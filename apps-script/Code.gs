@@ -146,6 +146,8 @@ function ensureHeaders_(sheet) {
   }
 }
 
+// The endpoint is public, so any cell Sheets would parse as a formula is forced to literal text
+// to keep submitted formulas from reading or exfiltrating other responses.
 function asPlainText_(value) {
   const text = String(value);
   return /^[=+\-@\t\r]/.test(text) ? '\'' + text : text;

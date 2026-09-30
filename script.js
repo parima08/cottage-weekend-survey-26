@@ -13,13 +13,27 @@
     statusEl.className = `status ${type}`.trim();
   };
 
-  const isConfigured = /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(scriptUrl) || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//.test(scriptUrl);
+  const isConfigured = /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(scriptUrl);
 
   if (!isConfigured) {
     notice.style.display = "block";
     submitButton.disabled = true;
-    setStatus("Submissions are not connected yet. You can review the questions, but answers will not be saved until setup is complete.");
   }
+
+  document.querySelectorAll(".photo-strip").forEach((strip) => {
+    const track = strip.querySelector(".photo-grid");
+    const prev = strip.querySelector(".strip-arrow.prev");
+    const next = strip.querySelector(".strip-arrow.next");
+    const updateArrows = () => {
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+    };
+    prev.addEventListener("click", () => track.scrollBy({ left: -track.clientWidth }));
+    next.addEventListener("click", () => track.scrollBy({ left: track.clientWidth }));
+    track.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+    updateArrows();
+  });
 
   const getRadioValue = (data, name) => data.get(name) || "";
 

@@ -32,7 +32,16 @@
         </div>
       </div>
       <aside class="hero-card" aria-label="Trip quick facts">
-        <img src="assets/img/pinnacles-sunset.jpg" alt="Sunset light on the High Peaks at Pinnacles National Park" loading="eager" width="960" height="640">
+        <div class="hero-pair">
+          <figure>
+            <img src="assets/img/auburn-3.jpg" alt="Open living room and kitchen inside the Auburn home" loading="eager" width="960" height="641">
+            <figcaption>Auburn</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/paicines-home-3.jpg" alt="Living room with a stone fireplace inside the Paicines home" loading="eager" width="960" height="720">
+            <figcaption>Paicines</figcaption>
+          </figure>
+        </div>
         <div class="quick-facts">
           <div class="fact"><b>Dates</b><span>Fri-Sun</span></div>
           <div class="fact"><b>Group</b><span>Bay Area young professionals</span></div>
@@ -51,12 +60,16 @@
 
       <div class="location-grid" aria-label="Location slides">
         <article class="location-card">
-          <div class="photo-grid" aria-label="Auburn listing photos">
-            <img src="assets/img/auburn-1.jpg" alt="Modern Auburn home exterior and pool area" width="960" height="719" loading="lazy">
-            <img src="assets/img/auburn-2.jpg" alt="Bright gathering space inside the Auburn home" width="960" height="719" loading="lazy">
-            <img src="assets/img/auburn-3.jpg" alt="Outdoor seating at the Auburn home" width="960" height="641" loading="lazy">
-            <img src="assets/img/auburn-4.jpg" alt="Kitchen and dining space at the Auburn home" width="960" height="641" loading="lazy">
-            <img src="assets/img/auburn-5.jpg" alt="Bedroom at the Auburn home" width="960" height="641" loading="lazy">
+          <div class="photo-strip">
+            <div class="photo-grid" role="region" aria-label="Auburn listing photos" tabindex="0">
+              <img src="assets/img/auburn-1.jpg" alt="Auburn home exterior and pool area at dusk" width="960" height="719" loading="lazy">
+              <img src="assets/img/auburn-2.jpg" alt="Aerial view of the Auburn home among wooded foothills" width="960" height="719" loading="lazy">
+              <img src="assets/img/auburn-3.jpg" alt="Open living room and kitchen inside the Auburn home" width="960" height="641" loading="lazy">
+              <img src="assets/img/auburn-4.jpg" alt="Long dining table at the Auburn home" width="960" height="641" loading="lazy">
+              <img src="assets/img/auburn-5.jpg" alt="Bedroom at the Auburn home" width="960" height="641" loading="lazy">
+            </div>
+            <button class="strip-arrow prev" type="button" aria-label="Previous Auburn photo">&lsaquo;</button>
+            <button class="strip-arrow next" type="button" aria-label="Next Auburn photo">&rsaquo;</button>
           </div>
           <div class="location-body">
             <h3>Auburn foothills home</h3>
@@ -74,12 +87,16 @@
         </article>
 
         <article class="location-card">
-          <div class="photo-grid" aria-label="Paicines listing and Pinnacles photos">
-            <img src="assets/img/paicines-home-1.jpg" alt="Paicines home and surrounding landscape" width="960" height="744" loading="lazy">
-            <img src="assets/img/paicines-home-2.jpg" alt="Shared living area in the Paicines home" width="960" height="606" loading="lazy">
-            <img src="assets/img/pinnacles-high-peaks.jpg" alt="Sunny rock formations along the High Peaks Trail in Pinnacles" width="960" height="720" loading="lazy">
-            <img src="assets/img/paicines-home-3.jpg" alt="Bedroom at the Paicines home" width="960" height="720" loading="lazy">
-            <img src="assets/img/pinnacles-cave.jpg" alt="Exit of Balconies Cave at Pinnacles National Park" width="960" height="640" loading="lazy">
+          <div class="photo-strip">
+            <div class="photo-grid" role="region" aria-label="Paicines listing and Pinnacles photos" tabindex="0">
+              <img src="assets/img/paicines-home-1.jpg" alt="Great room with tall arched windows inside the Paicines home" width="960" height="744" loading="lazy">
+              <img src="assets/img/paicines-home-2.jpg" alt="Paicines home exterior under a clear sky" width="960" height="606" loading="lazy">
+              <img src="assets/img/pinnacles-high-peaks.jpg" alt="Sunny rock formations along the High Peaks Trail in Pinnacles" width="960" height="720" loading="lazy">
+              <img src="assets/img/paicines-home-3.jpg" alt="Living room with a stone fireplace inside the Paicines home" width="960" height="720" loading="lazy">
+              <img src="assets/img/pinnacles-cave.jpg" alt="Exit of Balconies Cave at Pinnacles National Park" width="960" height="640" loading="lazy">
+            </div>
+            <button class="strip-arrow prev" type="button" aria-label="Previous Paicines photo">&lsaquo;</button>
+            <button class="strip-arrow next" type="button" aria-label="Next Paicines photo">&rsaquo;</button>
           </div>
           <div class="location-body">
             <h3>Paicines near Pinnacles</h3>
@@ -273,7 +290,7 @@
   </main>
 
   <footer class="footer page-shell">
-    <p>House photos are from the linked Airbnb listings. Pinnacles photos are public-domain National Park Service assets: Pinnacles High Peaks at Sunset, Blue Skies over the High Peaks by NPS/Beth Hudick, and Balconies Cave Exit by NPS. The survey stores responses in a private Google Sheet owned by the organizers.</p>
+    <p>House photos are from the linked Airbnb listings. Pinnacles photos are public-domain National Park Service assets: Blue Skies over the High Peaks by NPS/Beth Hudick, and Balconies Cave Exit by NPS. The survey stores responses in a private Google Sheet owned by the organizers.</p>
   </footer>
 
   <script src="config.js"></script>

@@ -66,8 +66,8 @@ function doPost(e) {
       ensureHeaders_(sheet);
       sheet.appendRow(HEADERS.map((header) => {
         if (header === 'serverTimestamp') return new Date();
-        if (header === 'activities') return (payload.activities || []).join(', ');
-        return payload[header] || '';
+        if (header === 'activities') return asPlainText_((payload.activities || []).join(', '));
+        return asPlainText_(payload[header] || '');
       }));
     } finally {
       lock.releaseLock();
@@ -144,6 +144,11 @@ function ensureHeaders_(sheet) {
   if (mismatch) {
     throw new Error('Response sheet headers do not match Code.gs. Create a new blank Responses sheet or update the headers.');
   }
+}
+
+function asPlainText_(value) {
+  const text = String(value);
+  return /^[=+\-@\t\r]/.test(text) ? '\'' + text : text;
 }
 
 function jsonResponse(body) {

@@ -11,8 +11,7 @@ const ALLOWED_FIELDS = [
   'vachanPreference',
   'accessNeeds',
   'openIdeas',
-  'website',
-  'submittedAt'
+  'website'
 ];
 
 const HEADERS = [
@@ -28,8 +27,7 @@ const HEADERS = [
   'structure',
   'vachanPreference',
   'accessNeeds',
-  'openIdeas',
-  'submittedAt'
+  'openIdeas'
 ];
 
 const MAX_LENGTHS = {
@@ -44,8 +42,7 @@ const MAX_LENGTHS = {
   vachanPreference: 140,
   accessNeeds: 1200,
   openIdeas: 1500,
-  website: 0,
-  submittedAt: 80
+  website: 0
 };
 
 const MAX_ACTIVITIES = 20;
@@ -77,10 +74,6 @@ function doPost(e) {
   } catch (err) {
     return jsonResponse({ ok: false, error: err.message || 'Submission failed.' });
   }
-}
-
-function doGet() {
-  return jsonResponse({ ok: true, message: 'Cottage Weekend survey endpoint is ready.' });
 }
 
 function validatePayload(payload) {

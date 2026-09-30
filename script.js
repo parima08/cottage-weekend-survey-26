@@ -52,8 +52,7 @@
       vachanPreference: getRadioValue(data, "vachanPreference"),
       accessNeeds: (data.get("accessNeeds") || "").trim(),
       openIdeas: (data.get("openIdeas") || "").trim(),
-      website: (data.get("website") || "").trim(),
-      submittedAt: new Date().toISOString()
+      website: (data.get("website") || "").trim()
     };
   };
 

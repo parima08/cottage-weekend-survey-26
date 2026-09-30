@@ -1,71 +1,35 @@
 # Cottage Weekend 2026 survey questions
 
-Draft wording for organizer review. The form intentionally does not ask people to choose a location. It asks what kind of weekend criteria should guide the organizers' decision.
+All questions show on one page with a progress bar. The survey does not ask people to choose a location.
 
-1. **Your name**
-   - Required text field, used for RSVP follow-up.
+Each question below shows the on-page title, then the exact value stored in the Sheet. Field names and values must match `apps-script/Code.gs` and the Sheet headers. Sheet columns, in order: `serverTimestamp, name, fridayDeparture, weekendEnergy, rhythm, activities, otherActivities, structure, openIdeas`.
 
-2. **For Friday, Oct 23, when do you expect to leave the Bay Area?**
-   - Around 3 pm
-   - Later in the evening, after work
-   - Not sure yet
-   - Leaving from somewhere else or at a different time
-   - Purpose: plan arrival timing and Friday dinner without implying either location.
+Required: questions 1, 2, 3, 4 and 7. The rest are optional.
 
-3. **What energy would you most enjoy for the weekend?**
-   - 1: Mostly cozy house time
-   - 2: Lean cozy
-   - 3: Balanced
-   - 4: Lean outdoors
-   - 5: Mostly outdoors in nature
+1. **What's your name?** (`name`, text)
 
-4. **Which morning and night rhythm sounds best?**
-   - Early start or sunrise option
-   - Moderate mornings and balanced nights
-   - Late nights and sleeping in
-   - Flexible split, with options for both
+2. **Friday, Oct 23: when do you leave?** (`fridayDeparture`)
+   - Around 3 pm -> `Around 3 pm`
+   - Evening, after work -> `Later in the evening after work`
+   - Not sure yet -> `Not sure yet`
+   - Other time or place -> `Leaving from somewhere else or at a different time`
 
-5. **How much should Cottage Weekend feel like past years?**
-   - Keep it mostly the same
-   - Keep the heart, but try a few new things
-   - I would enjoy a meaningfully different format
-   - No strong preference
+3. **What vibe do you want?** (`weekendEnergy`, slider from Cozy indoors to Out in nature)
+   - `1 - Mostly cozy house time`, `2 - Lean cozy`, `3 - Balanced`, `4 - Lean outdoors`, `5 - Mostly outdoors in nature`
 
-6. **If you would change one thing about the format, what would it be?**
-   - Optional open text.
+4. **Late night games or early sunrise?** (`rhythm`)
+   - Early morning sunrise -> `Early morning sunrise activities`
+   - Late night games -> `Late night games`
+   - A bit of both -> `A bit of both`
 
-7. **Which activities would you be excited about?**
-   - Hiking
-   - Lake, swimming, or kayaking
-   - Stargazing
-   - Board or card games
-   - Group cooking
-   - Campfire or s'mores
-   - Vachan reading or discussion
-   - Meditation or quiet reflection
-   - Movie night
-   - Talent show or open mic
-   - Photo walk
+5. **Outdoor fun?** (`activities`, pick any; shares one column with question 6)
+   - `Hiking`, `Lake, swimming, or kayaking`, `Stargazing`, `Campfire or smores`, `Photo walk`
 
-8. **Other activity ideas**
-   - Optional open text.
+6. **Indoor fun?** (`activities`, pick any; joined with question 5 in one cell)
+   - `Board or card games`, `Group cooking`, `Movie night`, `Talent show or open mic`, `Vachan reading or discussion`, `Meditation or quiet reflection`
+   - Also on this card, optional text: **Something we missed?** (`otherActivities`)
 
-9. **How structured should Saturday feel?**
-   - 1: Mostly free time
-   - 2: Light structure
-   - 3: Balanced
-   - 4: More planned
-   - 5: Mostly planned together
+7. **Saturday: free or planned?** (`structure`, slider from Free time to Planned together)
+   - `1 - Mostly free time`, `2 - Light structure`, `3 - Balanced`, `4 - More planned`, `5 - Mostly planned together`
 
-10. **What would help make spiritual or reflective time meaningful?**
-    - Short guided Vachan reading or discussion
-    - Quiet individual reflection time
-    - Integrated naturally into another activity
-    - No strong preference
-
-11. **Anything that would make it hard to attend or enjoy the weekend?**
-    - Optional private open text.
-    - Examples: schedule constraints, mobility, sleep, food, budget, or social energy.
-
-12. **Anything else you hope organizers consider?**
-    - Optional open text.
+8. **Anything else?** (`openIdeas`, optional text)

@@ -1,12 +1,12 @@
 # Cottage Weekend 2026 survey
 
-Static GitHub Pages site for gathering private planning input for Cottage Weekend 2026. The page shows a route map, the two possible host homes as full-width cards (photo row, Airbnb link, and a Google Maps directions preview from San Jose), and a one-question-at-a-time survey. It does not show public results and does not ask people to vote for a location.
+Static GitHub Pages site for gathering private planning input for Cottage Weekend 2026. The page shows a route map, the two possible host homes as full-width cards (photo row, Airbnb link, and a Google Maps directions preview from San Jose), and a short survey with one-tap choices. It does not show public results and does not ask people to vote for a location.
 
 ## Local files
 
 - `index.html` - the GitHub Pages entry point served from the repository root.
 - `styles.css` - responsive light/dark styling.
-- `script.js` - photo rows and full-screen viewer, the step-by-step survey, form serialization and submission.
+- `script.js` - photo rows and full-screen viewer, the survey progress bar and validation, form serialization and submission.
 - `map.js` and `routes.js` - the Leaflet route map in the hero. `routes.js` holds thinned driving routes from San Jose (OSRM); regenerate it if the addresses change.
 - `config.js` - the one place to paste the Google Apps Script `/exec` URL.
 - `QUESTIONS.md` - organizer-reviewable question wording.

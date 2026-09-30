@@ -1,6 +1,6 @@
 # Cottage Weekend 2026 survey questions
 
-The survey shows one question at a time. It does not ask people to choose a location. Required: questions 1, 2, 3, 4, 5, 7 and 8. The rest are optional.
+The survey shows all ten questions on one page with a progress bar. It does not ask people to choose a location. Required: questions 1, 2, 3, 4, 5, 7 and 8. The rest are optional.
 
 Each question below shows the on-page title, then the exact value stored in the Sheet. Values must match `apps-script/Code.gs` and the Sheet headers. Field names never changed in the simplification.
 

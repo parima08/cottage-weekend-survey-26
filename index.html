@@ -45,28 +45,24 @@
       </div>
       <figure class="map-card">
         <div id="map" class="map" role="img" aria-label="Map of the drives from San Jose to Auburn and to Paicines"></div>
-        <figcaption class="map-legend">
-          <span><i class="dot start"></i>San Jose</span>
-          <span><i class="dot auburn"></i>Auburn</span>
-          <span><i class="dot paicines"></i>Paicines</span>
-        </figcaption>
       </figure>
     </div>
   </header>
 
   <main>
     <section id="homes" class="section page-shell">
-      <h2 class="section-title">Two homes</h2>
-      <p class="section-note"><svg class="icon"><use href="#i-car"/></svg> Drive estimates are from San Jose, CA. Friday evening adds time.</p>
+      <h2 class="section-title">Two locations to choose between</h2>
 
       <div class="location-grid">
         <article class="location-card">
           <header class="card-head">
+            <span class="eyebrow">Location 1</span>
             <h3>Auburn</h3>
             <div class="location-meta">
               <span class="pill">Near Sacramento</span>
-              <span class="pill"><svg class="icon"><use href="#i-car"/></svg> About 2h 30m</span>
+              <span class="pill"><svg class="icon"><use href="#i-car"/></svg> About 2h 30m from San Jose</span>
             </div>
+            <p class="address"><svg class="icon"><use href="#i-pin"/></svg> 13559 Dry Creek Road, Auburn, CA 95602</p>
           </header>
           <div class="photo-strip">
             <div class="photo-grid" role="region" aria-label="Auburn photos" tabindex="0">
@@ -87,7 +83,6 @@
               <ul class="feel-chips">
                 <li>Lake time</li><li>Shared meals</li><li>Games and movies</li>
               </ul>
-              <p class="address"><svg class="icon"><use href="#i-pin"/></svg> 13559 Dry Creek Road, Auburn, CA 95602</p>
               <div class="card-actions">
                 <a class="button" href="https://www.airbnb.com/rooms/1717790396205238720?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25&amp;guests=16" target="_blank" rel="noopener">Open Airbnb listing <svg class="icon"><use href="#i-out"/></svg></a>
                 <a class="button secondary" href="https://www.google.com/maps/dir/?api=1&amp;origin=San+Jose,+CA&amp;destination=13559+Dry+Creek+Road%2C+Auburn%2C+CA+95602" target="_blank" rel="noopener">Directions <svg class="icon"><use href="#i-out"/></svg></a>
@@ -99,11 +94,13 @@
 
         <article class="location-card">
           <header class="card-head">
+            <span class="eyebrow">Location 2</span>
             <h3>Paicines</h3>
             <div class="location-meta">
               <span class="pill">Near Pinnacles National Park</span>
-              <span class="pill"><svg class="icon"><use href="#i-car"/></svg> About 1h 15m</span>
+              <span class="pill"><svg class="icon"><use href="#i-car"/></svg> About 1h 15m from San Jose</span>
             </div>
+            <p class="address"><svg class="icon"><use href="#i-pin"/></svg> 12839 Airline Hwy, Paicines, CA 95043</p>
           </header>
           <div class="photo-strip">
             <div class="photo-grid" role="region" aria-label="Paicines photos" tabindex="0">
@@ -124,7 +121,6 @@
               <ul class="feel-chips">
                 <li>Caves and trails</li><li>Stargazing</li><li>Campfire bonding</li>
               </ul>
-              <p class="address"><svg class="icon"><use href="#i-pin"/></svg> 12839 Airline Hwy, Paicines, CA 95043</p>
               <div class="card-actions">
                 <a class="button" href="https://www.airbnb.com/rooms/1720676538962010126?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25" target="_blank" rel="noopener">Open Airbnb listing <svg class="icon"><use href="#i-out"/></svg></a>
                 <a class="button secondary" href="https://www.google.com/maps/dir/?api=1&amp;origin=San+Jose,+CA&amp;destination=12839+Airline+Hwy%2C+Paicines%2C+CA+95043" target="_blank" rel="noopener">Directions <svg class="icon"><use href="#i-out"/></svg></a>
@@ -138,11 +134,10 @@
 
     <section id="survey" class="section page-shell">
       <h2 class="section-title">Your turn</h2>
-      <p class="section-note"><svg class="icon"><use href="#i-lock"/></svg> Tap your picks. Your answers stay private.</p>
 
       <div class="form-card">
         <div class="progress">
-          <span id="progressText" class="progress-text">Question 1 of 10</span>
+          <span id="progressText" class="progress-text">0 of 7 done</span>
           <div class="progress-bar"><span id="progressFill"></span></div>
         </div>
 
@@ -258,11 +253,7 @@
         </form>
 
         <div class="form-actions">
-          <div class="step-nav">
-            <button id="backButton" class="ghost" type="button">Back</button>
-            <button id="nextButton" type="button">Next</button>
-            <button id="submitButton" type="submit" form="surveyForm" hidden>Send it</button>
-          </div>
+          <button id="submitButton" type="submit" form="surveyForm">Send it</button>
           <div id="formStatus" class="status" role="status" aria-live="polite"></div>
         </div>
 

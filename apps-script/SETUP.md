@@ -15,6 +15,8 @@ This page is public, but the response Sheet should stay private. The web app bel
 3. Copy the full contents of `apps-script/Code.gs` from this repository and paste it into the Apps Script editor.
 4. Save the project.
 
+If you already pasted an older version of the script: replace it with this one, then either delete the old `Responses` tab (the script creates a fresh one) or make row 1 of `Responses` exactly `serverTimestamp, name, fridayDeparture, weekendEnergy, rhythm, activities, otherActivities, structure, openIdeas`. The script refuses to write when the header row does not match. Then use **Deploy > Manage deployments > Edit > New version** so the live URL runs the new code.
+
 ## 3. Deploy the web app
 
 1. In Apps Script, click **Deploy > New deployment**.

@@ -1,6 +1,6 @@
 # Cottage Weekend 2026 survey
 
-Static GitHub Pages site for gathering private planning input for Cottage Weekend 2026. The page shows a route map, the two possible host homes as full-width cards (photo row, Airbnb link, and a Google Maps directions preview from San Jose), and a short survey with one-tap choices. It does not show public results and does not ask people to vote for a location.
+Static GitHub Pages site for gathering private planning input for Cottage Weekend 2026. The page shows a route map, the two possible host homes as full-width cards (photo row, Airbnb link, and a Google Maps directions preview from San Jose), and a short survey with one-tap choices and two sliders. It does not show public results and does not ask people to vote for a location.
 
 ## Local files
 

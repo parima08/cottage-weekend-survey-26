@@ -78,11 +78,37 @@
   });
 
   // Survey progress: how many of the required questions are answered.
-  const requiredFields = ["name", "fridayDeparture", "weekendEnergy", "rhythm", "formatPreference", "structure", "vachanPreference"];
+  const requiredFields = ["name", "fridayDeparture", "weekendEnergy", "rhythm", "structure"];
+
+  // Sliders start unanswered; they count once the person touches them.
+  const touched = new Set();
+  form.querySelectorAll(".slider").forEach((slider) => {
+    const input = slider.querySelector("input");
+    const out = slider.querySelector("output");
+    const text = JSON.parse(slider.dataset.text);
+    const mark = () => {
+      touched.add(input.name);
+      slider.classList.add("touched");
+      out.textContent = text[Number(input.value) - 1];
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    };
+    input.addEventListener("input", (event) => { if (event.isTrusted) mark(); });
+    input.addEventListener("pointerdown", () => setTimeout(mark, 0));
+    input.addEventListener("keydown", (event) => { if (event.key.startsWith("Arrow") || event.key === "Home" || event.key === "End") setTimeout(mark, 0); });
+  });
+
+  const sliderValue = (field) => {
+    const slider = form.querySelector(`input[name="${field}"]`).closest(".slider");
+    return touched.has(field) ? JSON.parse(slider.dataset.labels)[Number(form.elements[field].value) - 1] : "";
+  };
 
   const missingFields = () => {
     const data = new FormData(form);
-    return requiredFields.filter((field) => (field === "name" ? !(data.get("name") || "").trim() : !data.get(field)));
+    return requiredFields.filter((field) => {
+      if (field === "name") return !(data.get("name") || "").trim();
+      if (field === "weekendEnergy" || field === "structure") return !touched.has(field);
+      return !data.get(field);
+    });
   };
 
   const updateProgress = () => {
@@ -109,15 +135,11 @@
     return {
       name: text("name"),
       fridayDeparture: data.get("fridayDeparture") || "",
-      weekendEnergy: data.get("weekendEnergy") || "",
+      weekendEnergy: sliderValue("weekendEnergy"),
       rhythm: data.get("rhythm") || "",
-      formatPreference: data.get("formatPreference") || "",
-      formatChange: text("formatChange"),
       activities: data.getAll("activities"),
       otherActivities: text("otherActivities"),
-      structure: data.get("structure") || "",
-      vachanPreference: data.get("vachanPreference") || "",
-      accessNeeds: text("accessNeeds"),
+      structure: sliderValue("structure"),
       openIdeas: text("openIdeas"),
       website: text("website")
     };

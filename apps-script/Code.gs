@@ -3,13 +3,9 @@ const ALLOWED_FIELDS = [
   'fridayDeparture',
   'weekendEnergy',
   'rhythm',
-  'formatPreference',
-  'formatChange',
   'activities',
   'otherActivities',
   'structure',
-  'vachanPreference',
-  'accessNeeds',
   'openIdeas',
   'website'
 ];
@@ -20,13 +16,9 @@ const HEADERS = [
   'fridayDeparture',
   'weekendEnergy',
   'rhythm',
-  'formatPreference',
-  'formatChange',
   'activities',
   'otherActivities',
   'structure',
-  'vachanPreference',
-  'accessNeeds',
   'openIdeas'
 ];
 
@@ -35,12 +27,8 @@ const MAX_LENGTHS = {
   fridayDeparture: 120,
   weekendEnergy: 80,
   rhythm: 120,
-  formatPreference: 140,
-  formatChange: 1000,
   otherActivities: 1000,
   structure: 80,
-  vachanPreference: 140,
-  accessNeeds: 1200,
   openIdeas: 1500,
   website: 0
 };
@@ -91,7 +79,7 @@ function validatePayload(payload) {
     throw new Error('Spam rejected.');
   }
 
-  ['name', 'fridayDeparture', 'weekendEnergy', 'rhythm', 'formatPreference', 'structure', 'vachanPreference'].forEach((field) => {
+  ['name', 'fridayDeparture', 'weekendEnergy', 'rhythm', 'structure'].forEach((field) => {
     if (!String(payload[field] || '').trim()) {
       throw new Error('Missing required field: ' + field);
     }

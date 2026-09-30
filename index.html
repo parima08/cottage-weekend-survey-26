@@ -137,7 +137,7 @@
 
       <div class="form-card">
         <div class="progress">
-          <span id="progressText" class="progress-text">0 of 7 done</span>
+          <span id="progressText" class="progress-text">0 of 5 done</span>
           <div class="progress-bar"><span id="progressFill"></span></div>
         </div>
 
@@ -164,54 +164,42 @@
 
           <fieldset class="q" data-q="weekendEnergy">
             <legend>What vibe do you want?</legend>
-            <div class="scale">
-              <div class="scale-options" role="radiogroup" aria-label="Weekend vibe, 1 cozy house to 5 outdoors">
-                <label><input type="radio" name="weekendEnergy" value="1 - Mostly cozy house time" required><span>1</span></label>
-                <label><input type="radio" name="weekendEnergy" value="2 - Lean cozy"><span>2</span></label>
-                <label><input type="radio" name="weekendEnergy" value="3 - Balanced"><span>3</span></label>
-                <label><input type="radio" name="weekendEnergy" value="4 - Lean outdoors"><span>4</span></label>
-                <label><input type="radio" name="weekendEnergy" value="5 - Mostly outdoors in nature"><span>5</span></label>
-              </div>
+            <div class="slider" data-labels='["1 - Mostly cozy house time","2 - Lean cozy","3 - Balanced","4 - Lean outdoors","5 - Mostly outdoors in nature"]' data-text='["Cozy house time","Leaning cozy","Balanced","Leaning outdoors","Out in nature"]'>
+              <output class="slider-value" aria-live="polite">Slide to pick</output>
+              <input type="range" name="weekendEnergy" min="1" max="5" step="1" value="3" aria-label="Weekend vibe, from cozy indoors to out in nature">
               <div class="scale-labels"><span>Cozy indoors</span><span>Out in nature</span></div>
             </div>
           </fieldset>
 
           <fieldset class="q" data-q="rhythm">
-            <legend>Early bird or night owl?</legend>
+            <legend>Late night games or early sunrise?</legend>
             <div class="options">
-              <label class="option"><input type="radio" name="rhythm" value="Early start or sunrise option" required><span>Early start</span></label>
-              <label class="option"><input type="radio" name="rhythm" value="Moderate mornings and balanced nights"><span>Middle of the road</span></label>
-              <label class="option"><input type="radio" name="rhythm" value="Late nights and sleeping in"><span>Late nights, sleep in</span></label>
-              <label class="option"><input type="radio" name="rhythm" value="Flexible split with options for both"><span>A bit of both</span></label>
+              <label class="option"><input type="radio" name="rhythm" value="Early morning sunrise activities" required><span>Early morning sunrise</span></label>
+              <label class="option"><input type="radio" name="rhythm" value="Late night games"><span>Late night games</span></label>
+              <label class="option"><input type="radio" name="rhythm" value="A bit of both"><span>A bit of both</span></label>
             </div>
           </fieldset>
 
-          <fieldset class="q" data-q="formatPreference">
-            <legend>Like past years?</legend>
-            <div class="options">
-              <label class="option"><input type="radio" name="formatPreference" value="Keep it mostly the same" required><span>Keep it the same</span></label>
-              <label class="option"><input type="radio" name="formatPreference" value="Keep the heart but try a few new things"><span>Same, plus a few new things</span></label>
-              <label class="option"><input type="radio" name="formatPreference" value="I would enjoy a meaningfully different format"><span>Try something new</span></label>
-              <label class="option"><input type="radio" name="formatPreference" value="No strong preference"><span>No preference</span></label>
-            </div>
-            <label class="more" for="formatChange">Want to change one thing?</label>
-            <textarea id="formatChange" name="formatChange" rows="2" maxlength="1000" placeholder="Optional"></textarea>
-          </fieldset>
-
-          <fieldset class="q" data-q="activities">
-            <legend>What sounds fun? <span class="hint">Pick any</span></legend>
+          <fieldset class="q" data-q="outdoorActivities">
+            <legend>Outdoor fun? <span class="hint">Pick any</span></legend>
             <div class="chips">
               <label class="chip"><input type="checkbox" name="activities" value="Hiking"><span>Hiking</span></label>
               <label class="chip"><input type="checkbox" name="activities" value="Lake, swimming, or kayaking"><span>Lake and kayaking</span></label>
               <label class="chip"><input type="checkbox" name="activities" value="Stargazing"><span>Stargazing</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Campfire or smores"><span>Campfire</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Photo walk"><span>Photo walk</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q" data-q="indoorActivities">
+            <legend>Indoor fun? <span class="hint">Pick any</span></legend>
+            <div class="chips">
               <label class="chip"><input type="checkbox" name="activities" value="Board or card games"><span>Games</span></label>
               <label class="chip"><input type="checkbox" name="activities" value="Group cooking"><span>Group cooking</span></label>
-              <label class="chip"><input type="checkbox" name="activities" value="Campfire or smores"><span>Campfire</span></label>
-              <label class="chip"><input type="checkbox" name="activities" value="Vachan reading or discussion"><span>Vachan</span></label>
-              <label class="chip"><input type="checkbox" name="activities" value="Meditation or quiet reflection"><span>Quiet reflection</span></label>
               <label class="chip"><input type="checkbox" name="activities" value="Movie night"><span>Movie night</span></label>
               <label class="chip"><input type="checkbox" name="activities" value="Talent show or open mic"><span>Open mic</span></label>
-              <label class="chip"><input type="checkbox" name="activities" value="Photo walk"><span>Photo walk</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Vachan reading or discussion"><span>Vachan</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Meditation or quiet reflection"><span>Quiet reflection</span></label>
             </div>
             <label class="more" for="otherActivities">Something we missed?</label>
             <textarea id="otherActivities" name="otherActivities" rows="2" maxlength="1000" placeholder="Optional"></textarea>
@@ -219,32 +207,12 @@
 
           <fieldset class="q" data-q="structure">
             <legend>Saturday: free or planned?</legend>
-            <div class="scale">
-              <div class="scale-options" role="radiogroup" aria-label="Saturday, 1 free time to 5 planned together">
-                <label><input type="radio" name="structure" value="1 - Mostly free time" required><span>1</span></label>
-                <label><input type="radio" name="structure" value="2 - Light structure"><span>2</span></label>
-                <label><input type="radio" name="structure" value="3 - Balanced"><span>3</span></label>
-                <label><input type="radio" name="structure" value="4 - More planned"><span>4</span></label>
-                <label><input type="radio" name="structure" value="5 - Mostly planned together"><span>5</span></label>
-              </div>
+            <div class="slider" data-labels='["1 - Mostly free time","2 - Light structure","3 - Balanced","4 - More planned","5 - Mostly planned together"]' data-text='["Mostly free time","A little planned","Balanced","More planned","Planned together"]'>
+              <output class="slider-value" aria-live="polite">Slide to pick</output>
+              <input type="range" name="structure" min="1" max="5" step="1" value="3" aria-label="Saturday, from free time to planned together">
               <div class="scale-labels"><span>Free time</span><span>Planned together</span></div>
             </div>
           </fieldset>
-
-          <fieldset class="q" data-q="vachanPreference">
-            <legend>How do you like quiet time?</legend>
-            <div class="options">
-              <label class="option"><input type="radio" name="vachanPreference" value="Short guided Vachan reading or discussion" required><span>A short reading together</span></label>
-              <label class="option"><input type="radio" name="vachanPreference" value="Quiet individual reflection time"><span>Time alone</span></label>
-              <label class="option"><input type="radio" name="vachanPreference" value="Integrated naturally into another activity"><span>Mixed into other things</span></label>
-              <label class="option"><input type="radio" name="vachanPreference" value="No strong preference"><span>No preference</span></label>
-            </div>
-          </fieldset>
-
-          <div class="q field" data-q="accessNeeds">
-            <label for="accessNeeds">Anything that makes it hard to come?</label>
-            <textarea id="accessNeeds" name="accessNeeds" rows="3" maxlength="1200" placeholder="Optional. Time, food, money, anything."></textarea>
-          </div>
 
           <div class="q field" data-q="openIdeas">
             <label for="openIdeas">Anything else?</label>

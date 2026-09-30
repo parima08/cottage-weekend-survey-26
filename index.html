@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Cottage Weekend 2026: two homes, one quick survey.">
   <title>Cottage Weekend 2026 Survey</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
@@ -39,8 +40,6 @@
         <h1>Help us plan the <em>weekend</em></h1>
         <div class="hero-actions">
           <a class="button" href="#survey">Take the survey</a>
-          <a class="button secondary" href="https://www.airbnb.com/rooms/1717790396205238720?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25&amp;guests=16" target="_blank" rel="noopener">Auburn listing <svg class="icon"><use href="#i-out"/></svg></a>
-          <a class="button secondary" href="https://www.airbnb.com/rooms/1720676538962010126?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25" target="_blank" rel="noopener">Paicines listing <svg class="icon"><use href="#i-out"/></svg></a>
         </div>
       </div>
       <figure class="map-card">
@@ -51,7 +50,7 @@
 
   <main>
     <section id="homes" class="section page-shell">
-      <h2 class="section-title">Two locations to choose between</h2>
+      <h2 class="section-title">The two homes</h2>
 
       <div class="location-grid">
         <article class="location-card">
@@ -67,7 +66,7 @@
           <div class="photo-strip">
             <div class="photo-grid" role="region" aria-label="Auburn photos" tabindex="0">
               <img src="assets/img/auburn-1.jpg" alt="Auburn home exterior and pool area at dusk" width="960" height="719" loading="lazy">
-              <img src="assets/img/auburn-lake.jpg" alt="A calm lake in the Auburn and Folsom area" width="1200" height="800" loading="lazy">
+              <img class="lake-view" src="assets/img/auburn-lake-porch.jpg" alt="View toward the lake from the Auburn home's covered porch" width="960" height="641" loading="lazy">
               <img src="assets/img/auburn-2.jpg" alt="Aerial view of the Auburn home among wooded foothills" width="960" height="719" loading="lazy">
               <img src="assets/img/auburn-3.jpg" alt="Open living room and kitchen inside the Auburn home" width="960" height="641" loading="lazy">
               <img src="assets/img/auburn-4.jpg" alt="Long dining table at the Auburn home" width="960" height="641" loading="lazy">
@@ -104,11 +103,11 @@
           </header>
           <div class="photo-strip">
             <div class="photo-grid" role="region" aria-label="Paicines photos" tabindex="0">
-              <img src="assets/img/paicines-home-1.jpg" alt="Great room with tall arched windows inside the Paicines home" width="960" height="744" loading="lazy">
-              <img src="assets/img/pinnacles-high-peaks.jpg" alt="Rocky peaks and wide valley views in Pinnacles National Park" width="1200" height="800" loading="lazy">
-              <img src="assets/img/paicines-home-2.jpg" alt="Paicines home exterior under a clear sky" width="960" height="606" loading="lazy">
-              <img src="assets/img/pinnacles-boulder-cave.jpg" alt="Sunlight through a boulder cave in Pinnacles National Park" width="1200" height="800" loading="lazy">
               <img src="assets/img/paicines-home-3.jpg" alt="Living room with a stone fireplace inside the Paicines home" width="960" height="720" loading="lazy">
+              <img src="assets/img/pinnacles-sunset.jpg" alt="Orange sunset on the High Peaks beneath a purple sky in Pinnacles National Park" width="1200" height="800" loading="lazy">
+              <img src="assets/img/paicines-home-2.jpg" alt="Paicines home exterior under a clear sky" width="960" height="606" loading="lazy">
+              <img src="assets/img/pinnacles-cave-stairs.jpg" alt="Stone staircase descending into Bear Gulch Cave in Pinnacles National Park" width="1200" height="900" loading="lazy">
+              <img src="assets/img/paicines-sitting-room.jpg" alt="Sunlit sitting room with a fireplace and tall arched window inside the Paicines home" width="960" height="720" loading="lazy">
               <img src="assets/img/pinnacles-trail.jpg" alt="Tall rock spires along a trail in Pinnacles National Park" width="1200" height="800" loading="lazy">
             </div>
             <button class="strip-arrow prev" type="button" aria-label="Previous Paicines photo">&lsaquo;</button>
@@ -243,7 +242,7 @@
   </dialog>
 
   <footer class="footer page-shell">
-    <p>Home photos are from the Airbnb listings. Map data by <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>, routes by OSRM. Pinnacles photos by Clyde Charles Brown (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>) and Brocken Inaglory (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>). Lake photo by The Oaked Ridge (CC BY-SA 3.0).</p>
+    <p>Home photos are from the Airbnb listings. Map data by <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>, routes by OSRM. Pinnacles trail photo by Clyde Charles Brown (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>). <a href="https://commons.wikimedia.org/wiki/File:Bear_Gulch_Cave,_Pinnacles_National_Park,_California_(13413489085).jpg" target="_blank" rel="noopener">Bear Gulch Cave</a> by Ken Lund (<a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener">CC BY-SA 2.0</a>, resized). <a href="https://npgallery.nps.gov/AssetDetail/f3eb3427-155d-4519-3e8b-c8fe544b434e" target="_blank" rel="noopener">Sunset photo</a> by the National Park Service (public domain).</p>
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>

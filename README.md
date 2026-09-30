@@ -1,12 +1,13 @@
 # Cottage Weekend 2026 survey
 
-Static GitHub Pages site for gathering private planning input for Cottage Weekend 2026. The page shows the two possible host settings, possible weekend rhythms, and a neutral criteria survey. It does not show public results and does not ask people to vote for a location.
+Static GitHub Pages site for gathering private planning input for Cottage Weekend 2026. The page shows a route map, the two possible host homes as full-width cards (photo row, Airbnb link, and a Google Maps directions preview from San Jose), and a one-question-at-a-time survey. It does not show public results and does not ask people to vote for a location.
 
 ## Local files
 
 - `index.html` - the GitHub Pages entry point served from the repository root.
 - `styles.css` - responsive light/dark styling.
-- `script.js` - form serialization and submission handling.
+- `script.js` - photo rows and full-screen viewer, the step-by-step survey, form serialization and submission.
+- `map.js` and `routes.js` - the Leaflet route map in the hero. `routes.js` holds thinned driving routes from San Jose (OSRM); regenerate it if the addresses change.
 - `config.js` - the one place to paste the Google Apps Script `/exec` URL.
 - `QUESTIONS.md` - organizer-reviewable question wording.
 - `apps-script/Code.gs` - Google Apps Script endpoint that appends responses to a private Sheet.
@@ -14,7 +15,7 @@ Static GitHub Pages site for gathering private planning input for Cottage Weeken
 
 ## Connect submissions
 
-The site is safe to publish before the endpoint is ready. If `config.js` has an empty `SCRIPT_URL`, the form remains visible but the submit button is disabled and a clear setup notice appears.
+The site is safe to publish before the endpoint is ready. If `config.js` has an empty `SCRIPT_URL`, the form remains visible but the send button is disabled.
 
 After deploying the Apps Script web app, paste its `/exec` URL into `config.js`:
 

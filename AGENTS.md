@@ -2,7 +2,9 @@
 
 This file is the project's committed home for project-intrinsic agent knowledge: build, test, release, architecture, and sharp-edge notes that should travel with the code.
 
-- Add durable project-specific notes here as they are discovered through real work.
+- Static GitHub Pages site, no build step. Preview with `python3 -m http.server` from the repo root.
+- Survey field names and stored answer values in `index.html` must stay in sync with `apps-script/Code.gs` and the Sheet headers; changing one means the owner must re-paste and re-deploy the script. `QUESTIONS.md` lists the exact values.
+- Never submit test answers to the live Sheet. `config.js` holds the real endpoint, so for local testing point `SCRIPT_URL` at nothing.
 
 ## Maintaining this file
 

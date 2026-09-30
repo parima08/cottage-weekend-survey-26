@@ -3,67 +3,75 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Cottage Weekend 2026 survey for what the group wants from the weekend.">
+  <meta name="description" content="Cottage Weekend 2026: two homes, one quick survey.">
   <title>Cottage Weekend 2026 Survey</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-sunrise" viewBox="0 0 24 24"><path d="M12 3v3M4.9 7.9l2.1 2.1M19.1 7.9 17 10M2 17h4m12 0h4M6.3 17a5.7 5.7 0 0 1 11.4 0M3 21h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4m0-14.2-1.4 1.4M6.3 17.7l-1.4 1.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-sunset" viewBox="0 0 24 24"><path d="M12 10V4m0 0-2.5 2.5M12 4l2.5 2.5M4.9 12.9l1.4 1.4m12.8-1.4-1.4 1.4M2 19h4m12 0h4M6.3 19a5.7 5.7 0 0 1 11.4 0M3 22h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 16V11l2-5h10l2 5v5M3 16h18v3H3zM7 13h.01M17 13h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5a7 7 0 0 0-14 0C5 14.800 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="9.500" r="2.500" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2.500" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 10V7.500a4 4 0 0 1 8 0V10" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  </svg>
+
   <a class="skip-link" href="#survey">Skip to survey</a>
+
   <header class="hero">
     <nav class="nav page-shell" aria-label="Page">
-      <div class="brand" aria-label="Cottage Weekend 2026"><span class="brand-mark">CW</span><span>Cottage Weekend 2026</span></div>
+      <div class="brand"><span class="brand-mark">CW</span><span>Cottage Weekend</span></div>
       <div class="nav-links">
-        <a href="#locations">Locations</a>
-        <a href="#possible-days">Possible days</a>
+        <a href="#homes">Homes</a>
         <a href="#survey">Survey</a>
       </div>
     </nav>
 
-    <div class="hero-grid page-shell">
-      <div>
-        <p class="kicker">Oct 23-25, 2026 - about 2 minutes</p>
-        <h1>What kind of weekend should we plan?</h1>
-        <p class="hero-copy">We are weighing two beautiful host homes for Cottage Weekend. Instead of voting on a place, tell the organizers what you want the weekend to feel like: more nature or more cozy house time, early starts or late nights, familiar rhythms or something a little new.</p>
+    <div class="page-shell hero-grid">
+      <div class="hero-body">
+        <p class="kicker">Fri, Oct 23 - Sun, Oct 25</p>
+        <h1>Help us plan the <em>weekend</em></h1>
         <div class="hero-actions">
-          <a class="button" href="#survey">Start the survey</a>
-          <a class="button secondary" href="#locations">See the host homes</a>
+          <a class="button" href="#survey">Take the survey</a>
+          <a class="button secondary" href="https://www.airbnb.com/rooms/1717790396205238720?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25&amp;guests=16" target="_blank" rel="noopener">Auburn listing <svg class="icon"><use href="#i-out"/></svg></a>
+          <a class="button secondary" href="https://www.airbnb.com/rooms/1720676538962010126?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25" target="_blank" rel="noopener">Paicines listing <svg class="icon"><use href="#i-out"/></svg></a>
         </div>
       </div>
-      <aside class="hero-card" aria-label="Trip quick facts">
-        <div class="hero-pair">
-          <figure>
-            <img src="assets/img/auburn-3.jpg" alt="Open living room and kitchen inside the Auburn home" loading="eager" width="960" height="641">
-            <figcaption>Auburn</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/img/paicines-home-3.jpg" alt="Living room with a stone fireplace inside the Paicines home" loading="eager" width="960" height="720">
-            <figcaption>Paicines</figcaption>
-          </figure>
-        </div>
-        <div class="quick-facts">
-          <div class="fact"><b>Dates</b><span>Fri-Sun</span></div>
-          <div class="fact"><b>Group</b><span>Bay Area young professionals</span></div>
-          <div class="fact"><b>Private</b><span>Answers go only to organizers</span></div>
-        </div>
-      </aside>
+      <figure class="map-card">
+        <div id="map" class="map" role="img" aria-label="Map of the drives from San Jose to Auburn and to Paicines"></div>
+        <figcaption class="map-legend">
+          <span><i class="dot start"></i>San Jose</span>
+          <span><i class="dot auburn"></i>Auburn</span>
+          <span><i class="dot paicines"></i>Paicines</span>
+        </figcaption>
+      </figure>
     </div>
   </header>
 
   <main>
-    <section id="locations" class="section page-shell">
-      <div class="section-head">
-        <h2>Two possible settings</h2>
-        <p>These are not presented as a vote. The goal is to help everyone picture the tradeoffs quickly, then answer questions about the weekend criteria that matter most.</p>
-        <p>Drive times for both homes are routed the same way from downtown San Francisco. Friday afternoon traffic adds time for both.</p>
-      </div>
+    <section id="homes" class="section page-shell">
+      <h2 class="section-title">Two homes</h2>
+      <p class="section-note"><svg class="icon"><use href="#i-car"/></svg> Drive estimates are from San Jose, CA. Friday evening adds time.</p>
 
-      <div class="location-grid" aria-label="Location slides">
+      <div class="location-grid">
         <article class="location-card">
+          <header class="card-head">
+            <h3>Auburn</h3>
+            <div class="location-meta">
+              <span class="pill">Near Sacramento</span>
+              <span class="pill"><svg class="icon"><use href="#i-car"/></svg> About 2h 30m</span>
+            </div>
+          </header>
           <div class="photo-strip">
-            <div class="photo-grid" role="region" aria-label="Auburn listing photos" tabindex="0">
+            <div class="photo-grid" role="region" aria-label="Auburn photos" tabindex="0">
               <img src="assets/img/auburn-1.jpg" alt="Auburn home exterior and pool area at dusk" width="960" height="719" loading="lazy">
+              <img src="assets/img/auburn-lake.jpg" alt="A calm lake in the Auburn and Folsom area" width="1200" height="800" loading="lazy">
               <img src="assets/img/auburn-2.jpg" alt="Aerial view of the Auburn home among wooded foothills" width="960" height="719" loading="lazy">
               <img src="assets/img/auburn-3.jpg" alt="Open living room and kitchen inside the Auburn home" width="960" height="641" loading="lazy">
               <img src="assets/img/auburn-4.jpg" alt="Long dining table at the Auburn home" width="960" height="641" loading="lazy">
@@ -71,89 +79,71 @@
             </div>
             <button class="strip-arrow prev" type="button" aria-label="Previous Auburn photo">&lsaquo;</button>
             <button class="strip-arrow next" type="button" aria-label="Next Auburn photo">&rsaquo;</button>
+            <span class="strip-count" aria-hidden="true">1 / 6</span>
           </div>
           <div class="location-body">
-            <h3>Auburn foothills home</h3>
-            <div class="location-meta">
-              <span class="pill">Lake and house time</span>
-              <span class="pill">About 2.5 hr from SF without traffic</span>
+            <div class="card-text">
+              <p class="feel">Time to bond, together, in a new modern house by the lake.</p>
+              <ul class="feel-chips">
+                <li>Lake time</li><li>Shared meals</li><li>Games and movies</li>
+              </ul>
+              <p class="address"><svg class="icon"><use href="#i-pin"/></svg> 13559 Dry Creek Road, Auburn, CA 95602</p>
+              <div class="card-actions">
+                <a class="button" href="https://www.airbnb.com/rooms/1717790396205238720?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25&amp;guests=16" target="_blank" rel="noopener">Open Airbnb listing <svg class="icon"><use href="#i-out"/></svg></a>
+                <a class="button secondary" href="https://www.google.com/maps/dir/?api=1&amp;origin=San+Jose,+CA&amp;destination=13559+Dry+Creek+Road%2C+Auburn%2C+CA+95602" target="_blank" rel="noopener">Directions <svg class="icon"><use href="#i-out"/></svg></a>
+              </div>
             </div>
-            <p>A polished home base in the Auburn and Granite Bay area, with room to spend more of the weekend together at the house. This leans toward shared meals, games, lake time nearby, and relaxed group hangouts.</p>
-            <address class="address"><strong>Address:</strong> 13559 Dry Creek Road, Auburn, CA 95602</address>
-            <div class="card-actions">
-              <a class="button secondary" href="https://www.airbnb.com/rooms/1717790396205238720?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25&amp;guests=16" target="_blank" rel="noopener">Open Airbnb listing</a>
-            </div>
+            <iframe class="card-map" title="Driving directions from San Jose to the Auburn home" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?saddr=San+Jose,+CA&amp;daddr=13559+Dry+Creek+Road%2C+Auburn%2C+CA+95602&amp;output=embed"></iframe>
           </div>
         </article>
 
         <article class="location-card">
+          <header class="card-head">
+            <h3>Paicines</h3>
+            <div class="location-meta">
+              <span class="pill">Near Pinnacles National Park</span>
+              <span class="pill"><svg class="icon"><use href="#i-car"/></svg> About 1h 15m</span>
+            </div>
+          </header>
           <div class="photo-strip">
-            <div class="photo-grid" role="region" aria-label="Paicines listing and Pinnacles photos" tabindex="0">
+            <div class="photo-grid" role="region" aria-label="Paicines photos" tabindex="0">
               <img src="assets/img/paicines-home-1.jpg" alt="Great room with tall arched windows inside the Paicines home" width="960" height="744" loading="lazy">
+              <img src="assets/img/pinnacles-high-peaks.jpg" alt="Rocky peaks and wide valley views in Pinnacles National Park" width="1200" height="800" loading="lazy">
               <img src="assets/img/paicines-home-2.jpg" alt="Paicines home exterior under a clear sky" width="960" height="606" loading="lazy">
-              <img src="assets/img/pinnacles-high-peaks.jpg" alt="Sunny rock formations along the High Peaks Trail in Pinnacles" width="960" height="720" loading="lazy">
+              <img src="assets/img/pinnacles-boulder-cave.jpg" alt="Sunlight through a boulder cave in Pinnacles National Park" width="1200" height="800" loading="lazy">
               <img src="assets/img/paicines-home-3.jpg" alt="Living room with a stone fireplace inside the Paicines home" width="960" height="720" loading="lazy">
-              <img src="assets/img/pinnacles-cave.jpg" alt="Exit of Balconies Cave at Pinnacles National Park" width="960" height="640" loading="lazy">
+              <img src="assets/img/pinnacles-trail.jpg" alt="Tall rock spires along a trail in Pinnacles National Park" width="1200" height="800" loading="lazy">
             </div>
             <button class="strip-arrow prev" type="button" aria-label="Previous Paicines photo">&lsaquo;</button>
             <button class="strip-arrow next" type="button" aria-label="Next Paicines photo">&rsaquo;</button>
+            <span class="strip-count" aria-hidden="true">1 / 6</span>
           </div>
           <div class="location-body">
-            <h3>Paicines near Pinnacles</h3>
-            <div class="location-meta">
-              <span class="pill">Near Pinnacles National Park</span>
-              <span class="pill">About 2.25 hr from SF without traffic</span>
+            <div class="card-text">
+              <p class="feel">A sunrise meditation in one of the most uniquely beautiful places.</p>
+              <ul class="feel-chips">
+                <li>Caves and trails</li><li>Stargazing</li><li>Campfire bonding</li>
+              </ul>
+              <p class="address"><svg class="icon"><use href="#i-pin"/></svg> 12839 Airline Hwy, Paicines, CA 95043</p>
+              <div class="card-actions">
+                <a class="button" href="https://www.airbnb.com/rooms/1720676538962010126?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25" target="_blank" rel="noopener">Open Airbnb listing <svg class="icon"><use href="#i-out"/></svg></a>
+                <a class="button secondary" href="https://www.google.com/maps/dir/?api=1&amp;origin=San+Jose,+CA&amp;destination=12839+Airline+Hwy%2C+Paicines%2C+CA+95043" target="_blank" rel="noopener">Directions <svg class="icon"><use href="#i-out"/></svg></a>
+              </div>
             </div>
-            <p>A quieter Paicines home base close to Pinnacles National Park. This leans toward hiking, outdoor time, stargazing, and a weekend rhythm shaped by the landscape around us.</p>
-            <address class="address"><strong>Address:</strong> 12839 Airline Hwy, Paicines, CA 95043, USA</address>
-            <div class="card-actions">
-              <a class="button secondary" href="https://www.airbnb.com/rooms/1720676538962010126?adults=16&amp;check_in=2026-10-23&amp;check_out=2026-10-25" target="_blank" rel="noopener">Open Airbnb listing</a>
-            </div>
+            <iframe class="card-map" title="Driving directions from San Jose to the Paicines home" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?saddr=San+Jose,+CA&amp;daddr=12839+Airline+Hwy%2C+Paicines%2C+CA+95043&amp;output=embed"></iframe>
           </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="possible-days" class="section page-shell">
-      <div class="section-head">
-        <h2>A possible day, not a plan</h2>
-        <p>These sketches show the kinds of rhythms each setting could support. Your answers below will help organizers decide which rhythm fits the group best.</p>
-      </div>
-      <div class="timeline-grid">
-        <article class="timeline-card">
-          <span class="label">Example Auburn rhythm</span>
-          <h3>Home base, lake, and group time</h3>
-          <ul class="timeline">
-            <li><span class="time">AM</span><div><strong>Slow breakfast</strong><p>Coffee, Vachan reading option, and a low-pressure morning at the house.</p></div></li>
-            <li><span class="time">Midday</span><div><strong>Lake or foothills outing</strong><p>A few hours outside, then back before people get too tired.</p></div></li>
-            <li><span class="time">PM</span><div><strong>Group dinner</strong><p>Cooking together, games, conversations, and unhurried hangout time.</p></div></li>
-            <li><span class="time">Late</span><div><strong>Cozy night in</strong><p>Cards, board games, movie night, or open mic in the house.</p></div></li>
-          </ul>
-        </article>
-        <article class="timeline-card">
-          <span class="label">Example Paicines rhythm</span>
-          <h3>Trail time, quiet, and stars</h3>
-          <ul class="timeline">
-            <li><span class="time">AM</span><div><strong>Early trail option</strong><p>A sunrise or cooler-morning hike for people who want a bigger nature day.</p></div></li>
-            <li><span class="time">Midday</span><div><strong>Pinnacles exploration</strong><p>High Peaks, caves, a photo walk, or a lighter outdoor route.</p></div></li>
-            <li><span class="time">PM</span><div><strong>Rest and dinner</strong><p>Regroup at the house with food, free time, and slower conversation.</p></div></li>
-            <li><span class="time">Late</span><div><strong>Stargazing</strong><p>Clear-sky time outside, reflection, or a calm evening together.</p></div></li>
-          </ul>
         </article>
       </div>
     </section>
 
     <section id="survey" class="section page-shell">
-      <div class="section-head">
-        <h2>Tell us what would make the weekend good</h2>
-        <p>Most questions are one tap. Your answers are private to the organizers and will not be shown as a public tally.</p>
-      </div>
+      <h2 class="section-title">Your turn</h2>
+      <p class="section-note"><svg class="icon"><use href="#i-lock"/></svg> Tap your picks. Your answers stay private.</p>
 
       <div class="form-card">
-        <div class="form-intro">
-          <h3>Cottage Weekend criteria survey</h3>
-          <p>Required: your name, so organizers can follow up on RSVP logistics. Everything else is about planning the right weekend rhythm.</p>
-          <div id="connectionNotice" class="notice" role="status">Submissions are not connected yet. The form is visible for review, but organizers still need to paste the Google Apps Script URL into <code>config.js</code> before answers can be saved.</div>
+        <div class="progress">
+          <span id="progressText" class="progress-text">Question 1 of 10</span>
+          <div class="progress-bar"><span id="progressFill"></span></div>
         </div>
 
         <form id="surveyForm" novalidate>
@@ -162,136 +152,144 @@
             <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
 
-          <div class="field">
-            <label for="name">Your name <span aria-hidden="true">*</span></label>
-            <input id="name" name="name" type="text" autocomplete="name" maxlength="120" required>
+          <div class="q field" data-q="name">
+            <label for="name">What's your name?</label>
+            <input id="name" name="name" type="text" autocomplete="name" maxlength="120" placeholder="First and last" required>
           </div>
 
-          <fieldset class="fieldset">
-            <legend>For Friday, Oct 23, when do you expect to leave the Bay Area?</legend>
-            <p class="help-text">This helps plan arrival timing and Friday dinner. It is okay if you are not sure yet.</p>
+          <fieldset class="q" data-q="fridayDeparture">
+            <legend>Friday, Oct 23: when do you leave?</legend>
             <div class="options">
-              <label class="option"><input type="radio" name="fridayDeparture" value="Around 3 pm" required> <span>Around 3 pm</span></label>
-              <label class="option"><input type="radio" name="fridayDeparture" value="Later in the evening after work"> <span>Later in the evening, after work</span></label>
-              <label class="option"><input type="radio" name="fridayDeparture" value="Not sure yet"> <span>Not sure yet</span></label>
-              <label class="option"><input type="radio" name="fridayDeparture" value="Leaving from somewhere else or at a different time"> <span>Leaving from somewhere else or at a different time</span></label>
+              <label class="option"><input type="radio" name="fridayDeparture" value="Around 3 pm" required><span>Around 3 pm</span></label>
+              <label class="option"><input type="radio" name="fridayDeparture" value="Later in the evening after work"><span>Evening, after work</span></label>
+              <label class="option"><input type="radio" name="fridayDeparture" value="Not sure yet"><span>Not sure yet</span></label>
+              <label class="option"><input type="radio" name="fridayDeparture" value="Leaving from somewhere else or at a different time"><span>Other time or place</span></label>
             </div>
           </fieldset>
 
-          <fieldset class="fieldset">
-            <legend>What energy would you most enjoy for the weekend?</legend>
+          <fieldset class="q" data-q="weekendEnergy">
+            <legend>What vibe do you want?</legend>
             <div class="scale">
-              <div class="scale-labels"><span>Mostly cozy house time</span><span>Mostly outdoors in nature</span></div>
-              <div class="scale-options" role="radiogroup" aria-label="Weekend energy scale">
-                <label><input type="radio" name="weekendEnergy" value="1 - Mostly cozy house time" required>1</label>
-                <label><input type="radio" name="weekendEnergy" value="2 - Lean cozy">2</label>
-                <label><input type="radio" name="weekendEnergy" value="3 - Balanced">3</label>
-                <label><input type="radio" name="weekendEnergy" value="4 - Lean outdoors">4</label>
-                <label><input type="radio" name="weekendEnergy" value="5 - Mostly outdoors in nature">5</label>
+              <div class="scale-options" role="radiogroup" aria-label="Weekend vibe, 1 cozy house to 5 outdoors">
+                <label><input type="radio" name="weekendEnergy" value="1 - Mostly cozy house time" required><span>1</span></label>
+                <label><input type="radio" name="weekendEnergy" value="2 - Lean cozy"><span>2</span></label>
+                <label><input type="radio" name="weekendEnergy" value="3 - Balanced"><span>3</span></label>
+                <label><input type="radio" name="weekendEnergy" value="4 - Lean outdoors"><span>4</span></label>
+                <label><input type="radio" name="weekendEnergy" value="5 - Mostly outdoors in nature"><span>5</span></label>
               </div>
+              <div class="scale-labels"><span>Cozy indoors</span><span>Out in nature</span></div>
             </div>
           </fieldset>
 
-          <fieldset class="fieldset">
-            <legend>Which morning and night rhythm sounds best?</legend>
+          <fieldset class="q" data-q="rhythm">
+            <legend>Early bird or night owl?</legend>
             <div class="options">
-              <label class="option"><input type="radio" name="rhythm" value="Early start or sunrise option" required> <span>Early start or sunrise option</span></label>
-              <label class="option"><input type="radio" name="rhythm" value="Moderate mornings and balanced nights"> <span>Moderate mornings and balanced nights</span></label>
-              <label class="option"><input type="radio" name="rhythm" value="Late nights and sleeping in"> <span>Late nights and sleeping in</span></label>
-              <label class="option"><input type="radio" name="rhythm" value="Flexible split with options for both"> <span>Flexible split, with options for both</span></label>
+              <label class="option"><input type="radio" name="rhythm" value="Early start or sunrise option" required><span>Early start</span></label>
+              <label class="option"><input type="radio" name="rhythm" value="Moderate mornings and balanced nights"><span>Middle of the road</span></label>
+              <label class="option"><input type="radio" name="rhythm" value="Late nights and sleeping in"><span>Late nights, sleep in</span></label>
+              <label class="option"><input type="radio" name="rhythm" value="Flexible split with options for both"><span>A bit of both</span></label>
             </div>
           </fieldset>
 
-          <fieldset class="fieldset">
-            <legend>How much should Cottage Weekend feel like past years?</legend>
+          <fieldset class="q" data-q="formatPreference">
+            <legend>Like past years?</legend>
             <div class="options">
-              <label class="option"><input type="radio" name="formatPreference" value="Keep it mostly the same" required> <span>Keep it mostly the same</span></label>
-              <label class="option"><input type="radio" name="formatPreference" value="Keep the heart but try a few new things"> <span>Keep the heart, but try a few new things</span></label>
-              <label class="option"><input type="radio" name="formatPreference" value="I would enjoy a meaningfully different format"> <span>I would enjoy a meaningfully different format</span></label>
-              <label class="option"><input type="radio" name="formatPreference" value="No strong preference"> <span>No strong preference</span></label>
+              <label class="option"><input type="radio" name="formatPreference" value="Keep it mostly the same" required><span>Keep it the same</span></label>
+              <label class="option"><input type="radio" name="formatPreference" value="Keep the heart but try a few new things"><span>Same, plus a few new things</span></label>
+              <label class="option"><input type="radio" name="formatPreference" value="I would enjoy a meaningfully different format"><span>Try something new</span></label>
+              <label class="option"><input type="radio" name="formatPreference" value="No strong preference"><span>No preference</span></label>
             </div>
+            <label class="more" for="formatChange">Want to change one thing?</label>
+            <textarea id="formatChange" name="formatChange" rows="2" maxlength="1000" placeholder="Optional"></textarea>
           </fieldset>
 
-          <div class="field">
-            <label for="formatChange">If you would change one thing about the format, what would it be?</label>
-            <textarea id="formatChange" name="formatChange" maxlength="1000" placeholder="Optional"></textarea>
-          </div>
-
-          <fieldset class="fieldset">
-            <legend>Which activities would you be excited about?</legend>
-            <p class="help-text">Choose as many as you want. These are not promises, just signals.</p>
-            <div class="check-grid">
-              <label class="option"><input type="checkbox" name="activities" value="Hiking"> <span>Hiking</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Lake, swimming, or kayaking"> <span>Lake, swimming, or kayaking</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Stargazing"> <span>Stargazing</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Board or card games"> <span>Board or card games</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Group cooking"> <span>Group cooking</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Campfire or smores"> <span>Campfire or s'mores</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Vachan reading or discussion"> <span>Vachan reading or discussion</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Meditation or quiet reflection"> <span>Meditation or quiet reflection</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Movie night"> <span>Movie night</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Talent show or open mic"> <span>Talent show or open mic</span></label>
-              <label class="option"><input type="checkbox" name="activities" value="Photo walk"> <span>Photo walk</span></label>
+          <fieldset class="q" data-q="activities">
+            <legend>What sounds fun? <span class="hint">Pick any</span></legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="activities" value="Hiking"><span>Hiking</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Lake, swimming, or kayaking"><span>Lake and kayaking</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Stargazing"><span>Stargazing</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Board or card games"><span>Games</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Group cooking"><span>Group cooking</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Campfire or smores"><span>Campfire</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Vachan reading or discussion"><span>Vachan</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Meditation or quiet reflection"><span>Quiet reflection</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Movie night"><span>Movie night</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Talent show or open mic"><span>Open mic</span></label>
+              <label class="chip"><input type="checkbox" name="activities" value="Photo walk"><span>Photo walk</span></label>
             </div>
+            <label class="more" for="otherActivities">Something we missed?</label>
+            <textarea id="otherActivities" name="otherActivities" rows="2" maxlength="1000" placeholder="Optional"></textarea>
           </fieldset>
 
-          <div class="field">
-            <label for="otherActivities">Other activity ideas</label>
-            <textarea id="otherActivities" name="otherActivities" maxlength="1000" placeholder="Optional"></textarea>
-          </div>
-
-          <fieldset class="fieldset">
-            <legend>How structured should Saturday feel?</legend>
+          <fieldset class="q" data-q="structure">
+            <legend>Saturday: free or planned?</legend>
             <div class="scale">
-              <div class="scale-labels"><span>Mostly free time</span><span>Mostly planned together</span></div>
-              <div class="scale-options" role="radiogroup" aria-label="Structure scale">
-                <label><input type="radio" name="structure" value="1 - Mostly free time" required>1</label>
-                <label><input type="radio" name="structure" value="2 - Light structure">2</label>
-                <label><input type="radio" name="structure" value="3 - Balanced">3</label>
-                <label><input type="radio" name="structure" value="4 - More planned">4</label>
-                <label><input type="radio" name="structure" value="5 - Mostly planned together">5</label>
+              <div class="scale-options" role="radiogroup" aria-label="Saturday, 1 free time to 5 planned together">
+                <label><input type="radio" name="structure" value="1 - Mostly free time" required><span>1</span></label>
+                <label><input type="radio" name="structure" value="2 - Light structure"><span>2</span></label>
+                <label><input type="radio" name="structure" value="3 - Balanced"><span>3</span></label>
+                <label><input type="radio" name="structure" value="4 - More planned"><span>4</span></label>
+                <label><input type="radio" name="structure" value="5 - Mostly planned together"><span>5</span></label>
               </div>
+              <div class="scale-labels"><span>Free time</span><span>Planned together</span></div>
             </div>
           </fieldset>
 
-          <fieldset class="fieldset">
-            <legend>What would help make spiritual or reflective time meaningful?</legend>
+          <fieldset class="q" data-q="vachanPreference">
+            <legend>How do you like quiet time?</legend>
             <div class="options">
-              <label class="option"><input type="radio" name="vachanPreference" value="Short guided Vachan reading or discussion" required> <span>Short guided Vachan reading or discussion</span></label>
-              <label class="option"><input type="radio" name="vachanPreference" value="Quiet individual reflection time"> <span>Quiet individual reflection time</span></label>
-              <label class="option"><input type="radio" name="vachanPreference" value="Integrated naturally into another activity"> <span>Integrated naturally into another activity</span></label>
-              <label class="option"><input type="radio" name="vachanPreference" value="No strong preference"> <span>No strong preference</span></label>
+              <label class="option"><input type="radio" name="vachanPreference" value="Short guided Vachan reading or discussion" required><span>A short reading together</span></label>
+              <label class="option"><input type="radio" name="vachanPreference" value="Quiet individual reflection time"><span>Time alone</span></label>
+              <label class="option"><input type="radio" name="vachanPreference" value="Integrated naturally into another activity"><span>Mixed into other things</span></label>
+              <label class="option"><input type="radio" name="vachanPreference" value="No strong preference"><span>No preference</span></label>
             </div>
           </fieldset>
 
-          <div class="field">
-            <label for="accessNeeds">Anything that would make it hard to attend or enjoy the weekend?</label>
-            <p class="help-text">Optional and private to organizers. Examples: schedule constraints, mobility, sleep, food, budget, or social energy.</p>
-            <textarea id="accessNeeds" name="accessNeeds" maxlength="1200" placeholder="Optional"></textarea>
+          <div class="q field" data-q="accessNeeds">
+            <label for="accessNeeds">Anything that makes it hard to come?</label>
+            <textarea id="accessNeeds" name="accessNeeds" rows="3" maxlength="1200" placeholder="Optional. Time, food, money, anything."></textarea>
           </div>
 
-          <div class="field">
-            <label for="openIdeas">Anything else you hope organizers consider?</label>
-            <textarea id="openIdeas" name="openIdeas" maxlength="1500" placeholder="Optional"></textarea>
+          <div class="q field" data-q="openIdeas">
+            <label for="openIdeas">Anything else?</label>
+            <textarea id="openIdeas" name="openIdeas" rows="3" maxlength="1500" placeholder="Optional"></textarea>
           </div>
         </form>
 
         <div class="form-actions">
-          <button id="submitButton" type="submit" form="surveyForm">Submit private response</button>
+          <div class="step-nav">
+            <button id="backButton" class="ghost" type="button">Back</button>
+            <button id="nextButton" type="button">Next</button>
+            <button id="submitButton" type="submit" form="surveyForm" hidden>Send it</button>
+          </div>
           <div id="formStatus" class="status" role="status" aria-live="polite"></div>
         </div>
+
         <div id="thanks" class="thanks" tabindex="-1">
-          <h3>Thank you - your response was saved.</h3>
-          <p>The organizers will use the full set of answers to choose the setting and plan the rhythm of the weekend.</p>
+          <div class="confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <h3>Got it, thank you!</h3>
+          <p>Your answers help us plan a great weekend.</p>
         </div>
       </div>
     </section>
   </main>
 
+  <dialog id="lightbox" class="lightbox" aria-label="Photo viewer">
+    <button class="lb-close" type="button" aria-label="Close">&times;</button>
+    <button class="lb-nav lb-prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+    <img class="lb-img" alt="">
+    <button class="lb-nav lb-next" type="button" aria-label="Next photo">&rsaquo;</button>
+    <p class="lb-count" aria-live="polite"></p>
+  </dialog>
+
   <footer class="footer page-shell">
-    <p>House photos are from the linked Airbnb listings. Pinnacles photos are public-domain National Park Service assets: Blue Skies over the High Peaks by NPS/Beth Hudick, and Balconies Cave Exit by NPS. The survey stores responses in a private Google Sheet owned by the organizers.</p>
+    <p>Home photos are from the Airbnb listings. Map data by <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>, routes by OSRM. Pinnacles photos by Clyde Charles Brown (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>) and Brocken Inaglory (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>). Lake photo by The Oaked Ridge (CC BY-SA 3.0).</p>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="routes.js"></script>
+  <script src="map.js"></script>
   <script src="config.js"></script>
   <script src="script.js"></script>
 </body>

@@ -28,7 +28,7 @@
   const showPhoto = (index) => {
     lbIndex = (index + lbPhotos.length) % lbPhotos.length;
     const photo = lbPhotos[lbIndex];
-    lbImg.src = photo.currentSrc || photo.src;
+    lbImg.src = photo.src;
     lbImg.alt = photo.alt;
     lbCount.textContent = `${lbIndex + 1} / ${lbPhotos.length}`;
   };

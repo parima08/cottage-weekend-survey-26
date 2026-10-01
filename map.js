@@ -6,8 +6,9 @@
   const START = [37.3382, -121.8863];
   const ends = { auburn: routes.auburn[routes.auburn.length - 1], paicines: routes.paicines[routes.paicines.length - 1] };
   const colors = { auburn: "#a14f2a", paicines: "#3f7a4a" };
+  const isTouch = L.Browser.touch || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
 
-  const map = L.map(el, { scrollWheelZoom: false, dragging: !L.Browser.mobile, tap: false, zoomSnap: 0.25, attributionControl: true });
+  const map = L.map(el, { scrollWheelZoom: false, dragging: !isTouch, touchZoom: !isTouch, tap: false, zoomSnap: 0.25, attributionControl: true });
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 12,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

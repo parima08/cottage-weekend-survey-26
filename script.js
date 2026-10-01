@@ -28,7 +28,7 @@
   const showPhoto = (index) => {
     lbIndex = (index + lbPhotos.length) % lbPhotos.length;
     const photo = lbPhotos[lbIndex];
-    lbImg.src = photo.src;
+    lbImg.src = photo.currentSrc || photo.src;
     lbImg.alt = photo.alt;
     lbCount.textContent = `${lbIndex + 1} / ${lbPhotos.length}`;
   };
@@ -53,25 +53,93 @@
     const prev = strip.querySelector(".strip-arrow.prev");
     const next = strip.querySelector(".strip-arrow.next");
     const count = strip.querySelector(".strip-count");
-    const photos = [...track.querySelectorAll("img")];
+    [...track.children].forEach((child) => {
+      if (!child.matches("img, picture")) return;
+      const photo = child.matches("img") ? child : child.querySelector("img");
+      const button = document.createElement("button");
+      button.className = "photo-item";
+      button.type = "button";
+      button.setAttribute("aria-label", photo.alt);
+      child.replaceWith(button);
+      button.append(child);
+    });
+    const items = [...track.querySelectorAll(".photo-item")];
+    const photos = items.map((item) => item.querySelector("img"));
+    const itemLeft = (item) => item.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+    const snapToNearest = () => {
+      const nearest = items.reduce((best, item) => {
+        const distance = Math.abs(itemLeft(item) - track.scrollLeft);
+        return distance < best.distance ? { item, distance } : best;
+      }, { item: items[0], distance: Infinity }).item;
+      if (nearest) track.scrollTo({ left: itemLeft(nearest), behavior: "smooth" });
+    };
     const updateArrows = () => {
       prev.disabled = track.scrollLeft <= 1;
       next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
-      const index = photos.findIndex((photo) => photo.offsetLeft - track.offsetLeft >= track.scrollLeft - 4);
+      const index = items.findIndex((item) => itemLeft(item) >= track.scrollLeft - 4);
       const shown = index === -1 ? photos.length : index + 1;
       count.textContent = `${shown} / ${photos.length}`;
     };
-    const step = () => (photos[1] ? photos[1].offsetLeft - photos[0].offsetLeft : track.clientWidth);
-    prev.addEventListener("click", () => track.scrollBy({ left: -step() }));
-    next.addEventListener("click", () => track.scrollBy({ left: step() }));
+    const step = () => (items[1] ? itemLeft(items[1]) - itemLeft(items[0]) : track.clientWidth);
+    prev.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
+    next.addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
+
+    let drag = null;
+    let suppressClick = false;
+    track.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0 || photos.length < 2) return;
+      const item = event.target.closest(".photo-item");
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, scrollLeft: track.scrollLeft, moved: false, cancelled: false, item };
+      track.setPointerCapture(event.pointerId);
+    });
+    track.addEventListener("pointermove", (event) => {
+      if (!drag || drag.id !== event.pointerId) return;
+      const dx = event.clientX - drag.x;
+      const dy = event.clientY - drag.y;
+      if (!drag.moved && Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) {
+        drag.cancelled = true;
+      }
+      if (!drag.moved && !drag.cancelled && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
+        drag.moved = true;
+        track.classList.add("dragging");
+      }
+      if (!drag.moved) return;
+      event.preventDefault();
+      track.scrollLeft = drag.scrollLeft - dx;
+    });
+    const endDrag = (event) => {
+      if (!drag || drag.id !== event.pointerId) return;
+      if (Math.abs(track.scrollLeft - drag.scrollLeft) > 4) drag.moved = true;
+      if (drag.moved) {
+        suppressClick = true;
+        snapToNearest();
+        setTimeout(() => { suppressClick = false; }, 250);
+      } else if (!drag.cancelled && drag.item) {
+        const index = items.indexOf(drag.item);
+        if (index !== -1) {
+          suppressClick = true;
+          openPhoto(photos, index);
+          setTimeout(() => { suppressClick = false; }, 250);
+        }
+      }
+      track.classList.remove("dragging");
+      drag = null;
+    };
+    track.addEventListener("pointerup", endDrag);
+    track.addEventListener("pointercancel", endDrag);
+    track.addEventListener("click", (event) => {
+      if (!suppressClick) return;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+
     track.addEventListener("scroll", updateArrows, { passive: true });
     window.addEventListener("resize", updateArrows);
     photos.forEach((photo, index) => {
-      photo.tabIndex = 0;
-      photo.setAttribute("role", "button");
-      photo.addEventListener("click", () => openPhoto(photos, index));
-      photo.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openPhoto(photos, index); }
+      const item = items[index];
+      photo.addEventListener("dragstart", (event) => event.preventDefault());
+      item.addEventListener("click", (event) => {
+        if (!suppressClick && event.detail === 0) openPhoto(photos, index);
       });
     });
     updateArrows();

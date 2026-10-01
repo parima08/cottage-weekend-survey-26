@@ -20,13 +20,12 @@ Required: questions 1, 2, 3, 4 and 7. The rest are optional.
 4. **Late night games or early sunrise?** (`rhythm`)
    - Early morning sunrise -> `Early morning sunrise activities`
    - Late night games -> `Late night games`
-   - A bit of both -> `A bit of both`
 
 5. **Outdoor fun?** (`activities`, pick any; shares one column with question 6)
-   - `Hiking`, `Lake, swimming, or kayaking`, `Stargazing`, `Campfire or smores`, `Photo walk`
+   - `Hiking`, `Lake, swimming, or kayaking`, `Stargazing`, `Campfire or smores`, `Cave Exploring`, `Sunrise Hike`, `Sunrise Kram`, `Cricket, volleyball, and other outdoor games`
 
 6. **Indoor fun?** (`activities`, pick any; joined with question 5 in one cell)
-   - `Board or card games`, `Group cooking`, `Movie night`, `Talent show or open mic`, `Vachan reading or discussion`, `Meditation or quiet reflection`
+   - `Bonding Games`, `Powerpoint Karaoke`, `Dance Party`, `Pool Party`, `Boba Bar`, `Bhakti Session`, `Meditative Artistic Activity`, `Activity based on Vachanamrutji`, `Meditation or quiet reflection`
    - Also on this card, optional text: **Something we missed?** (`otherActivities`)
 
 7. **Saturday: free or planned?** (`structure`, slider from Free time to Planned together)

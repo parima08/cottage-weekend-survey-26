@@ -9,6 +9,7 @@ Required: questions 1, 2, 3, 4 and 7. The rest are optional.
 1. **What's your name?** (`name`, text)
 
 2. **Friday, Oct 23: when do you leave?** (`fridayDeparture`)
+   - Around noon -> `Around noon`
    - Around 3 pm -> `Around 3 pm`
    - Evening, after work -> `Later in the evening after work`
    - Not sure yet -> `Not sure yet`

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Cottage Weekend: Auburn</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=Nunito+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+  color-scheme:light;
+  --bg:#f5f5ef; --bg-soft:#e9ede7; --card-strong:#fcfcf8;
+  --ink:#293b39; --muted:#5d6c67; --line:#d9dfd6; --line-strong:#b5c1b8;
+  --tint:#f1f3ed; --tint-strong:#dce4da;
+  --accent:#35675b; --accent-strong:#285447; --accent-soft:#e0eae1; --on-accent:#ffffff;
+  --green:#35675b; --gold:#637d55;
+  --band-hero:#f5f5ef; --band-homes:#edf1e9; --band-survey:#f6efe5; --band-footer:#eceee7;
+  --clear:#00000000; --photo-ink:#fff8ec; --photo-shade:#181e20d1; --viewer:#141a1c;
+  --serif:'Libre Baskerville',Georgia,serif; --sans:'Nunito Sans',system-ui,sans-serif;
+  --gutter:max(20px,calc((100vw - 1080px)/2));
+  --c1:#35675b; --c2:#c9a227; --c3:#d9826b; --c4:#7fa7c9; --c5:#9bbf8a;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme:dark;
+    --bg:#181e20; --bg-soft:#202a2b; --card-strong:#20292b;
+    --ink:#eef0e8; --muted:#b4c0b9; --line:#354346; --line-strong:#60716c;
+    --tint:#263232; --tint-strong:#3a4b46;
+    --accent:#abd0b9; --accent-strong:#c6e1cc; --accent-soft:#324b40; --on-accent:#182922;
+    --green:#abd0b9; --gold:#ccdab3;
+    --band-hero:#181e20; --band-homes:#1d2726; --band-survey:#241f1d; --band-footer:#202628;
+    --clear:#00000000; --photo-ink:#fff8ec; --photo-shade:#181e20d1; --viewer:#141a1c;
+    --c1:#abd0b9; --c2:#f0d27a; --c3:#f0a58c; --c4:#a9c6e3; --c5:#c6e1a8;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme:dark;
+  --bg:#181e20; --bg-soft:#202a2b; --card-strong:#20292b;
+  --ink:#eef0e8; --muted:#b4c0b9; --line:#354346; --line-strong:#60716c;
+  --tint:#263232; --tint-strong:#3a4b46;
+  --accent:#abd0b9; --accent-strong:#c6e1cc; --accent-soft:#324b40; --on-accent:#182922;
+  --green:#abd0b9; --gold:#ccdab3;
+  --band-hero:#181e20; --band-homes:#1d2726; --band-survey:#241f1d; --band-footer:#202628;
+  --clear:#00000000; --photo-ink:#fff8ec; --photo-shade:#181e20d1; --viewer:#141a1c;
+  --c1:#abd0b9; --c2:#f0d27a; --c3:#f0a58c; --c4:#a9c6e3; --c5:#c6e1a8;
+}
+* {box-sizing:border-box}
+body {margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans)}
+img {display:block;max-width:100%;height:auto}
+button,a {-webkit-tap-highlight-color:var(--clear)}
+button {font:inherit;color:inherit;cursor:pointer}
+a {color:inherit;text-underline-offset:4px}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible {outline:3px solid var(--gold);outline-offset:3px}
+button:disabled {opacity:.4;cursor:default}
+h1,h2,h3,p,figure {margin:0}
+h1,h2,h3 {font-family:var(--serif);font-weight:400;letter-spacing:-.045em;text-wrap:balance}
+h2 {font-size:clamp(1.8rem,3.7vw,2.65rem);line-height:1.22}
+h3 {font-size:1.1rem;line-height:1.4}
+.wrap {width:min(1120px,100%);padding-inline:20px;margin-inline:auto}
+.section {padding-block:58px}
+.muted {color:var(--muted)}
+.top {display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:20px;border-bottom:1px solid var(--line-strong)}
+.brand {display:flex;align-items:center;gap:12px;font-weight:600;font-size:.85rem;text-decoration:none}
+.logo {width:52px;height:52px;border-radius:50%;flex:none}
+.brand-mark {display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--line-strong);border-radius:50%;font:400 .75rem var(--serif)}
+.theme {width:44px;height:44px;border:1px solid var(--line-strong);border-radius:50%;background:var(--clear);font-size:22px}
+.hero {position:relative;background:var(--clear)}
+.hero-inner {display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;padding-block:55px 58px}
+.hero h1 {font-size:clamp(2rem,4.4vw,3.3rem);line-height:1.3}
+.hero h1 em {display:block;color:var(--accent-strong);font-size:clamp(4rem,7.5vw,6rem);letter-spacing:-.065em;line-height:1.12;margin-top:6px;padding-left:5px}
+.trip {border-left:1px solid var(--line-strong);padding-left:36px}
+.trip-date {font:400 1.23rem/1.6 var(--serif);letter-spacing:-.03em;margin-bottom:12px}
+.trip p:not(.trip-date) {color:var(--muted);font-size:.9rem}
+.trip p.stay {color:var(--ink);font-weight:700;margin-top:6px}
+.reel-head .home-meta {margin-top:6px}
+.actions {display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn {display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:11px 18px;border:1px solid var(--accent);border-radius:3px;background:var(--accent);color:var(--on-accent);font:700 .87rem var(--sans);text-decoration:none}
+.btn.secondary {background:var(--clear);color:var(--ink);border-color:var(--line-strong)}
+#confetti {position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:0}
+body > .wrap,main,footer {position:relative;z-index:1}
+#confetti[hidden] {display:none}
+.count {border-block:1px solid var(--line);background:var(--accent-soft);color:var(--accent-strong)}
+.count .wrap {padding-block:14px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.count p {font:400 1.12rem var(--serif);letter-spacing:-.025em}
+.count span {font-size:.8rem;letter-spacing:.04em}
+.reel {--photo-h:clamp(260px,35vw,430px)}
+.reel-head {display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}
+.reel-controls {display:flex;align-items:center;gap:8px;flex:none}
+.reel-count {font-size:.8rem;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:62px;text-align:center;color:var(--muted)}
+.control {display:grid;place-items:center;width:44px;height:44px;flex:none;background:var(--card-strong);border:1px solid var(--line-strong);border-radius:50%;font-size:22px}
+.pause {min-height:44px;margin-right:8px;border:0;padding:0 6px;background:var(--clear);color:var(--muted);font-size:.78rem;text-decoration:underline;text-underline-offset:4px}
+.photo-track {display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;width:100%;padding:3px var(--gutter);scroll-padding-left:var(--gutter);scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x pan-y pinch-zoom;-webkit-overflow-scrolling:touch}
+.photo-track::-webkit-scrollbar {display:none}
+.photo-track:focus-visible {outline-offset:-3px}
+.photo-item {flex:0 0 calc(var(--photo-h)*var(--ratio,1.5));max-width:calc(100vw - 40px);height:var(--photo-h);min-width:0;display:block;padding:0;border:0;border-radius:3px;overflow:hidden;background:var(--bg-soft);scroll-snap-align:start;scroll-snap-stop:always;cursor:zoom-in}
+.photo-item img {width:100%;height:100%;object-fit:cover;user-select:none}
+.photo-track.dragging {scroll-snap-type:none;cursor:grabbing}
+.photo-track.dragging * {cursor:grabbing;pointer-events:none}
+.second {background:color-mix(in srgb,var(--band-homes) 80%,transparent)}
+.second-summary {display:grid;grid-template-columns:1fr 1.05fr;gap:70px;align-items:center;margin-bottom:32px}
+.second h2 em {display:block;font-size:.7em;color:var(--accent);margin-top:10px;letter-spacing:-.03em}
+.home-meta {margin-top:22px;font-size:.93rem;font-weight:700}
+.features {margin-top:7px;color:var(--muted);font-size:.88rem}
+.second .btn {margin-top:22px}
+.note {font-size:.8rem;color:var(--muted);margin-top:18px}
+.map-image {position:relative;border:1px solid var(--line-strong);padding:4px;background:var(--card-strong);border-radius:3px}
+.map-image img {width:100%;height:auto;aspect-ratio:761/670}
+.map-label {position:absolute;background:var(--photo-shade);color:var(--photo-ink);border-radius:3px;padding:4px 9px;font-size:.72rem;font-weight:700}
+.map-label.main {top:10%;left:13%}.map-label.neighbor {bottom:12%;right:5%}
+.second .reel {--photo-h:clamp(250px,30vw,360px)}
+.second .reel-head {justify-content:flex-end;margin-bottom:14px}
+.results {display:grid;grid-template-columns:.75fr 1.25fr;gap:65px;align-items:start}
+.results-intro p {font-size:.9rem;color:var(--muted);margin-top:16px;max-width:27ch}
+.board {display:grid;gap:15px}
+.row {display:grid;grid-template-columns:23px 1fr 44px;gap:12px;align-items:start}
+.rank {font:italic 1rem/1.5 var(--serif);color:var(--muted)}
+.activity-name {font-size:.88rem;line-height:1.45;display:block;font-weight:600}
+.bar {height:5px;border-radius:3px;background:var(--accent-soft);margin-top:7px;overflow:hidden}
+.bar span {display:block;height:100%;width:var(--w);background:var(--accent);border-radius:3px}
+.value {font-weight:800;font-size:.85rem;text-align:right;font-variant-numeric:tabular-nums}
+.value small {display:block;font-size:.65rem;font-weight:500;color:var(--muted);line-height:1.2}
+.vibe-section {background:color-mix(in srgb,var(--band-survey) 80%,transparent)}
+.vibe-section h2 {margin-bottom:26px}
+.vibes {display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.vibe {background:var(--card-strong);border:1px solid var(--line);border-radius:3px;padding:23px;min-width:0}
+.vibe h3 {min-height:50px}
+.hist {display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:22px}
+.hist > div {display:grid;grid-template-rows:100px 24px;align-items:end;text-align:center;font-size:.75rem}
+.hist i {height:var(--h);display:block;border-radius:3px 3px 0 0;background:var(--accent)}
+.hist > div:nth-child(3) i {background:var(--gold)}
+.ends {display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.7rem;margin-top:7px}
+.verdict {font-size:.8rem;color:var(--muted);margin-top:21px}
+.split {display:flex;height:48px;border-radius:3px;overflow:hidden;margin-top:35px}
+.split div {display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font-size:.78rem;font-weight:700}
+.split .sunrise {background:var(--tint-strong);color:var(--ink)}
+footer {padding-block:24px;background:color-mix(in srgb,var(--band-footer) 85%,transparent);color:var(--muted);font-size:.75rem}
+footer .wrap {display:flex;justify-content:space-between;gap:20px}
+.viewer {position:fixed;inset:0;width:100%;max-width:none;height:100dvh;max-height:none;margin:0;padding:20px;border:0;background:var(--viewer);color:var(--photo-ink)}
+.viewer[open] {display:flex;flex-direction:column;gap:14px}
+.viewer::backdrop {background:var(--viewer)}
+.viewer-top {display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:.85rem;flex:none}
+.viewer .control {background:var(--photo-shade);color:var(--photo-ink);border-color:var(--line-strong)}
+.viewer-frame {display:flex;align-items:center;justify-content:center;min-height:0;flex:1;touch-action:pan-y pinch-zoom}
+.viewer-img {width:100%;height:100%;object-fit:contain}
+.viewer-bottom {display:flex;align-items:center;justify-content:space-between;gap:14px;flex:none}
+.viewer-caption {font-size:.85rem;flex:1;text-align:center}
+.skip {position:absolute;top:-100px;left:20px;padding:10px;background:var(--card-strong);z-index:10}
+.skip:focus {top:8px}
+@media (max-width:760px) {
+ .section {padding-block:38px}.top {padding-block:14px}.hero-inner {grid-template-columns:1fr;gap:26px;padding-block:32px}
+ .hero h1 {font-size:2rem}.hero h1 em {font-size:4rem}.trip {border:0;padding:0}.trip-date {font-size:1.1rem;margin-bottom:8px}.trip p:not(.trip-date) {font-size:.84rem}
+ .actions {gap:8px;margin-top:20px}.actions .btn {flex:1;padding-inline:11px;font-size:.8rem;gap:8px}
+ .count .wrap {padding-block:14px;gap:12px}.count p {font-size:1rem}.count span {font-size:.7rem}
+ .reel {--photo-h:250px}.reel-head {gap:14px;flex-wrap:wrap;margin-bottom:18px}.reel-head h2 {font-size:1.9rem}.reel-controls {gap:6px}.reel-count {min-width:50px}.pause {margin-right:0;font-size:.72rem}.control {width:44px;height:44px}
+ .second-summary {grid-template-columns:1fr;gap:28px;margin-bottom:18px}.home-meta {margin-top:18px;font-size:.88rem}.features {font-size:.82rem}.map-label {font-size:.65rem;padding:4px 7px}.second .reel {--photo-h:250px}
+ .results {grid-template-columns:1fr;gap:26px}.results-intro p {max-width:none;margin-top:12px}.row {gap:9px;grid-template-columns:22px 1fr 42px}
+ .vibes {grid-template-columns:1fr;gap:14px}.vibe h3 {min-height:0}.vibe {padding:22px}.split {margin-top:24px}
+ footer .wrap {display:block}footer p+p {margin-top:6px}.viewer {padding:16px}.viewer-caption {font-size:.75rem}
+}
+@media (prefers-reduced-motion:reduce) {*,*::before,*::after {animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<canvas id="confetti" aria-hidden="true" hidden></canvas>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap"><nav class="top" aria-label="Page header"><a class="brand" href="#"><img class="logo" src="img/sfyg-logo.png" alt="San Francisco Youth Group logo" width="240" height="240">SFYG Cottage Weekend</a><button class="theme" type="button" aria-label="Switch to dark mode">◐</button></nav></div>
+<main id="main">
+<header class="hero">
+  <div class="wrap hero-inner"><h1>We're going to <em>Auburn!</em></h1><div class="trip"><p class="trip-date">October 23 - 25, 2026</p><p>13559 Dry Creek Road, Auburn</p><p>About 2h 30m from San Jose</p><p class="stay">Two homes · 7 bedrooms · 17 beds · 6.5 baths</p><div class="actions"><a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;origin=San+Jose,+CA&amp;destination=13559+Dry+Creek+Road%2C+Auburn%2C+CA+95602" target="_blank" rel="noopener noreferrer">Get directions <span aria-hidden="true">↗</span></a><a class="btn secondary" href="https://www.airbnb.com/rooms/1717790396205238720" target="_blank" rel="noopener noreferrer">See the main home <span aria-hidden="true">↗</span></a></div></div></div>
+</header>
+<section class="section" aria-labelledby="main-home-heading">
+  <div class="reel" id="main-reel" role="region" aria-roledescription="carousel" aria-label="Main home photos" data-auto>
+    <div class="wrap reel-head"><div><h2 id="main-home-heading">The main home</h2><p class="home-meta">5 bedrooms · 12 beds · 4.5 baths</p></div><div class="reel-controls"><button class="pause" type="button" aria-label="Pause main home reel">Pause</button><span class="reel-count" aria-live="off">1 / 8</span><button class="control prev" type="button" aria-label="Previous main home photo">←</button><button class="control next" type="button" aria-label="Next main home photo">→</button></div></div>
+    <div class="photo-track" tabindex="0" aria-label="Main home photos. Scroll or use arrow keys. Select a photo to enlarge."><button class="photo-item" type="button" aria-label="Enlarge main home at dusk"><img src="img/main-dusk.jpg" alt="Main home and blue-lit pool at dusk" width="960" height="719" fetchpriority="high"></button></div>
+  </div>
+</section>
+<section class="section second" aria-labelledby="second-heading">
+  <div class="wrap second-summary"><div><h2 id="second-heading">Second home<em>Walking distance</em></h2><p class="home-meta">8 guests · 2 bedrooms · 5 beds · 2 baths</p><p class="features">Lake-view deck · Hot tub · Private sauna</p><a class="btn secondary" href="https://www.airbnb.com/rooms/1156745847354612810?source_impression_id=p3_1791757308_P3GOeMAX2_iQAZgw" target="_blank" rel="noopener noreferrer">See the second home <span aria-hidden="true">↗</span></a></div><figure class="map-image"><img src="img/two-homes-aerial.jpg" alt="Satellite view with the main home circled at upper left and the second home circled at lower right, beside the lake" width="761" height="670" loading="lazy"><span class="map-label main" aria-hidden="true">1 · Main home</span><span class="map-label neighbor" aria-hidden="true">2 · Second home</span></figure></div>
+  <div class="reel" id="second-reel" role="region" aria-roledescription="carousel" aria-label="Second home photos">
+    <div class="wrap reel-head"><div class="reel-controls"><span class="reel-count" aria-live="polite">1 / 13</span><button class="control prev" type="button" aria-label="Previous second home photo">←</button><button class="control next" type="button" aria-label="Next second home photo">→</button></div></div>
+    <div class="photo-track" tabindex="0" aria-label="Second home photos. Scroll or use arrow keys. Select a photo to enlarge."><button class="photo-item" type="button" aria-label="Enlarge second home deck"><img src="img/second-01.jpg" alt="Wood-sided exterior and deck above the lake" width="1000" height="667" loading="lazy"></button></div>
+  </div>
+</section>
+<section class="section" aria-labelledby="activities-heading"><div class="wrap results"><div class="results-intro"><h2 id="activities-heading">Most wanted activities</h2><p>37 people. Multiple picks allowed.</p></div><div class="board" id="board" role="list" aria-label="Activity preferences"></div></div></section>
+<section class="section vibe-section" aria-labelledby="vibe-heading"><div class="wrap"><h2 id="vibe-heading">The vibe check</h2><div class="vibes">
+  <article class="vibe"><h3>Indoors or outdoors?</h3><div class="hist" data-vals="4,5,11,11,6" role="img" aria-label="From cozy indoors to out in nature, ratings 1 to 5 received 4, 5, 11, 11, and 6 responses."></div><div class="ends"><span>Cozy indoors</span><span>Out in nature</span></div><p class="verdict">17 outdoors · 11 balanced · 9 indoors</p></article>
+  <article class="vibe"><h3>Free time or planned Saturday?</h3><div class="hist" data-vals="5,6,11,10,5" role="img" aria-label="From free time to planned together, ratings 1 to 5 received 5, 6, 11, 10, and 5 responses."></div><div class="ends"><span>Free time</span><span>Planned together</span></div></article>
+  <article class="vibe"><h3>Late nights or early mornings?</h3><div class="split" role="img" aria-label="23 late night games, 14 early sunrise"><div style="flex:23">Late night · 23</div><div class="sunrise" style="flex:14">Sunrise · 14</div></div><p class="verdict">21 also picked Sunrise Kram.</p></article>
+</div></div></section>
+</main>
+<footer><div class="wrap"><p>SFYG Cottage Weekend 2026</p><p>Photos: Airbnb · Aerial: organizers</p></div></footer>
+<dialog class="viewer" aria-label="Full-screen photo viewer"><div class="viewer-top"><span class="viewer-count" aria-live="polite"></span><button class="control viewer-close" type="button" aria-label="Close photo viewer" autofocus>×</button></div><div class="viewer-frame"><img class="viewer-img" alt="" width="1200" height="800"></div><div class="viewer-bottom"><button class="control viewer-prev" type="button" aria-label="Previous enlarged photo">←</button><p class="viewer-caption"></p><button class="control viewer-next" type="button" aria-label="Next enlarged photo">→</button></div></dialog>
+<script>
+(() => {
+  const motion=matchMedia('(prefers-reduced-motion: reduce)');
+  const mainPhotos=[
+    ['main-dusk.jpg','Main home and blue-lit pool at dusk',960,719],
+    ['main-pool.jpg','Pool, loungers and the main home',1200,800],
+    ['main-living.jpg','Open living room and kitchen',960,641],
+    ['main-dining.jpg','The long dining table',960,641],
+    ['main-porch.jpg','Wraparound porch at sunset',1200,800],
+    ['main-games.jpg','Lounge with sofas, arcade games and glass doors',960,640],
+    ['main-firepit.jpg','Patio seating around the fire pit',1200,800],
+    ['main-aerial.jpg','Aerial sunset view of the property',1200,900]
+  ];
+  // All 69 unique photos exposed by the second home's Airbnb listing, visually reviewed.
+  const secondAlts=[
+    'Wood-sided exterior and deck above the lake','Covered hot tub overlooking the lake','A lake-facing lounge with a seated guest','Bright living room with walls of windows',
+    'Kitchen island and open living space','Bedroom with a wood-framed bed','Bedroom with a dark metal bed frame','Lounge chairs opened as sleepers',
+    'The lake below the deck','Living room with a gray sectional and gold-framed mirror','Armchair beside lake-facing windows','Fold-out sofa beneath a gold-framed mirror',
+    'Dining table and chairs','Kitchen with island and gas stove','Living room seating beside wide windows','Kitchen shelves and countertop',
+    'Coffee table with books and plants','Entry console and gold-framed mirror','Lawn, covered seating and the lake','Living room television beside the windows',
+    'Wicker chairs on the covered porch','Barbecue grill on the deck','Bedroom with bedside lamps','Lake-facing living room at dusk',
+    'Board games on a shelf','Sofa bed beside a window','Coffee pods on the kitchen counter','Coffee station and cutting boards',
+    'Baking dishes in a kitchen cupboard','Kitchen drawers with utensils','Kitchen linens in a drawer','Cutlery drawer',
+    'Cooking on the gas stove','Glassware and small kitchen appliances','Pots and pans in a kitchen cupboard','Plates and bowls in a kitchen cupboard',
+    'Cutting boards on a kitchen shelf','Coffee maker and kettles','Hot tub and lake view','Covered porch with chairs and a dining table',
+    'Wood-sided exterior and garden path','Outdoor dining table on the porch','Exterior of the second home and covered outdoor seating','Kitchen island facing the dining area',
+    'Glass-fronted living room from outside','Illuminated house and garden path at night','Porch chairs at night','Garden path and covered patio at night',
+    'Bathroom with a double vanity','Chairs around the fire pit at night','Bedroom with a wood-framed bed beside a window','Towels in a basket',
+    'Glass shower enclosure','Shower toiletries on a shelf','Bathroom sink and mirror','Sofa beneath a gold-framed mirror',
+    'Bedroom storage shelves','Bed with abstract artwork above it','Bedroom reflected in a gold-framed mirror','Dining table beneath two framed artworks',
+    'Bathroom counter and towels','Walk-in shower','Washer and dryer','The listing’s illustrated property map',
+    'Bedside table and lamp','Deer among trees in a listing photo','Wooded surroundings','Wood-lined sauna interior','Sauna benches and heater'
+  ];
+  const secondRatios=[1.499674,.75,1.333333,1.499225,1.499268,1.499356,.667285,1.498439,1.499674,1.499268,.666992,1.372736,.667285,1.464903,1.498439,.666961,.666992,.666992,1.499674,.667285,.666667,.666992,.667285,.666667,1.498439,.666992,.666992,.666999,.666992,.666992,.666992,.666992,.666992,.666992,.666992,.666992,1.499268,.666992,.75,1.499674,1.499674,.666811,1.5,1.498698,.667246,1.499674,.666811,.643755,1.498439,.667285,.667285,1.499268,.666992,.666992,.666992,.666965,.667008,.666992,1.498439,1.498439,1.499268,.667285,.667285,1.447301,.666992,.666811,.666811,.75,.75];
+  // A curated set: the home, living space, lake and amenities.
+  const lead=[1,43,4,2,6,14,68,9];
+  const secondOrder=[...lead,19,24,46,50,69];
+  const secondPhotos=secondOrder.map(n=>{const ratio=secondRatios[n-1];return ['second-'+String(n).padStart(2,'0')+'.jpg',secondAlts[n-1],ratio<1?Math.round(1000*ratio):1000,ratio<1?1000:Math.round(1000/ratio)];});
+
+  const viewer=document.querySelector('.viewer'),viewerImage=viewer.querySelector('.viewer-img');
+  let viewerPhotos=[],viewerIndex=0,opener=null,oldOverflow='';
+  function showPhoto(n) {
+    viewerIndex=(n+viewerPhotos.length)%viewerPhotos.length;
+    const [file,alt,w,h]=viewerPhotos[viewerIndex];
+    viewerImage.src='img/'+file;viewerImage.alt=alt;viewerImage.width=w;viewerImage.height=h;
+    viewer.querySelector('.viewer-count').textContent=(viewerIndex+1)+' / '+viewerPhotos.length;
+    viewer.querySelector('.viewer-caption').textContent=alt;
+  }
+  function openPhoto(photos,n,button) {
+    viewerPhotos=photos;opener=button;showPhoto(n);oldOverflow=document.body.style.overflow;
+    document.body.style.overflow='hidden';viewer.showModal();
+  }
+  viewer.querySelector('.viewer-close').addEventListener('click',()=>viewer.close());
+  viewer.querySelector('.viewer-prev').addEventListener('click',()=>showPhoto(viewerIndex-1));
+  viewer.querySelector('.viewer-next').addEventListener('click',()=>showPhoto(viewerIndex+1));
+  viewer.addEventListener('close',()=>{document.body.style.overflow=oldOverflow;opener?.focus({preventScroll:true});});
+  viewer.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();showPhoto(viewerIndex+(e.key==='ArrowRight'?1:-1));}});
+  let viewerTouch=null;
+  viewerImage.addEventListener('touchstart',e=>{viewerTouch=e.touches.length===1?{x:e.touches[0].clientX,y:e.touches[0].clientY}:null;},{passive:true});
+  viewerImage.addEventListener('touchend',e=>{if(!viewerTouch)return;const dx=e.changedTouches[0].clientX-viewerTouch.x,dy=e.changedTouches[0].clientY-viewerTouch.y;viewerTouch=null;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy))showPhoto(viewerIndex+(dx<0?1:-1));},{passive:true});
+  viewerImage.addEventListener('touchcancel',()=>{viewerTouch=null;},{passive:true});
+
+  function setupReel(selector,photos) {
+    const reel=document.querySelector(selector),track=reel.querySelector('.photo-track'),prev=reel.querySelector('.prev'),next=reel.querySelector('.next'),count=reel.querySelector('.reel-count'),pause=reel.querySelector('.pause');
+    let index=0,playing=reel.hasAttribute('data-auto'),hover=false,focused=false,visible=false,drag=null,suppressClick=false;
+    track.replaceChildren();
+    const items=photos.map(([file,alt,w,h],i)=>{
+      const button=document.createElement('button');button.type='button';button.className='photo-item';button.style.setProperty('--ratio',String(w/h));button.setAttribute('aria-label','Enlarge photo '+(i+1)+': '+alt);
+      const img=document.createElement('img');img.src='img/'+file;img.alt=alt;img.width=w;img.height=h;img.draggable=false;img.loading=i<2?'eager':'lazy';
+      if(selector==='#main-reel'&&i===0)img.fetchPriority='high';
+      button.append(img);track.append(button);button.addEventListener('click',e=>{if(suppressClick){e.preventDefault();return;}stop();openPhoto(photos,i,button);});return button;
+    });
+    function gutter(){return parseFloat(getComputedStyle(track).paddingLeft);}
+    function position(item){return item.getBoundingClientRect().left-track.getBoundingClientRect().left+track.scrollLeft-gutter();}
+    function update() {
+      index=items.reduce((best,item,i)=>Math.abs(position(item)-track.scrollLeft)<Math.abs(position(items[best])-track.scrollLeft)?i:best,0);
+      count.textContent=(index+1)+' / '+photos.length;
+      prev.disabled=index===0;next.disabled=index===photos.length-1;
+      items.forEach((item,i)=>{item.setAttribute('aria-current',String(i===index));item.tabIndex=i===index?0:-1;});
+    }
+    function go(n,manual=true) {
+      const target=Math.max(0,Math.min(photos.length-1,n));if(manual)stop();
+      track.scrollTo({left:position(items[target]),behavior:motion.matches?'instant':'smooth'});
+      if(manual&&document.activeElement?.classList.contains('photo-item'))items[target].focus({preventScroll:true});
+    }
+    function playLabel(){if(!pause)return;pause.disabled=motion.matches;pause.textContent=motion.matches?'Paused':playing?'Pause':'Play';pause.setAttribute('aria-label',motion.matches?'Automatic reel paused for reduced motion':playing?'Pause main home reel':'Play main home reel');count.setAttribute('aria-live',playing?'off':'polite');}
+    function stop(){playing=false;playLabel();}
+    prev.addEventListener('click',()=>go(index-1));next.addEventListener('click',()=>go(index+1));
+    pause?.addEventListener('click',()=>{playing=!playing;playLabel();});
+    track.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();go(index+(e.key==='ArrowRight'?1:-1));}else if(e.key==='Home'||e.key==='End'){e.preventDefault();go(e.key==='Home'?0:photos.length-1);}});
+    track.addEventListener('scroll',update,{passive:true});
+    track.addEventListener('wheel',stop,{passive:true});track.addEventListener('touchstart',stop,{passive:true});
+    reel.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')hover=true;});reel.addEventListener('pointerleave',()=>{hover=false;});
+    reel.addEventListener('focusin',()=>{focused=true;});reel.addEventListener('focusout',()=>{setTimeout(()=>{focused=reel.contains(document.activeElement);},0);});
+    // Native touch scrolling; pointer drag adds the same affordance for a mouse.
+    track.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;stop();drag={id:e.pointerId,x:e.clientX,left:track.scrollLeft,moved:false};});
+    track.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const dx=e.clientX-drag.x;if(!drag.moved&&Math.abs(dx)>6){drag.moved=true;suppressClick=true;track.setPointerCapture(e.pointerId);track.classList.add('dragging');}if(drag.moved){e.preventDefault();track.scrollLeft=drag.left-dx;}});
+    function endDrag(){if(!drag)return;const moved=drag.moved;drag=null;track.classList.remove('dragging');if(moved){update();go(index);setTimeout(()=>{suppressClick=false;},0);}}
+    track.addEventListener('pointerup',endDrag);track.addEventListener('pointercancel',endDrag);
+    function resize(){const active=index;track.style.paddingRight=Math.max(gutter(),track.clientWidth-items.at(-1).getBoundingClientRect().width-gutter())+'px';track.scrollTo({left:position(items[active]),behavior:'instant'});update();}
+    new ResizeObserver(resize).observe(track);
+    new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;},{threshold:.2}).observe(reel);
+    if(pause)setInterval(()=>{if(playing&&!motion.matches&&!document.hidden&&visible&&!hover&&!focused&&!viewer.open)go((index+1)%photos.length,false);},6000);
+    motion.addEventListener('change',playLabel);playLabel();resize();
+  }
+  setupReel('#main-reel',mainPhotos);setupReel('#second-reel',secondPhotos);
+
+  const acts = [
+    ["Bhakti Session",30],["Lake, swimming, or kayaking",28],["Campfire or s'mores",24],
+    ["Bonding Games",24],["Meditative Artistic Activity",22],["Stargazing",22],
+    ["Activity based on Vachanamrutji",22],["Hiking",21],["Sunrise Kram",21],
+    ["Cricket, volleyball and outdoor games",18],["Boba Bar",17],["Dance Party",17],
+    ["Meditation or quiet reflection",15],["Cave Exploring",15]
+  ];
+  const board=document.querySelector('#board');
+  acts.forEach(([name,votes],i)=>{const row=document.createElement('div');row.className='row';row.setAttribute('role','listitem');row.innerHTML='<span class="rank">'+String(i+1).padStart(2,'0')+'</span><div><span class="activity-name"></span><div class="bar" aria-hidden="true"><span style="--w:'+votes/30*100+'%"></span></div></div><span class="value">'+Math.round(votes/37*100)+'%<small>'+votes+' votes</small></span>';row.querySelector('.activity-name').textContent=name;board.append(row);});
+  document.querySelectorAll('.hist').forEach(h=>{const vals=h.dataset.vals.split(',').map(Number),max=Math.max(...vals);vals.forEach(v=>{const d=document.createElement('div');d.setAttribute('aria-hidden','true');d.innerHTML='<i style="--h:'+v/max*100+'%"></i><b>'+v+'</b>';h.append(d);});});
+
+  const theme=document.querySelector('.theme'),root=document.documentElement,scheme=matchMedia('(prefers-color-scheme: dark)');
+  function dark(){return root.dataset.theme?root.dataset.theme==='dark':scheme.matches;}
+  function themeLabel(){theme.setAttribute('aria-label','Switch to '+(dark()?'light':'dark')+' mode');}
+  theme.addEventListener('click',()=>{root.dataset.theme=dark()?'light':'dark';themeLabel();});scheme.addEventListener('change',themeLabel);themeLabel();
+
+  // Confetti: a burst on arrival, then a gentle, continuous drift behind the page.
+  const canvas=document.querySelector('#confetti'),ctx=canvas.getContext('2d');
+  if(ctx){
+    const dpr=Math.min(devicePixelRatio||1,2);
+    let width=0,height=0,frame=0,running=false,last=0,colors=[];
+    function palette(){const cs=getComputedStyle(root);colors=['--c1','--c2','--c3','--c4','--c5'].map(v=>cs.getPropertyValue(v).trim());}
+    function size(){width=innerWidth;height=innerHeight;canvas.width=width*dpr;canvas.height=height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+    function piece(burst){return {x:Math.random()*width,y:burst?-20-Math.random()*height*.8:-20-Math.random()*60,vx:(Math.random()-.5)*(burst?60:24),vy:burst?70+Math.random()*80:28+Math.random()*34,r:Math.random()*6,vr:(Math.random()-.5)*2.4,w:4+Math.random()*4,h:7+Math.random()*5,sway:Math.random()*6.28,c:Math.floor(Math.random()*5),burst};}
+    size();palette();
+    let pieces=Array.from({length:110},()=>piece(true));
+    const ambient=Math.max(28,Math.min(60,Math.round(width/22)));
+    function tick(now){
+      const dt=Math.min((now-last)/1000,.05);last=now;
+      ctx.clearRect(0,0,width,height);
+      const calm=pieces.filter(p=>!p.burst).length;
+      if(calm<ambient&&Math.random()<.35)pieces.push(piece(false));
+      pieces=pieces.filter(p=>p.y<height+30);
+      pieces.forEach(p=>{p.sway+=dt*1.6;p.x+=(p.vx+Math.sin(p.sway)*14)*dt;p.y+=p.vy*dt;p.r+=p.vr*dt;ctx.globalAlpha=p.burst?.95:.7;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=colors[p.c];ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();});
+      frame=requestAnimationFrame(tick);
+    }
+    function play(){if(running||motion.matches||document.hidden)return;running=true;canvas.hidden=false;last=performance.now();frame=requestAnimationFrame(tick);}
+    function pause(){running=false;cancelAnimationFrame(frame);if(motion.matches){ctx.clearRect(0,0,width,height);canvas.hidden=true;}}
+    addEventListener('resize',size);
+    motion.addEventListener('change',()=>motion.matches?pause():play());
+    document.addEventListener('visibilitychange',()=>document.hidden?pause():play());
+    theme.addEventListener('click',palette);scheme.addEventListener('change',palette);
+    play();
+  }
+})();
+</script>
+</body>
+</html>

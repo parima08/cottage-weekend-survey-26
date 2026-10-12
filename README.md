@@ -5,6 +5,7 @@ Static GitHub Pages site for gathering private planning input for Cottage Weeken
 ## Local files
 
 - `index.html` - the GitHub Pages entry point served from the repository root.
+- `auburn/` - the Auburn weekend announcement and local photos, served at `/auburn/`.
 - `styles.css` - responsive light/dark travel-journal styling (the approved v2 style now serves at the root; there is no separate `/v2/` page).
 - `script.js` - photo rows and full-screen viewer, the survey progress bar and validation, form serialization and submission.
 - `map.js` and `routes.js` - the Leaflet route map in the hero. `routes.js` holds thinned driving routes from San Jose (OSRM); regenerate it if the addresses change.

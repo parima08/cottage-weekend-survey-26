@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cottage Weekend 2026</title>
 <meta name="description" content="Schedule for SFYG Cottage Weekend 2026 in Auburn, October 23 - 25.">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#eef1ee">
 <meta name="color-scheme" content="light only">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -19,8 +19,8 @@
 <style>
 :root {
   color-scheme:light;
-  --page:#ffffff; --card:#ffffff; --ink:#263b32; --muted:#626f68; --line:#e7ece9;
-  --shadow:0 8px 24px rgba(29,52,40,.07); --shadow-sm:0 3px 12px rgba(29,52,40,.05); --card-shadow:0 1px 3px rgba(29,52,40,.05),0 5px 16px rgba(29,52,40,.09);
+  --page:#eef1ee; --card:#ffffff; --ink:#263b32; --muted:#626f68; --line:#e7ece9;
+  --shadow:0 8px 24px rgba(29,52,40,.07); --shadow-sm:0 3px 12px rgba(29,52,40,.05); --card-shadow:0 0 0 1px rgba(29,52,40,.09),0 2px 4px rgba(29,52,40,.06),0 8px 22px rgba(29,52,40,.13);
   --accent:#2e9e66; --accent-ink:#1d7a4b; --accent-soft:#e2f4ea; --on-accent:#ffffff;
   --chip:#fff0bf; --chip-ink:#4a3d0c; --opt:#e8e1fb; --opt-ink:#45367a;
   --il-sky:#e3f4ec; --il-h1:#9fd8b8; --il-h2:#c6ead5; --il-tree:#2f8f7a; --il-tree2:#5fb89f; --il-trunk:#5b6f68;
@@ -35,13 +35,37 @@ button {font:inherit;color:inherit;cursor:pointer}
 h1,h2,p {margin:0}
 .shell {width:min(600px,100%);margin-inline:auto;padding:0 max(16px,env(safe-area-inset-right)) calc(100px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
 .tabbar {position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 18px rgba(29,52,40,.04);padding:8px 12px calc(10px + env(safe-area-inset-bottom))}
-.tabbar div {display:grid;grid-template-columns:repeat(3,1fr);max-width:420px;margin-inline:auto}
+.tabbar div {display:grid;grid-template-columns:repeat(4,1fr);max-width:460px;margin-inline:auto}
 .tabbar a {display:grid;justify-items:center;gap:4px;min-height:48px;padding:2px 0;font-size:11px;font-weight:500;color:var(--muted);text-decoration:none}
 .tabbar span {display:grid;place-items:center;width:58px;height:32px;border-radius:99px}
 .tabbar svg {width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tabbar a[aria-current="page"] {color:var(--accent-ink)}
 .tabbar a[aria-current="page"] span {background:var(--accent-soft)}
 .tabbar a[aria-current="page"] svg {stroke-width:2.1}
+.info-hero {position:relative;margin-top:16px;border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.info-hero img {display:block;width:100%;height:auto}
+.map-label {position:absolute;background:rgba(24,30,32,.78);color:#fff;border-radius:6px;padding:4px 9px;font-size:11px;font-weight:500}
+.map-label.main {top:10%;left:11%}
+.map-label.second {bottom:12%;right:5%}
+.info-head {padding:4px 2px 6px}
+.info-head .place {display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.info-head h1 {font-size:24px;font-weight:400;letter-spacing:-.025em;line-height:1.3;margin-top:4px}
+.info-head p {color:var(--muted);font-size:14px;margin-top:4px}
+.facts {display:grid;gap:14px;background:var(--card);border-radius:12px;padding:18px;margin-top:14px;box-shadow:var(--card-shadow)}
+.fact {display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center}
+.fact .ic {width:40px;height:40px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center}
+.fact svg {width:20px;height:20px;stroke:var(--accent-ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fact b {display:block;font-size:15px;font-weight:500}
+.fact span:not(.ic) {display:block;font-size:12px;color:var(--muted)}
+.go {display:flex;justify-content:center;align-items:center;min-height:48px;margin-top:4px;border-radius:10px;background:var(--accent-ink);color:#fff;font-weight:500;font-size:15px;text-decoration:none}
+.info-h {font-size:20px;font-weight:400;letter-spacing:-.025em;margin:28px 2px 0}
+.home .item {margin-top:14px}
+.home .thumb img {display:block;width:100%;height:100%;object-fit:cover}
+.home .item-body .where + .where {margin-top:2px}
+.more {display:inline-flex;align-items:center;min-height:36px;margin-top:6px;color:var(--accent-ink);font-size:13px;font-weight:500;text-decoration:none}
+.gallery {display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px -16px 0;padding:2px 16px 6px;scrollbar-width:none}
+.gallery::-webkit-scrollbar {display:none}
+.gallery img {flex:none;width:168px;height:118px;object-fit:cover;border-radius:9px;scroll-snap-align:start;background:var(--line)}
 .empty {background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);margin-top:12px}
 .empty-art {height:220px}
 .empty-art svg {display:block;width:100%;height:100%}
@@ -51,6 +75,30 @@ h1,h2,p {margin:0}
 
 .top {position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 -16px 12px;padding:calc(18px + env(safe-area-inset-top)) 18px 16px;background:var(--page);transition:box-shadow .2s}
 .top.stuck {box-shadow:0 3px 12px rgba(29,52,40,.06)}
+.top {flex-wrap:wrap}
+.jump {display:flex;gap:6px;width:100%;margin:-4px 0 -4px}
+.jump[hidden] {display:none}
+.jump button {flex:1;min-height:36px;border:0;border-radius:99px;background:var(--card);color:var(--ink);font:inherit;font-size:13px;font-weight:500;box-shadow:0 0 0 1px rgba(29,52,40,.1)}
+.jump button[aria-current="true"] {background:var(--accent-ink);color:#fff;box-shadow:none}
+.jump .jnow {color:var(--accent-ink);display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.jump .jnow::before {content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.day, .item, .group {scroll-margin-top:var(--top-h,76px)}
+.today {background:var(--tone-bg,var(--card));border-radius:14px;margin-top:4px;padding:16px 14px 14px;box-shadow:var(--card-shadow)}
+.today[hidden], .hero[hidden] {display:none}
+.hero:not([hidden]) ~ .today {margin-top:16px}
+.today-head {display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 4px 12px}
+.today-head h2 {font-size:20px;font-weight:400;letter-spacing:-.025em;line-height:1.3}
+.today-head h2 span {display:block;font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.02em}
+.today-head .wear {background:var(--card);box-shadow:0 0 0 1px rgba(29,52,40,.08),0 2px 6px rgba(29,52,40,.08)}
+.today-rows {background:var(--card);border-radius:10px;box-shadow:0 0 0 1px rgba(29,52,40,.06)}
+.today button {display:block;width:100%;padding:13px 14px;border:0;background:none;font:inherit;color:inherit;text-align:left}
+.today button + button {border-top:1px solid var(--line)}
+.today small {display:block;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.today .is-now small {color:var(--accent-ink);display:flex;align-items:center;gap:6px}
+.today .is-now small::before {content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.today .tt {display:block;font-size:15px;font-weight:500;color:var(--accent-ink);font-variant-numeric:tabular-nums}
+.today .tw {display:block;font-size:15px;font-weight:500;line-height:1.4;letter-spacing:-.015em}
+.today .to {display:block;font-size:12.5px;color:var(--muted);margin-top:1px}
 .brand {display:flex;align-items:center;gap:10px;min-width:0}
 .brand img {width:36px;height:36px;border-radius:50%;flex:none}
 .brand b {display:block;font-size:clamp(15px,4.5vw,20px);font-weight:400;letter-spacing:-.035em;line-height:1.3}
@@ -58,8 +106,8 @@ h1,h2,p {margin:0}
 .sync i {width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
 .sync.stale i {background:var(--il-warm)}
 
-.hero {position:relative;height:184px;border-radius:14px;overflow:hidden;background:var(--il-sky)}
-.hero svg {display:block;width:100%;height:100%}
+.hero {position:relative;height:236px;border-radius:14px;overflow:hidden;background:var(--il-sky);box-shadow:var(--card-shadow)}
+.hero > img {display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
 .hero-text {position:absolute;left:12px;bottom:12px;right:12px;display:flex;align-items:center;gap:12px;background:var(--card);border-radius:10px;padding:12px;box-shadow:var(--shadow-sm);max-width:310px}
 .cal {width:46px;height:46px;border-radius:13px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;text-align:center;line-height:1;flex:none}
 .cal small {display:block;font-size:10px;font-weight:600;letter-spacing:.08em}
@@ -83,14 +131,14 @@ h1,h2,p {margin:0}
 .dayhead h2 {font-size:20px;font-weight:400;letter-spacing:-.025em;white-space:nowrap;line-height:1.3}
 .dayhead h2 span {display:block;font-size:11px;font-weight:400;color:var(--muted);margin-top:4px;letter-spacing:.02em}
 .wear {display:inline-flex;align-items:center;gap:7px;background:var(--tone-chip,var(--chip));color:var(--tone-ink,var(--chip-ink));border-radius:12px;padding:8px 10px;font-size:11px;font-weight:500;line-height:1.5;min-width:0;max-width:58%;overflow-wrap:anywhere}
+.dayhead .wear {background:var(--card);box-shadow:0 0 0 1px rgba(29,52,40,.08),0 2px 6px rgba(29,52,40,.08)}
 .wear svg {width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
-.item {display:grid;grid-template-columns:100px minmax(0,1fr);align-items:stretch;background:var(--card);border-radius:9px;overflow:hidden;margin-top:16px;box-shadow:var(--card-shadow)}
+.item {display:grid;grid-template-columns:84px minmax(0,1fr);align-items:stretch;background:var(--card);border-radius:9px;overflow:hidden;margin-top:16px;box-shadow:var(--card-shadow)}
 .item.now {box-shadow:0 0 0 1.5px var(--accent),var(--card-shadow)}
 .item.past .thumb, .group.past .thumb {opacity:.65}
 .item.past .what, .group.past .what, .item.past .time, .group.past .group-head .time {color:var(--muted)}
-.item.past .time::after, .group.past .group-head .time::after {content:" · Past";font-size:10px}
-.thumb {min-height:112px;overflow:hidden}
+.thumb {min-height:96px;overflow:hidden}
 .item-body {padding:16px 14px;min-width:0;display:flex;flex-direction:column;justify-content:center;overflow-wrap:anywhere}
 .thumb svg {display:block;width:100%;height:100%}
 .time {display:block;font-size:15px;font-weight:500;color:var(--accent-ink);margin-bottom:4px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
@@ -102,14 +150,14 @@ h1,h2,p {margin:0}
 .tag.opt {background:var(--opt);color:var(--opt-ink)}
 .tag.wear-tag {background:var(--tone-chip,var(--chip));color:var(--tone-ink,var(--chip-ink))}
 /* Day sections take the color named in their dress code. */
-.tone-neutral {--tone-bg:#eff1ee;--tone-chip:#dce2db;--tone-ink:#33403a}
-.tone-blue {--tone-bg:#edf5fd;--tone-chip:#dceafb;--tone-ink:#315f88}
-.tone-yellow {--tone-bg:#fdf8e4;--tone-chip:#f9e4a0;--tone-ink:#634c00}
-.tone-green {--tone-bg:#eaf6ef;--tone-chip:#c6ead5;--tone-ink:#1d6b43}
-.tone-red {--tone-bg:#fdefee;--tone-chip:#f8cbc6;--tone-ink:#8f2a22}
-.tone-orange {--tone-bg:#fef4e9;--tone-chip:#f9d6b0;--tone-ink:#8a4b12}
-.tone-purple {--tone-bg:#f4f0fc;--tone-chip:#dcd0f7;--tone-ink:#4b3a86}
-.tone-pink {--tone-bg:#fdf0f5;--tone-chip:#f6c9dc;--tone-ink:#8a2f57}
+.tone-neutral {--tone-bg:#e2e7e2;--tone-chip:#dce2db;--tone-ink:#33403a}
+.tone-blue {--tone-bg:#d6e7f9;--tone-chip:#dceafb;--tone-ink:#315f88}
+.tone-yellow {--tone-bg:#faedc4;--tone-chip:#f9e4a0;--tone-ink:#634c00}
+.tone-green {--tone-bg:#d3ecdd;--tone-chip:#c6ead5;--tone-ink:#1d6b43}
+.tone-red {--tone-bg:#f9dcd8;--tone-chip:#f8cbc6;--tone-ink:#8f2a22}
+.tone-orange {--tone-bg:#fce3c9;--tone-chip:#f9d6b0;--tone-ink:#8a4b12}
+.tone-purple {--tone-bg:#e6dcf9;--tone-chip:#dcd0f7;--tone-ink:#4b3a86}
+.tone-pink {--tone-bg:#f9d9e6;--tone-chip:#f6c9dc;--tone-ink:#8a2f57}
 /* Illustrations inside a toned day or event repaint in that color. */
 .tone-blue {--t-sky:#e5f0fc;--t-h2:#d2e4f7;--t-h1:#b4d3ef;--t-acc:#528dc8;--t-tree:#578bb3;--t-tree2:#8bb8dc}
 .tone-yellow {--t-sky:#fdf3d3;--t-h2:#f8e3a2;--t-h1:#efcf6a;--t-acc:#d39b12;--t-tree:#6f9a3c;--t-tree2:#b7c25a}
@@ -119,25 +167,25 @@ h1,h2,p {margin:0}
 .tone-purple {--t-sky:#efe9fb;--t-h2:#dcd0f7;--t-h1:#bfaeee;--t-acc:#7a5cd0;--t-tree:#5a45a0;--t-tree2:#9b86df}
 .tone-pink {--t-sky:#fce8f0;--t-h2:#f5c9db;--t-h1:#eca2c1;--t-acc:#d5508a;--t-tree:#a33a68;--t-tree2:#e083ab}
 /* Keep the pajama motifs off text and give them a full row below the sticky header. */
-.tone-pajama {--pajamas:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='70' viewBox='0 0 180 70'%3E%3Cg transform='translate(30 13) rotate(-12 15 20)'%3E%3Cpath d='M8 0l7 4 7-4 9 7-5 9-5-3v14H9V13l-5 3-5-9z' fill='%23c8b5e8'/%3E%3Cpath d='M9 30h12l3 19h-8l-1-12-1 12H6z' fill='%23c8b5e8'/%3E%3Cpath d='M11 2l4 8 4-8M15 10v14' fill='none' stroke='%23fff' stroke-width='1.4'/%3E%3C/g%3E%3Cg transform='translate(118 12) rotate(14 15 20)'%3E%3Cpath d='M8 0l7 4 7-4 9 7-5 9-5-3v14H9V13l-5 3-5-9z' fill='%239fc7e5'/%3E%3Cpath d='M9 30h12l3 19h-8l-1-12-1 12H6z' fill='%239fc7e5'/%3E%3Cpath d='M11 2l4 8 4-8M15 10v14' fill='none' stroke='%23fff' stroke-width='1.4'/%3E%3C/g%3E%3Cpath d='M90 18a11 11 0 1 0 9 18 10 10 0 0 1-9-18' fill='%23efd28a'/%3E%3Cpath d='M9 29l2 4 4 2-4 2-2 4-2-4-4-2 4-2zM171 45l2 4 4 2-4 2-2 4-2-4-4-2 4-2z' fill='%23e5b3cb'/%3E%3C/svg%3E");--tone-head:linear-gradient(100deg,#f4ecfd 0%,#fdeff5 50%,#ebf4fd 100%);--tone-bg:var(--tone-head);--tone-chip:linear-gradient(90deg,#dccdf7,#f6c9dc,#cfe2f7);--tone-ink:#4b3a86;--t-sky:#f1e8fb;--t-h2:#f6cfe0;--t-h1:#c9b6f0;--t-acc:#d5508a;--t-tree:#7a5cd0;--t-tree2:#e083ab}
+.tone-pajama {--pajamas:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='70' viewBox='0 0 180 70'%3E%3Cg transform='translate(30 13) rotate(-12 15 20)'%3E%3Cpath d='M8 0l7 4 7-4 9 7-5 9-5-3v14H9V13l-5 3-5-9z' fill='%23c8b5e8'/%3E%3Cpath d='M9 30h12l3 19h-8l-1-12-1 12H6z' fill='%23c8b5e8'/%3E%3Cpath d='M11 2l4 8 4-8M15 10v14' fill='none' stroke='%23fff' stroke-width='1.4'/%3E%3C/g%3E%3Cg transform='translate(118 12) rotate(14 15 20)'%3E%3Cpath d='M8 0l7 4 7-4 9 7-5 9-5-3v14H9V13l-5 3-5-9z' fill='%239fc7e5'/%3E%3Cpath d='M9 30h12l3 19h-8l-1-12-1 12H6z' fill='%239fc7e5'/%3E%3Cpath d='M11 2l4 8 4-8M15 10v14' fill='none' stroke='%23fff' stroke-width='1.4'/%3E%3C/g%3E%3Cpath d='M90 18a11 11 0 1 0 9 18 10 10 0 0 1-9-18' fill='%23efd28a'/%3E%3Cpath d='M9 29l2 4 4 2-4 2-2 4-2-4-4-2 4-2zM171 45l2 4 4 2-4 2-2 4-2-4-4-2 4-2z' fill='%23e5b3cb'/%3E%3C/svg%3E");--tone-head:linear-gradient(100deg,#e7dbf9 0%,#f9dae7 50%,#d8e8f9 100%);--tone-bg:var(--tone-head);--tone-chip:linear-gradient(90deg,#dccdf7,#f6c9dc,#cfe2f7);--tone-ink:#4b3a86;--t-sky:#f1e8fb;--t-h2:#f6cfe0;--t-h1:#c9b6f0;--t-acc:#d5508a;--t-tree:#7a5cd0;--t-tree2:#e083ab}
 .day.tone {background:var(--tone-bg);margin:24px -16px 0;padding:0 16px 24px}
 .day.tone .dayhead {background:var(--tone-head,var(--tone-bg));margin-top:0}
 .day-art {display:none}
 .day.tone-pajama .day-art {display:block;height:56px;margin:0 -16px -4px;background:var(--pajamas) center/180px 70px repeat-x,var(--tone-head)}
 .day.tone-pajama > .item {margin-top:22px}
 @media (max-width:359px) {
-  .item {grid-template-columns:86px minmax(0,1fr)}
+  .item {grid-template-columns:76px minmax(0,1fr)}
   .item-body {padding:14px 12px}
   .what {font-size:14px}
   .group-head {flex-wrap:wrap}
 }
 @media (min-width:600px) {
-  .hero {height:220px}
+  .hero {height:300px}
   .day.tone {margin-inline:0;padding-inline:20px;border-radius:14px}
   .day.tone .dayhead {margin-inline:-20px;padding-inline:20px;border-radius:14px 14px 0 0}
   .day.tone-pajama .day-art {margin-inline:-20px}
-  .item {grid-template-columns:120px minmax(0,1fr)}
-  .thumb {min-height:120px}
+  .item {grid-template-columns:104px minmax(0,1fr)}
+  .thumb {min-height:104px}
   .item-body {padding:18px 20px}
 }
 
@@ -148,8 +196,8 @@ h1,h2,p {margin:0}
 
 .group-head {display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px}
 .group-head b {display:block;font-size:16px;font-weight:500}
-.group .item {box-shadow:none;margin:0;border-radius:0;border-top:1px solid var(--line);grid-template-columns:84px minmax(0,1fr)}
-.group .thumb {min-height:84px}
+.group .item {box-shadow:none;margin:0;border-radius:0;border-top:1px solid var(--line)}
+.group .thumb {min-height:80px}
 
 
 .note {text-align:center;padding:40px 20px;color:var(--muted)}
@@ -168,22 +216,38 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 <div class="shell">
   <header class="top">
     <div class="brand"><img src="img/sfyg-logo.png" alt="SFYG logo" width="40" height="40"><div><b>Cottage Weekend 2026</b><span class="sync" id="sync" aria-live="polite">SFYG · Auburn</span></div></div>
+    <nav class="jump" id="jump" aria-label="Jump to" hidden></nav>
   </header>
   <section id="view-schedule" data-view="schedule">
-  <div class="hero" id="hero"><div class="hero-text"><div class="cal"><div><small>OCT</small><strong>23</strong></div></div><div><span class="place">Auburn, CA</span><h1>Weekend schedule</h1><span>Fri, Oct 23 - Sun, Oct 25</span></div></div></div>
+  <div class="hero" id="hero"><img src="auburn/img/main-dusk.jpg" alt="The main home at dusk" width="960" height="719"><div class="hero-text"><div class="cal"><div><small>OCT</small><strong>23</strong></div></div><div><span class="place">Auburn, CA</span><h1>Weekend schedule</h1><span>Fri, Oct 23 - Sun, Oct 25</span></div></div></div>
   <aside class="install" id="install" hidden>
     <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M12 8v6M9 11h6"/></svg></span>
     <div><b>Keep it on your home screen</b><p id="install-steps"></p></div>
     <button class="x" type="button" id="install-close" aria-label="Dismiss">×</button>
   </aside>
+  <section class="today" id="today" aria-label="Up next" hidden></section>
   <main id="schedule" aria-label="Schedule"></main>
   <footer>SFYG Cottage Weekend 2026</footer>
+  </section>
+  <section id="view-info" data-view="info" hidden>
+    <div class="info-head"><span class="place">Auburn, CA</span><h1>We're going to Auburn</h1><p>Two homes by the lake, a short walk apart.</p></div>
+    <div class="facts">
+      <div class="fact"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8.5 3v4M15.5 3v4"/></svg></span><div><b>Fri, Oct 23 - Sun, Oct 25</b><span>2026</span></div></div>
+      <div class="fact"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><b>13559 Dry Creek Road</b><span>Auburn, CA 95602</span></div></div>
+      <div class="fact"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3"/></svg></span><div><b>About 2h 30m</b><span>from San Jose</span></div></div>
+      <a class="go" href="https://www.google.com/maps/dir/?api=1&amp;destination=13559+Dry+Creek+Road%2C+Auburn%2C+CA+95602" target="_blank" rel="noopener">Get directions</a>
+    </div>
+    <div class="info-hero"><img src="auburn/img/two-homes-aerial.jpg" alt="Satellite view with the main home at upper left and the second home at lower right, beside the lake" width="761" height="670"><span class="map-label main">1 · Main home</span><span class="map-label second">2 · Second home</span></div>
+    <h2 class="info-h">The homes</h2>
+    <article class="home"><div class="item"><div class="thumb"><img src="auburn/img/main-dusk.jpg" alt="" loading="lazy"></div><div class="item-body"><span class="time">Home 1</span><span class="what">Main home</span><span class="where">5 bedrooms · 12 beds · 4.5 baths</span><a class="more" href="https://www.airbnb.com/rooms/1717790396205238720" target="_blank" rel="noopener">See on Airbnb ↗</a></div></div><div class="gallery" tabindex="0" aria-label="Photos"><img src="auburn/img/main-pool.jpg" alt="Pool and loungers" loading="lazy"><img src="auburn/img/main-living.jpg" alt="Living room and kitchen" loading="lazy"><img src="auburn/img/main-dining.jpg" alt="Dining table" loading="lazy"><img src="auburn/img/main-porch.jpg" alt="Wraparound porch" loading="lazy"><img src="auburn/img/main-games.jpg" alt="Lounge with arcade games" loading="lazy"><img src="auburn/img/main-firepit.jpg" alt="Fire pit patio" loading="lazy"><img src="auburn/img/main-aerial.jpg" alt="Aerial view" loading="lazy"></div></article>
+    <article class="home"><div class="item"><div class="thumb"><img src="auburn/img/second-01.jpg" alt="" loading="lazy"></div><div class="item-body"><span class="time">Home 2 · walking distance</span><span class="what">Second home</span><span class="where">2 bedrooms · 5 beds · 2 baths</span><span class="where">Lake-view deck · Hot tub · Private sauna</span><a class="more" href="https://www.airbnb.com/rooms/1156745847354612810" target="_blank" rel="noopener">See on Airbnb ↗</a></div></div><div class="gallery" tabindex="0" aria-label="Photos"><img src="auburn/img/second-02.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-04.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-06.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-09.jpg" alt="Second home" loading="lazy"></div></article>
   </section>
   <section id="view-carpool" data-view="carpool" hidden><div class="empty"><div class="empty-art" data-art="car"></div><div class="empty-body"><h1>Carpool</h1><p>Car assignments will show up here closer to the weekend.</p></div></div></section>
   <section id="view-rooms" data-view="rooms" hidden><div class="empty"><div class="empty-art" data-art="bed"></div><div class="empty-body"><h1>Rooms</h1><p>Room assignments will show up here closer to the weekend.</p></div></div></section>
 </div>
 <nav class="tabbar" aria-label="Sections"><div>
   <a href="#schedule" data-tab="schedule"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8.5 3v4M15.5 3v4"/></svg></span>Schedule</a>
+  <a href="#info" data-tab="info"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg></span>Info</a>
   <a href="#carpool" data-tab="carpool"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3M7.5 13.5h.01M16.5 13.5h.01"/></svg></span>Carpool</a>
   <a href="#rooms" data-tab="rooms"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19v-6.5A2.5 2.5 0 0 1 5.5 10h13a2.5 2.5 0 0 1 2.5 2.5V19M3 16h18M7 10V7.5h4.5V10"/></svg></span>Rooms</a>
 </div></nav>
@@ -246,7 +310,6 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   // The first color word in a dress code wins, so "Blue or Pajamas" reads as blue.
   const toneOf = text => { if (!text) return ''; let best = null; for (const [re, name] of TONE_WORDS) { const m = text.match(re); if (m && (!best || m.index < best.i)) best = { i: m.index, name }; } return best ? 'tone-' + best.name : ''; };
   const shirt = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3l-5 3 2 5 3-1v11h8V10l3 1 2-5-5-3a4 4 0 0 1-8 0z"/></svg>';
-  document.getElementById('hero').insertAdjacentHTML('afterbegin', scene('lake'));
   document.querySelectorAll('[data-art]').forEach(el => { el.innerHTML = scene(el.dataset.art); });
 
   // ---------- CSV ----------
@@ -312,7 +375,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
       const t = event ? parseTime(time) : null;
       const optional = /^\(?optional\)?\s*[-:]?\s*/i.test(title);
       const clean = title.replace(/^\(?optional\)?\s*[-:]?\s*/i, '');
-      day.items.push({ raw: event ? time : '', t, title: clean, optional, where, art: artFor(clean) });
+      day.items.push({ id: `${days.length}-${day.items.length}`, raw: event ? time : '', t, title: clean, optional, where, art: artFor(clean) });
     }
     const d = dressText ? table(dressText) : null;
     const dress = d ? d.rows.map(r => ({ day: (r[d.col('day')] || '').toLowerCase(), event: (r[d.col('event')] || '').toLowerCase(), wear: r[d.col('dress')] || '' })).filter(x => x.day && x.wear) : [];
@@ -346,7 +409,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   const itemHTML = (it, st, inGroup) => {
     const time = it.t ? fmtRange(it.t.start, it.t.end) : 'Anytime';
     const tags = [st === 'now' && !inGroup ? '<span class="tag live">Now</span>' : '', it.optional && !inGroup ? '<span class="tag opt">Optional</span>' : '', it.wear ? `<span class="tag wear-tag ${toneOf(it.wear)}">Wear: ${esc(it.wear)}</span>` : ''].filter(Boolean).join('');
-    return `<div class="item ${inGroup ? '' : st} ${toneOf(it.wear)}"><div class="thumb">${scene(it.art)}</div><div class="item-body">${inGroup ? '' : `<span class="time">${esc(time)}</span>`}<span class="what">${esc(it.title)}</span>${it.where ? `<span class="where">${esc(it.where)}</span>` : ''}${tags ? `<div class="tags">${tags}</div>` : ''}</div></div>`;
+    return `<div class="item ${inGroup ? '' : st} ${toneOf(it.wear)}"${inGroup ? '' : ` id="ev-${it.id}"`}><div class="thumb">${scene(it.art)}</div><div class="item-body">${inGroup ? '' : `<span class="time">${esc(time)}</span>`}<span class="what">${esc(it.title)}</span>${it.where ? `<span class="where">${esc(it.where)}</span>` : ''}${tags ? `<div class="tags">${tags}</div>` : ''}</div></div>`;
   };
   const render = days => {
     const now = nowParts();
@@ -360,13 +423,56 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
         for (let j = i; j < dy.items.length && dy.items[j].optional && it.optional && dy.items[j].raw && dy.items[j].raw === it.raw; j++) same.push(dy.items[j]);
         if (same.length > 1) {
           const st = state(same[0], dy, now);
-          html += `<div class="group ${st}"><div class="group-head"><div><span class="time">${esc(fmtRange(it.t.start, it.t.end))}</span><b>Pick one</b></div><div class="tags">${st === 'now' ? '<span class="tag live">Now</span>' : ''}<span class="tag opt">Optional</span></div></div>${same.map(x => itemHTML(x, st, true)).join('')}</div>`;
+          html += `<div class="group ${st}" id="ev-${it.id}"><div class="group-head"><div><span class="time">${esc(fmtRange(it.t.start, it.t.end))}</span><b>Pick one</b></div><div class="tags">${st === 'now' ? '<span class="tag live">Now</span>' : ''}<span class="tag opt">Optional</span></div></div>${same.map(x => itemHTML(x, st, true)).join('')}</div>`;
           i += same.length;
         } else { html += itemHTML(it, state(it, dy, now), false); i++; }
       }
       return `<section class="day tone ${toneOf(dy.wear) || 'tone-neutral'}" id="day-${dy.name.toLowerCase()}" aria-labelledby="h-${dy.name.toLowerCase()}"><div class="dayhead"><h2 id="h-${dy.name.toLowerCase()}">${esc(dy.name)}<span>${esc(dy.label)}</span></h2>${dy.wear ? `<span class="wear">${shirt}${esc(dy.wear)}</span>` : ''}</div><div class="day-art" aria-hidden="true"></div>${html}</section>`;
     }).join('');
+    renderToday(days, now); renderJump(days, now);
   };
+
+  // ---------- Today card and jump strip ----------
+  const todayBox = document.getElementById('today'), hero = document.getElementById('hero'), jump = document.getElementById('jump');
+  const longDay = { Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday' };
+  // A slot's card: optional activities sharing a time collapse into one "Pick one" entry.
+  const slots = dy => { const out = []; for (const it of dy.items) { const last = out[out.length - 1]; if (last && it.optional && last.optional && it.raw && it.raw === last.raw) last.titles.push(it.title); else out.push({ ...it, titles: [it.title] }); } return out; };
+  const renderToday = (days, now) => {
+    const timed = days.flatMap(dy => slots(dy).filter(s => s.t).map(s => ({ s, dy, st: state(s, dy, now) })));
+    const cur = timed.filter(x => x.st === 'now'), next = timed.find(x => x.st === '');
+    const today = days.find(d => d.key === now.key), head = today;
+    // Only during the weekend; before it, the banner and Friday's section already say what's first.
+    if (!today || (!cur.length && !next)) { todayBox.hidden = true; hero.hidden = false; return; }
+    const row = (x, label, cls) => {
+      const pick = x.s.titles.length > 1, when = (x.dy === head ? '' : x.dy.name.slice(0, 3) + ' · ') + fmtRange(x.s.t.start, x.s.t.end);
+      return `<button type="button" class="${cls}" data-go="ev-${x.s.id}"><small>${label}</small><span class="tt">${esc(when)}</span><span class="tw">${pick ? 'Pick one' : esc(x.s.titles[0])}</span>${pick ? `<span class="to">${x.s.titles.map(esc).join(' · ')}</span>` : ''}</button>`;
+    };
+    todayBox.className = `today ${toneOf(head.wear) || 'tone-neutral'}`;
+    todayBox.innerHTML = `<div class="today-head"><h2>Today<span>${esc((longDay[head.name.slice(0, 3)] || head.name) + ', ' + head.label)}</span></h2>${head.wear ? `<span class="wear">${shirt}${esc(head.wear)}</span>` : ''}</div>`
+      + `<div class="today-rows">${cur.map(x => row(x, 'Now', 'is-now')).join('')}${next ? row(next, 'Next', '') : ''}</div>`;
+    hero.hidden = true;
+    todayBox.hidden = false;
+  };
+  const renderJump = (days, now) => {
+    const live = !!document.querySelector('.item.now, .group.now');
+    jump.innerHTML = days.map(d => `<button type="button" data-go="day-${d.name.toLowerCase()}">${esc(d.name.slice(0, 3))}</button>`).join('') + (live ? '<button type="button" class="jnow" data-go="now">Now</button>' : '');
+    jump.hidden = current !== 'schedule'; markJump();
+  };
+  const goTo = id => {
+    const el = id === 'now' ? document.querySelector('.item.now, .group.now') : document.getElementById(id);
+    if (!el) return;
+    if (el.matches('.day')) el.scrollIntoView({ block: 'start' }); else el.scrollIntoView({ block: 'center' });
+  };
+  document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) goTo(b.dataset.go); });
+  // Highlight the day whose header is pinned under the top bar.
+  const markJump = () => {
+    if (jump.hidden) return;
+    const line = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-h')) || 76) + 2;
+    let on = '';
+    for (const d of document.querySelectorAll('.day')) if (d.getBoundingClientRect().top <= line) on = d.id;
+    jump.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.go === on ? 'true' : 'false'));
+  };
+  addEventListener('scroll', markJump, { passive: true });
 
   // ---------- Sync status ----------
   const sync = document.getElementById('sync');
@@ -416,12 +522,13 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   // ---------- Tabs ----------
   const scrollMemo = {};
   const showTab = () => {
-    const next = ['schedule', 'carpool', 'rooms'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'schedule';
+    const next = ['schedule', 'info', 'carpool', 'rooms'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'schedule';
     scrollMemo[current] = scrollY;
     current = next;
     document.querySelectorAll('[data-view]').forEach(v => { v.hidden = v.dataset.view !== next; });
+    jump.hidden = next !== 'schedule' || !jump.children.length;
     document.querySelectorAll('[data-tab]').forEach(a => { if (a.dataset.tab === next) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
-    scrollTo(0, scrollMemo[next] || 0);
+    scrollTo(0, scrollMemo[next] || 0); markJump();
   };
   addEventListener('hashchange', showTab);
   showTab();

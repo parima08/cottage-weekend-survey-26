@@ -30,7 +30,7 @@ Important: **Anyone** here means anyone with the survey page can submit a respon
 
 ## 4. Connect the site
 
-1. Open `config.js`.
+1. Open `survey/config.js`.
 2. Paste the `/exec` URL into the one config line:
 
 ```js
@@ -39,7 +39,7 @@ window.CW26_CONFIG = {
 };
 ```
 
-3. Commit the changed `config.js`. Do not commit the Sheet URL or any response data. The Apps Script URL is only a submission endpoint.
+3. Commit the changed `survey/config.js`. Do not commit the Sheet URL or any response data. The Apps Script URL is only a submission endpoint.
 
 ## 5. Test before sending the survey
 

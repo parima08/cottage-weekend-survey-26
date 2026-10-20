@@ -1,25 +1,28 @@
-# Cottage Weekend 2026 survey
+# Cottage Weekend 2026
 
-Static GitHub Pages site for gathering private planning input for Cottage Weekend 2026. The page shows a route map, the two possible host homes as full-width cards (photo row, Airbnb link, and a Google Maps directions preview from San Jose), and a short survey with one-tap choices and two sliders. It does not show public results and does not ask people to vote for a location.
+Static GitHub Pages site for Cottage Weekend 2026. The root serves the live weekend hub, `/auburn/` the venue announcement, and `/survey/` the planning survey.
+
+The survey gathers private planning input. It shows a route map, the two possible host homes as full-width cards (photo row, Airbnb link, and a Google Maps directions preview from San Jose), and a short survey with one-tap choices and two sliders. It does not show public results and does not ask people to vote for a location.
 
 ## Local files
 
-- `index.html` - the GitHub Pages entry point served from the repository root.
+- `index.html` - the live weekend hub, served at the site root. See [Weekend hub](#weekend-hub). `config.js`, `manifest.webmanifest`, `img/` and `sample/` belong to it.
+- `hub/` - a redirect from the hub's old `/hub/` address to the root.
 - `auburn/` - the Auburn weekend announcement and local photos, served at `/auburn/`.
-- `hub/` - the live weekend schedule, served at `/hub/`. See [Weekend hub](#weekend-hub).
-- `styles.css` - responsive light/dark travel-journal styling (the approved v2 style now serves at the root; there is no separate `/v2/` page).
-- `script.js` - photo rows and full-screen viewer, the survey progress bar and validation, form serialization and submission.
-- `map.js` and `routes.js` - the Leaflet route map in the hero. `routes.js` holds thinned driving routes from San Jose (OSRM); regenerate it if the addresses change.
-- `config.js` - the one place to paste the Google Apps Script `/exec` URL.
+- `survey/` - the planning survey, served at `/survey/`. The files below live in it.
+- `survey/styles.css` - responsive light/dark travel-journal styling.
+- `survey/script.js` - photo rows and full-screen viewer, the survey progress bar and validation, form serialization and submission.
+- `survey/map.js` and `survey/routes.js` - the Leaflet route map in the hero. `routes.js` holds thinned driving routes from San Jose (OSRM); regenerate it if the addresses change.
+- `survey/config.js` - the one place to paste the Google Apps Script `/exec` URL.
 - `QUESTIONS.md` - organizer-reviewable question wording.
 - `apps-script/Code.gs` - Google Apps Script endpoint that appends responses to a private Sheet.
 - `apps-script/SETUP.md` - setup steps for the private Sheet and web app deployment.
 
 ## Connect submissions
 
-The site is safe to publish before the endpoint is ready. If `config.js` has an empty `SCRIPT_URL`, the form remains visible but the send button is disabled.
+The site is safe to publish before the endpoint is ready. If `survey/config.js` has an empty `SCRIPT_URL`, the form remains visible but the send button is disabled.
 
-After deploying the Apps Script web app, paste its `/exec` URL into `config.js`:
+After deploying the Apps Script web app, paste its `/exec` URL into `survey/config.js`:
 
 ```js
 window.CW26_CONFIG = {
@@ -31,15 +34,15 @@ Do not commit any response data, Sheet exports, or private Google Sheet links.
 
 ## Weekend hub
 
-`hub/index.html` shows the schedule from the organizers' "Cottage Weekend 2026 - Schedule" Google Sheet. It reads two tabs, **Final Schedule** (Time, Event, Location; a row with only a date such as `Friday, Oct 23` starts a day) and **Dress Code** (Day, Event, Dress Code; `All Day` applies to the whole day). The **[DRAFT] Schedule** tab is never read.
+`index.html` at the root shows the schedule from the organizers' "Cottage Weekend 2026 - Schedule" Google Sheet. It reads two tabs, **Final Schedule** (Time, Event, Location; a row with only a date such as `Friday, Oct 23` starts a day) and **Dress Code** (Day, Event, Dress Code; `All Day` applies to the whole day). The **[DRAFT] Schedule** tab is never read.
 
-Each tab is shared through File > Share > Publish to web, one sheet at a time, as CSV. Paste the two links into `hub/config.js`. Never publish the entire document, since that would expose the draft tab. Published sheets refresh within a few minutes of an edit, and the page re-checks every 2 minutes. Each phone keeps the last good copy for weak signal.
+Each tab is shared through File > Share > Publish to web, one sheet at a time, as CSV. Paste the two links into the root `config.js`. Never publish the entire document, since that would expose the draft tab. Published sheets refresh within a few minutes of an edit, and the page re-checks every 2 minutes. Each phone keeps the last good copy for weak signal.
 
 Preview locally with the bundled sample data, optionally pinning the clock:
 
 ```sh
 python3 -m http.server 8080
-# http://localhost:8080/hub/?sample&now=2026-10-24T14:50
+# http://localhost:8080/?sample&now=2026-10-24T14:50
 ```
 
 Add `&install` to show the "add to home screen" tip on a desktop browser.

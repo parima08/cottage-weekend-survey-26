@@ -322,7 +322,9 @@ html:has(.sheet[open]) {overflow:hidden}
 .sheet::backdrop {background:rgba(20,28,24,.5)}
 /* Profile selection keeps the same frame while filtering. Only names scroll.
    The inset and viewport height apply on every platform, including when a keyboard reduces the visible area. */
-#who {position:fixed;inset:calc(var(--vvt,0px) + 12px) 12px auto;width:min(560px,calc(100% - 24px));height:min(640px,calc(var(--vvh,100dvh) - 24px));max-height:calc(var(--vvh,100dvh) - 24px);margin:0 auto;border-radius:18px;overflow:hidden}
+#you,#who {position:fixed;inset:calc(var(--vvt,0px) + 12px) 12px auto;width:min(560px,calc(100% - 24px));max-height:calc(var(--vvh,100dvh) - 24px);margin:0 auto;border-radius:18px;overflow:hidden}
+#you {top:calc(var(--vvt,0px) + var(--vvh,100dvh) / 2);transform:translateY(-50%)}
+#who {height:min(640px,calc(var(--vvh,100dvh) - 24px))}
 #who .sheet-head,#who .sheet-foot {flex:0 0 auto}
 #who .people {flex:1 1 0;min-height:0}
 

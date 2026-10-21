@@ -35,9 +35,9 @@ button {font:inherit;color:inherit;cursor:pointer}
 h1,h2,p {margin:0}
 .shell {width:min(600px,100%);margin-inline:auto;padding:0 max(16px,env(safe-area-inset-right)) calc(100px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
 .tabbar {position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 18px rgba(29,52,40,.04);padding:8px 12px calc(10px + env(safe-area-inset-bottom))}
-.tabbar div {display:grid;grid-template-columns:repeat(4,1fr);max-width:460px;margin-inline:auto}
+.tabbar div {display:grid;grid-template-columns:repeat(5,1fr);max-width:520px;margin-inline:auto}
 .tabbar a {display:grid;justify-items:center;gap:4px;min-height:48px;padding:2px 0;font-size:11px;font-weight:500;color:var(--muted);text-decoration:none}
-.tabbar span {display:grid;place-items:center;width:58px;height:32px;border-radius:99px}
+.tabbar span {display:grid;place-items:center;width:min(58px,100%);height:32px;border-radius:99px}
 .tabbar svg {width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tabbar a[aria-current="page"] {color:var(--accent-ink)}
 .tabbar a[aria-current="page"] span {background:var(--accent-soft)}
@@ -246,6 +246,59 @@ h1,h2,p {margin:0}
 
 
 
+/* Bring: the shared list of things to bring. Sign-ups write a row to the logistics sheet. */
+.bring-sum {background:var(--card);border-radius:12px;padding:14px 16px 16px;margin-top:14px;box-shadow:var(--card-shadow)}
+.bring-sum p {display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px;color:var(--muted)}
+.bring-sum b {font-size:20px;font-weight:500;letter-spacing:-.02em;color:var(--ink)}
+.bar {display:block;height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:10px}
+.bar i {display:block;height:100%;border-radius:inherit;background:var(--accent)}
+.bring-filter {display:flex;gap:6px;margin-top:14px}
+.bring-filter[hidden], .bring-sum[hidden] {display:none}
+.bring-filter button {flex:1;min-height:38px;border:0;border-radius:99px;background:var(--card);font-size:13px;font-weight:500;box-shadow:0 0 0 1px rgba(29,52,40,.1)}
+.bring-filter button[aria-pressed="true"] {background:var(--accent-ink);color:#fff;box-shadow:none}
+.need-group h2 {display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:20px;font-weight:400;letter-spacing:-.025em;margin:26px 2px 10px}
+.need-group h2 span {font-size:12px;color:var(--muted);letter-spacing:0}
+.needs {background:var(--card);border-radius:12px;overflow:hidden;box-shadow:var(--card-shadow)}
+.need {display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:center;padding:13px 14px 14px 16px}
+.need + .need {border-top:1px solid var(--line)}
+.need .what {font-size:15px;line-height:1.35;overflow-wrap:anywhere}
+.need-count {display:block;font-size:12px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+.need .bar {height:4px;margin-top:8px;max-width:200px}
+.need .who {display:block;font-size:12px;color:var(--ink);margin-top:7px}
+.need .who::before {content:"Bringing: ";color:var(--muted)}
+.need.done .need-count {color:var(--accent-ink);font-weight:500}
+.need.done .bar i {background:var(--accent-ink)}
+.add {min-height:40px;min-width:78px;padding:0 16px;border:0;border-radius:99px;background:var(--accent-ink);color:#fff;font-size:14px;font-weight:500}
+.need.done .add {background:none;color:var(--accent-ink);box-shadow:inset 0 0 0 1.5px var(--accent-ink)}
+.bring-foot {font-size:12.5px;color:var(--muted);text-align:center;margin:22px 8px 0}
+.bring-foot a {color:var(--accent-ink)}
+/* Sign-up form: a bottom sheet over the list. */
+.sheet {width:min(560px,100%);max-width:100%;max-height:92vh;margin:auto auto 0;padding:0;border:0;border-radius:18px 18px 0 0;background:var(--card);color:var(--ink);box-shadow:0 -10px 40px rgba(20,24,40,.25)}
+.sheet::backdrop {background:rgba(20,28,24,.5)}
+.sheet form {padding:22px 20px calc(18px + env(safe-area-inset-bottom))}
+.sheet small {font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.sheet h2 {font-size:21px;font-weight:400;letter-spacing:-.025em;line-height:1.3;margin-top:4px}
+.sheet h2 + p {font-size:13px;color:var(--muted);margin-top:2px}
+.field {display:block;margin-top:16px}
+.field > span {display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+.field em {font-style:normal;font-weight:400;color:var(--muted)}
+.field input {width:100%;min-height:46px;padding:10px 12px;border:1.5px solid #cdd6d0;border-radius:10px;background:#fff;color:var(--ink);font:inherit;font-size:16px}
+.field input:focus {outline:none;border-color:var(--accent-ink);box-shadow:0 0 0 3px var(--accent-soft)}
+.stepper {display:inline-grid;grid-template-columns:48px 56px 48px;align-items:center;border:1.5px solid #cdd6d0;border-radius:10px;overflow:hidden}
+.stepper button {height:46px;border:0;background:var(--page);color:var(--accent-ink);font-size:22px;line-height:1}
+.stepper button:disabled {color:#b5bfb9;cursor:default}
+.stepper output {text-align:center;font-size:17px;font-weight:500;font-variant-numeric:tabular-nums}
+.hp {position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.err {color:#a3322a;font-size:13px;margin-top:14px}
+.err:empty {display:none}
+.actions {display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:22px}
+.actions button {min-height:48px;border:0;border-radius:10px;font-size:15px;font-weight:500}
+.actions .ghost {background:var(--page)}
+.actions .primary {background:var(--accent-ink);color:#fff}
+.actions .primary:disabled {opacity:.6;cursor:default}
+.toast {position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));z-index:6;width:max-content;max-width:calc(100% - 32px);transform:translate(-50%,12px);background:var(--ink);color:#fff;font-size:14px;padding:12px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.toast.show {opacity:1;transform:translate(-50%,0)}
+
 .note {text-align:center;padding:40px 20px;color:var(--muted)}
 .note b {display:block;color:var(--ink);font-size:18px;margin-bottom:4px}
 .note button {margin-top:14px;border:0;background:var(--accent-ink);color:var(--on-accent);font-weight:500;min-height:44px;padding:11px 22px;border-radius:10px}
@@ -288,12 +341,34 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     <article class="home"><div class="item"><div class="thumb"><img src="auburn/img/main-dusk.jpg" alt="" loading="lazy"></div><div class="item-body"><span class="time">Home 1</span><span class="what">Main home</span><span class="where">5 bedrooms · 12 beds · 4.5 baths</span><a class="more" href="https://www.airbnb.com/rooms/1717790396205238720" target="_blank" rel="noopener">See on Airbnb ↗</a></div></div><div class="gallery" tabindex="0" aria-label="Photos"><img src="auburn/img/main-pool.jpg" alt="Pool and loungers" loading="lazy"><img src="auburn/img/main-living.jpg" alt="Living room and kitchen" loading="lazy"><img src="auburn/img/main-dining.jpg" alt="Dining table" loading="lazy"><img src="auburn/img/main-porch.jpg" alt="Wraparound porch" loading="lazy"><img src="auburn/img/main-games.jpg" alt="Lounge with arcade games" loading="lazy"><img src="auburn/img/main-firepit.jpg" alt="Fire pit patio" loading="lazy"><img src="auburn/img/main-aerial.jpg" alt="Aerial view" loading="lazy"></div></article><div class="rooms"><figure class="room"><img src="auburn/img/room-main-1.jpg" alt="Bedroom with a carved headboard and a curved wall of windows" loading="lazy"><figcaption><b>Bedroom 1</b><span>1 king · 1 single</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-2.jpg" alt="Bedroom with a spotted rug and a ceiling fan" loading="lazy"><figcaption><b>Bedroom 2</b><span>1 queen · 1 sofa bed</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-3.jpg" alt="Bedroom with a vaulted ceiling and a green nightstand" loading="lazy"><figcaption><b>Bedroom 3</b><span>1 king · 1 sofa bed</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-4.jpg" alt="Two double beds beneath small framed art" loading="lazy"><figcaption><b>Bedroom 4</b><span>2 doubles · 1 couch</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-5.jpg" alt="Bedroom with a checkered rug and doors to a balcony" loading="lazy"><figcaption><b>Bedroom 5</b><span>1 king · 1 sofa bed</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-living.jpg" alt="Living room with two gray sofas" loading="lazy"><figcaption><b>Living room</b><span>2 sofa beds</span></figcaption></figure></div>
     <article class="home"><div class="item"><div class="thumb"><img src="auburn/img/second-01.jpg" alt="" loading="lazy"></div><div class="item-body"><span class="time">Home 2 · walking distance</span><span class="what">Second home</span><span class="where">2 bedrooms · 5 beds · 2 baths</span><span class="where">Lake-view deck · Hot tub · Private sauna</span><a class="more" href="https://www.airbnb.com/rooms/1156745847354612810" target="_blank" rel="noopener">See on Airbnb ↗</a></div></div><div class="gallery" tabindex="0" aria-label="Photos"><img src="auburn/img/second-02.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-04.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-06.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-09.jpg" alt="Second home" loading="lazy"></div></article><div class="rooms"><figure class="room"><img src="auburn/img/room-second-1.jpg" alt="Bedroom with a wood bed beside a tree-filled window" loading="lazy"><figcaption><b>Bedroom 1</b><span>1 king · 1 sofa bed</span></figcaption></figure><figure class="room"><img src="auburn/img/room-second-2.jpg" alt="Bed with a metal frame beneath abstract line art" loading="lazy"><figcaption><b>Bedroom 2</b><span>1 queen</span></figcaption></figure><figure class="room"><img src="auburn/img/room-second-living.jpg" alt="Living room with a sectional and a gold-framed mirror" loading="lazy"><figcaption><b>Living room</b><span>2 single beds</span></figcaption></figure></div>
   </section>
+  <section id="view-bring" data-view="bring" hidden>
+    <div class="info-head"><span class="place">Help out</span><h1>What to bring</h1><p>Tap anything you can bring. Your name goes straight onto the logistics sheet.</p></div>
+    <div class="bring-sum" id="bring-sum" hidden></div>
+    <div class="bring-filter" id="bring-filter" hidden><button type="button" data-filter="open" aria-pressed="true">Still needed</button><button type="button" data-filter="all" aria-pressed="false">All items</button></div>
+    <div id="bring-list"></div>
+    <p class="bring-foot">The logistics team will confirm the final list with you. To change or remove a sign-up, <a id="bring-sheet" href="#" target="_blank" rel="noopener">edit the sheet</a>.</p>
+  </section>
   <section id="view-carpool" data-view="carpool" hidden><div class="empty"><div class="empty-art" data-art="car"></div><div class="empty-body"><h1>Carpool</h1><p>Car assignments will show up here closer to the weekend.</p></div></div></section>
   <section id="view-rooms" data-view="rooms" hidden><div class="empty"><div class="empty-art" data-art="bed"></div><div class="empty-body"><h1>Rooms</h1><p>Room assignments will show up here closer to the weekend.</p></div></div></section>
 </div>
+<dialog class="sheet" id="bring-dialog" aria-labelledby="bring-title">
+  <form id="bring-form" novalidate>
+    <small>Sign up to bring</small>
+    <h2 id="bring-title"></h2>
+    <p id="bring-left"></p>
+    <label class="field"><span>Your name</span><input name="name" autocomplete="name" maxlength="80" required></label>
+    <div class="field"><span id="qty-label">How many</span><div class="stepper"><button type="button" data-step="-1" aria-label="One fewer">−</button><output id="qty" aria-labelledby="qty-label">1</output><button type="button" data-step="1" aria-label="One more">+</button></div></div>
+    <label class="field"><span>Notes <em>optional</em></span><input name="notes" maxlength="300" placeholder="Size, brand, anything useful"></label>
+    <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="err" id="bring-err" role="alert"></p>
+    <div class="actions"><button type="button" class="ghost" id="bring-cancel">Cancel</button><button type="submit" class="primary" id="bring-submit">Sign up</button></div>
+  </form>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="tabbar" aria-label="Sections"><div>
   <a href="#schedule" data-tab="schedule"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8.5 3v4M15.5 3v4"/></svg></span>Schedule</a>
   <a href="#info" data-tab="info"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg></span>Info</a>
+  <a href="#bring" data-tab="bring"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12.5H6.2z"/><path d="M9 10.5V6.5a3 3 0 0 1 6 0v4"/></svg></span>Bring</a>
   <a href="#carpool" data-tab="carpool"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3M7.5 13.5h.01M16.5 13.5h.01"/></svg></span>Carpool</a>
   <a href="#rooms" data-tab="rooms"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19v-6.5A2.5 2.5 0 0 1 5.5 10h13a2.5 2.5 0 0 1 2.5 2.5V19M3 16h18M7 10V7.5h4.5V10"/></svg></span>Rooms</a>
 </div></nav>
@@ -565,6 +640,131 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   setInterval(() => { if (model.length) render(model); showSync(); }, 30 * 1000);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') load(); });
 
+  // ---------- Bring ----------
+  // The list and its sign-ups are read straight from the sheet's tabs as CSV, so edits there show on the next refresh.
+  // Sign-ups are written by the sheet's Apps Script (SIGNUP_URL). ?sample reads a local copy and fakes the writes.
+  const SHEET = cfg.SIGNUP_SHEET_ID || '', TABS = cfg.SIGNUP_TABS || {};
+  const SIGNUP_URL = (cfg.SIGNUP_URL || '').trim();
+  const sheetCSV = gid => `https://docs.google.com/spreadsheets/d/${SHEET}/export?format=csv&gid=${gid}`;
+  const BRING_ON = sample || !!SHEET;
+  // Each group starts at the list-tab row whose first cell is its header; its sign-ups live on their own tab.
+  const BRING_GROUPS = [{ key: 'kitchen', title: 'Kitchen', header: 'appliance/item', tab: TABS.kitchen }, { key: 'misc', title: 'Miscellaneous', header: 'miscellaneous item', tab: TABS.misc }];
+  const norm = v => String(v || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const buildBring = (listText, signupTexts) => {
+    const items = {}; let cur = null;
+    for (const r of parseCSV(listText)) {
+      const head = BRING_GROUPS.find(g => norm(r[0]) === g.header);
+      if (head) { cur = head; (items[cur.key] = []); continue; }
+      if (cur && r[0] && r[1] !== '' && !isNaN(+r[1])) items[cur.key].push({ item: r[0], needed: +r[1], total: 0, people: [] });
+    }
+    return BRING_GROUPS.map((g, gi) => {
+      const list = items[g.key] || [], byKey = new Map(list.map(it => [norm(it.item), it]));
+      // Sign-up tabs have a title block above the header row, so start at the row whose first cell is "Item".
+      const rows = parseCSV(signupTexts[gi] || ''), h = rows.findIndex(r => norm(r[0]) === 'item');
+      if (h >= 0) {
+        const col = name => rows[h].findIndex(c => norm(c).startsWith(name)), pc = col('person'), qc = col('quantity');
+        for (const r of rows.slice(h + 1)) {
+          const it = byKey.get(norm(r[0])); if (!it) continue;
+          const q = +r[qc] || 0, name = (r[pc] || '').trim();
+          it.total += q; if (name) it.people.push({ name, qty: q });
+        }
+      }
+      return { key: g.key, title: g.title, items: list };
+    }).filter(g => g.items.length);
+  };
+  const BRING_KEY = 'cw26-bring-' + (sample ? 'sample' : 'live');
+  const bringList = document.getElementById('bring-list'), bringSum = document.getElementById('bring-sum'), bringFilterEl = document.getElementById('bring-filter');
+  const dlg = document.getElementById('bring-dialog'), form = document.getElementById('bring-form'), nameIn = form.querySelector('[name=name]'), notesIn = form.querySelector('[name=notes]'), hpIn = form.querySelector('[name=website]'), errEl = document.getElementById('bring-err'), qtyEl = document.getElementById('qty'), submitBtn = document.getElementById('bring-submit');
+  const SHEET_URL = SHEET ? `https://docs.google.com/spreadsheets/d/${SHEET}/edit` : '';
+  if (SHEET_URL) document.getElementById('bring-sheet').href = SHEET_URL; else document.querySelector('.bring-foot').hidden = true;
+  let bringSampleLoaded = false, bring = (store.get(BRING_KEY) || {}).groups || null, bringFilter = 'open', bringLoading = false, picked = null, qty = 1;
+  // Items signed up for in this visit stay on the "Still needed" view, so they don't vanish under your thumb.
+  const keep = new Set();
+  const left = it => Math.max(it.needed - it.total, 0);
+  const needHTML = (g, it) => {
+    const l = left(it), done = !l, pct = Math.min(100, Math.round(it.total / (it.needed || 1) * 100));
+    return `<div class="need${done ? ' done' : ''}"><div><span class="what">${esc(it.item)}</span><span class="need-count">${done ? `Covered · ${it.total} of ${it.needed}` : it.total ? `${it.total} of ${it.needed} · ${l} more needed` : `Need ${it.needed}`}</span>${it.total ? `<span class="bar" aria-hidden="true"><i style="width:${pct}%"></i></span>` : ''}${it.people.length ? `<span class="who">${it.people.map(p => esc(p.name) + (p.qty > 1 ? ` (${p.qty})` : '')).join(', ')}</span>` : ''}</div><button type="button" class="add" data-group="${esc(g.key)}" data-item="${esc(it.item)}" aria-label="Bring ${esc(it.item)}">${done ? 'Add' : 'Bring'}</button></div>`;
+  };
+  const renderBring = () => {
+    if (!BRING_ON) { bringList.innerHTML = `<div class="note"><b>Sign-ups open soon</b>The list of things to bring will show up here.</div>`; return; }
+    if (!bring) { bringList.innerHTML = `<div class="note"><b>Loading the list</b>One moment.</div>`; return; }
+    const all = bring.flatMap(g => g.items), covered = all.filter(it => !left(it)).length;
+    bringSum.hidden = bringFilterEl.hidden = false;
+    bringSum.innerHTML = `<p><span><b>${covered} of ${all.length}</b> items covered</span><span>${all.length - covered} to go</span></p><span class="bar" aria-hidden="true"><i style="width:${Math.round(covered / (all.length || 1) * 100)}%"></i></span>`;
+    bringFilterEl.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.filter === bringFilter));
+    const html = bring.map(g => {
+      const rows = g.items.filter(it => bringFilter === 'all' || left(it) || keep.has(g.key + '|' + it.item));
+      if (!rows.length) return '';
+      const open = g.items.filter(left).length;
+      return `<section class="need-group"><h2>${esc(g.title)}<span>${open ? `${open} still needed` : 'All covered'}</span></h2><div class="needs">${rows.map(it => needHTML(g, it)).join('')}</div></section>`;
+    }).join('');
+    bringList.innerHTML = html || `<div class="note"><b>Everything is covered</b>Thank you! Tap All items to see who is bringing what.</div>`;
+  };
+  const loadBring = async () => {
+    if (!BRING_ON || bringLoading) { renderBring(); return; }
+    bringLoading = true; renderBring();
+    try {
+      const get = u => fetch(u + (u.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(r.status); return r.text(); });
+      if (sample) bring = bring && bringSampleLoaded ? bring : (JSON.parse(await get('sample/signup.json')).groups);
+      else {
+        const [list, ...tabs] = await Promise.all([get(sheetCSV(TABS.list || 0)), ...BRING_GROUPS.map(g => get(sheetCSV(g.tab)))]);
+        if (/^\s*</.test(list)) throw new Error('not csv');
+        bring = buildBring(list, tabs);
+      }
+      bringSampleLoaded = sample; store.set(BRING_KEY, { groups: bring });
+    } catch {
+      if (!bring) { bringList.innerHTML = `<div class="note"><b>Couldn't load the list</b>Check your connection and try again.<br><button type="button" id="bring-retry">Try again</button></div>`; document.getElementById('bring-retry').onclick = loadBring; bringLoading = false; return; }
+    }
+    bringLoading = false; renderBring();
+  };
+  bringFilterEl.addEventListener('click', e => { const b = e.target.closest('[data-filter]'); if (b) { bringFilter = b.dataset.filter; renderBring(); } });
+
+  const setQty = n => { qty = Math.min(Math.max(n, 1), 50); qtyEl.value = qty; form.querySelector('[data-step="-1"]').disabled = qty <= 1; form.querySelector('[data-step="1"]').disabled = qty >= 50; };
+  bringList.addEventListener('click', e => {
+    const b = e.target.closest('.add'); if (!b) return;
+    // Until the sheet's script is deployed, sign-ups happen in the sheet itself.
+    if (!sample && !SIGNUP_URL) { window.open(SHEET_URL, '_blank', 'noopener'); return; }
+    const g = bring.find(x => x.key === b.dataset.group), it = g && g.items.find(x => x.item === b.dataset.item); if (!it) return;
+    picked = { g, it };
+    document.getElementById('bring-title').textContent = it.item;
+    document.getElementById('bring-left').textContent = left(it) ? `${left(it)} of ${it.needed} still needed` : `All ${it.needed} are covered. Extras are welcome.`;
+    form.reset(); nameIn.value = store.get('cw26-name') || ''; setQty(1); errEl.textContent = ''; submitBtn.disabled = false; submitBtn.textContent = 'Sign up';
+    dlg.showModal();
+    if (!nameIn.value) nameIn.focus(); else submitBtn.focus();
+  });
+  form.addEventListener('click', e => { const s = e.target.closest('[data-step]'); if (s) setQty(qty + +s.dataset.step); });
+  document.getElementById('bring-cancel').onclick = () => dlg.close();
+  // A tap on the dimmed backdrop closes the sheet.
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  const toastEl = document.getElementById('toast'); let toastT;
+  const toast = msg => { toastEl.textContent = msg; toastEl.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('show'), 3200); };
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = nameIn.value.trim();
+    if (!name) { errEl.textContent = 'Please add your name.'; nameIn.focus(); return; }
+    const { g, it } = picked, body = { group: g.key, item: it.item, name, qty, notes: notesIn.value.trim(), website: hpIn.value };
+    submitBtn.disabled = true; submitBtn.textContent = 'Signing up…'; errEl.textContent = '';
+    try {
+      if (sample) {
+        await new Promise(r => setTimeout(r, 500));
+        it.people.push({ name, qty }); it.total += qty;
+      } else {
+        const r = await fetch(SIGNUP_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
+        const j = await r.json();
+        if (!j.ok) throw new Error(j.error || 'Sign-up failed.');
+        it.people.push({ name, qty }); it.total += qty;
+      }
+    } catch (err) {
+      errEl.textContent = err instanceof TypeError ? "Couldn't reach the sheet. Check your connection and try again." : err.message;
+      submitBtn.disabled = false; submitBtn.textContent = 'Sign up'; return;
+    }
+    store.set('cw26-name', name); keep.add(g.key + '|' + it.item);
+    dlg.close(); renderBring();
+    if (!sample) setTimeout(loadBring, 1500);
+    toast(`Thanks, ${name.split(/\s+/)[0]}! You're bringing ${qty} × ${it.item}.`);
+  });
+  setInterval(() => { if (current === 'bring' && document.visibilityState === 'visible' && !dlg.open) loadBring(); }, REFRESH_MS);
+
   // ---------- Pinned header ----------
   const topBar = document.querySelector('.top');
   const setTopH = () => document.documentElement.style.setProperty('--top-h', topBar.getBoundingClientRect().height + 'px');
@@ -575,13 +775,14 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   // ---------- Tabs ----------
   const scrollMemo = {};
   const showTab = () => {
-    const next = ['schedule', 'info', 'carpool', 'rooms'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'schedule';
+    const next = ['schedule', 'info', 'bring', 'carpool', 'rooms'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'schedule';
     scrollMemo[current] = scrollY;
     current = next;
     document.querySelectorAll('[data-view]').forEach(v => { v.hidden = v.dataset.view !== next; });
     jump.hidden = next !== 'schedule' || !jump.children.length;
     document.querySelectorAll('[data-tab]').forEach(a => { if (a.dataset.tab === next) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     scrollTo(0, scrollMemo[next] || 0); markJump();
+    if (next === 'bring') loadBring();
   };
   addEventListener('hashchange', showTab);
   showTab();

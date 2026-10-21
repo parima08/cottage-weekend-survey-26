@@ -1,0 +1,348 @@
+{
+ "ok": true,
+ "groups": [
+  {
+   "key": "kitchen",
+   "title": "Kitchen",
+   "items": [
+    {
+     "item": "Countertop blender (large)",
+     "needed": 4,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Measuring cups",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Ice cream scoop",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Baking trays (large)",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Salad Tongs",
+     "needed": 5,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Instant Pot",
+     "needed": 5,
+     "total": 3,
+     "people": [
+      {
+       "name": "Asha",
+       "qty": 2
+      },
+      {
+       "name": "Dev",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "item": "Tadka pan / vaghariyu",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Chef's Knife",
+     "needed": 4,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Large Colander or fine-mesh strainer",
+     "needed": 3,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Heat-resistant silicone spatula or wooden spoon",
+     "needed": 6,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Cutting Board",
+     "needed": 4,
+     "total": 1,
+     "people": [
+      {
+       "name": "Asha",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "item": "Electric Kettle",
+     "needed": 4,
+     "total": 4,
+     "people": [
+      {
+       "name": "Mira",
+       "qty": 2
+      },
+      {
+       "name": "Neel",
+       "qty": 2
+      }
+     ]
+    },
+    {
+     "item": "Medium Pot",
+     "needed": 1,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Non stick Saute Pan large",
+     "needed": 4,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Can Openers",
+     "needed": 3,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Ladle",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Whisk",
+     "needed": 1,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Chopper",
+     "needed": 3,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Mixing Bowls",
+     "needed": 4,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Serving bowls",
+     "needed": 5,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Empty yogurt containers",
+     "needed": 3,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Salad Spinner",
+     "needed": 1,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Oven trays",
+     "needed": 3,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "MIttens",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Masher",
+     "needed": 4,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Citrus juicer",
+     "needed": 3,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Small strainer (Chai strainer)",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Thermos",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Large Chai pots",
+     "needed": 3,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Large containers box",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Cooler",
+     "needed": 1,
+     "total": 1,
+     "people": [
+      {
+       "name": "Rohan",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "item": "Sharp Knife",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Trash bags",
+     "needed": 20,
+     "total": 10,
+     "people": [
+      {
+       "name": "Neel",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "item": "Scissors",
+     "needed": 4,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Rubber bands / Food packet clips",
+     "needed": 10,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Steel Serving Spoon",
+     "needed": 4,
+     "total": 0,
+     "people": []
+    }
+   ]
+  },
+  {
+   "key": "misc",
+   "title": "Miscellaneous",
+   "items": [
+    {
+     "item": "Extension cables (Large/surge protection)",
+     "needed": 6,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Extension cables",
+     "needed": 5,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Bapa's Chitrapat (Large)",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Bapa's Chitrapat (Medium / Small)",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "PKD Chitrapat (Large)",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "PKD Chitrapat (Medium / Small)",
+     "needed": 2,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Air mattress (queen / king)",
+     "needed": 10,
+     "total": 3,
+     "people": [
+      {
+       "name": "Kavi",
+       "qty": 3
+      }
+     ]
+    },
+    {
+     "item": "Air mattress (twin)",
+     "needed": 10,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Tall portable standing lights",
+     "needed": 10,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Portable heater",
+     "needed": 4,
+     "total": 4,
+     "people": [
+      {
+       "name": "Dev",
+       "qty": 4
+      }
+     ]
+    },
+    {
+     "item": "Comforter (boys)",
+     "needed": 30,
+     "total": 0,
+     "people": []
+    },
+    {
+     "item": "Outdoor lights",
+     "needed": 4,
+     "total": 0,
+     "people": []
+    }
+   ]
+  }
+ ]
+}

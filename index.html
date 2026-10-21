@@ -206,7 +206,8 @@ h1,h2,p {margin:0}
 .ev .opt-row .what {font-size:14px;font-weight:500}
 .tag {display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:500;padding:4px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent-ink)}
 .tag.opt {background:var(--opt);color:var(--opt-ink)}
-.tag.wear-tag {background:var(--tone-chip,var(--chip));color:var(--tone-ink,var(--chip-ink))}
+/* An event's own dress code uses the day header's chip, tinted in its color so it shows on the white card. */
+.tags .wear {background:var(--tone-chip,var(--chip));max-width:100%}
 /* Day sections take the color named in their dress code: --tone-deep paints the poster, --tone-ink the chips on white. */
 /* Every --tone-deep keeps white text above 5:1. */
 .tone-neutral {--tone-deep:#3a4a42;--tone-chip:#dce2db;--th-sky:#b5e0c8;--th-h2:#8acfaa;--th-h1:#5fb98a;--tone-ink:#33403a}
@@ -338,6 +339,19 @@ h1,h2,p {margin:0}
 .you-sec li {display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:15px}
 .you-sec li span {color:var(--muted);font-variant-numeric:tabular-nums}
 .you-sec p {margin-top:8px;font-size:14px;color:var(--muted)}
+.sheet .kicker {display:block;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+.add-body {padding:6px 20px 20px}
+.add-row {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.add-row > span, .field > span {font-size:14px;font-weight:500}
+.step.big button {width:46px;height:46px}
+.step.big output {min-width:32px;font-size:17px}
+.step button:disabled {color:#b5bfb9;cursor:default}
+.field {display:block;margin-top:16px}
+.field > span {display:block;margin-bottom:-6px}
+.field em {font-style:normal;font-weight:400;color:var(--muted)}
+.sheet-foot.two {display:grid;grid-template-columns:1fr 2fr;gap:10px;padding-top:12px}
+.sheet-foot .primary {background:var(--accent-ink);color:#fff}
+.mine-row .what small {display:block;font-size:12px;color:var(--muted);margin-top:1px;overflow-wrap:anywhere}
 .sheet-foot {padding:6px 20px calc(16px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
 .sheet-foot button {width:100%;min-height:46px;border:0;border-radius:10px;background:var(--page);font-size:15px;font-weight:500}
 .toast {position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));z-index:6;width:max-content;max-width:calc(100% - 32px);transform:translate(-50%,12px);background:var(--ink);color:#fff;font-size:14px;padding:12px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
@@ -378,7 +392,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     <div class="facts">
       <div class="fact"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8.5 3v4M15.5 3v4"/></svg></span><div><b>Fri, Oct 23 - Sun, Oct 25</b><span>2026</span></div></div>
       <div class="fact"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><b>13559 Dry Creek Road</b><span>Auburn, CA 95602</span></div></div>
-      <div class="fact"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3"/></svg></span><div><b>About 2h 30m</b><span>from San Jose</span></div></div>
+      <div class="fact"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3"/></svg></span><div><b>About 3 hours</b><span>from San Jose</span></div></div>
       <a class="go" href="https://www.google.com/maps/dir/?api=1&amp;destination=13559+Dry+Creek+Road%2C+Auburn%2C+CA+95602" target="_blank" rel="noopener">Get directions</a>
     </div>
     <div class="info-hero"><img src="auburn/img/two-homes-aerial.jpg" alt="Satellite view with the main home at upper left and the second home at lower right, beside the lake" width="761" height="670"><span class="map-label main">1 · Main home</span><span class="map-label second">2 · Second home</span></div>
@@ -401,6 +415,16 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   <div class="sheet-head you-head"><span class="avatar" id="you-av" aria-hidden="true"></span><div><h2 id="you-name"></h2><button type="button" class="link" id="you-switch">Not you? Switch</button></div></div>
   <div class="you-body" id="you-body"></div>
   <div class="sheet-foot"><button type="button" id="you-close">Done</button></div>
+</dialog>
+<dialog class="sheet" id="add" aria-labelledby="add-title" tabindex="-1">
+  <form id="add-form">
+    <div class="sheet-head"><small class="kicker">Bring</small><h2 id="add-title"></h2><p id="add-left"></p></div>
+    <div class="add-body">
+      <div class="add-row"><span id="add-qty-label">How many</span><div class="step big"><button type="button" data-step="-1" aria-label="One fewer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></button><output id="add-qty" aria-labelledby="add-qty-label">1</output><button type="button" data-step="1" aria-label="One more"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg></button></div></div>
+      <label class="field"><span>Notes <em>optional</em></span><input class="search" id="add-note" maxlength="300" placeholder="Size, brand, anything useful" autocomplete="off"></label>
+    </div>
+    <div class="sheet-foot two"><button type="button" id="add-cancel">Cancel</button><button type="submit" class="primary">Add to my list</button></div>
+  </form>
 </dialog>
 <dialog class="sheet" id="who" aria-labelledby="who-title">
   <div class="sheet-head"><h2 id="who-title">Who are you?</h2><p>Pick your name once. This phone will remember it.</p><input class="search" id="who-q" type="search" placeholder="Search names" autocomplete="off" aria-label="Search names"></div>
@@ -600,7 +624,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     const a = fmt(t.start);
     return `<div class="when"><b>${esc(a)}</b>${t.end !== null ? `<span>to ${esc(fmt(t.end).replace(a.slice(-3), ''))}</span>` : t.open ? '<span>onwards</span>' : ''}</div>`;
   };
-  const tagsHTML = (it, st, inGroup) => [st === 'now' && !inGroup ? '<span class="tag live">Now</span>' : '', it.optional && !inGroup ? '<span class="tag opt">Optional</span>' : '', it.wear ? `<span class="tag wear-tag ${toneOf(it.wear)}">Wear: ${esc(it.wear)}</span>` : ''].filter(Boolean).join('');
+  const tagsHTML = (it, st, inGroup) => [st === 'now' && !inGroup ? '<span class="tag live">Now</span>' : '', it.optional && !inGroup ? '<span class="tag opt">Optional</span>' : '', it.wear ? `<span class="wear ${toneOf(it.wear)}">${shirt}${esc(it.wear)}</span>` : ''].filter(Boolean).join('');
   // A row is [time | stop on the rail | card]; the card keeps its picture on the left.
   const stop = '<span class="stop" aria-hidden="true"></span>';
   const itemHTML = (it, st) => {
@@ -730,11 +754,11 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
       // Sign-up tabs have a title block above the header row, so start at the row whose first cell is "Item".
       const rows = parseCSV(signupTexts[gi] || ''), h = rows.findIndex(r => norm(r[0]) === 'item');
       if (h >= 0) {
-        const col = name => rows[h].findIndex(c => norm(c).startsWith(name)), pc = col('person'), qc = col('quantity');
+        const col = name => rows[h].findIndex(c => norm(c).startsWith(name)), pc = col('person'), qc = col('quantity'), nc = col('notes');
         for (const r of rows.slice(h + 1)) {
           const it = byKey.get(norm(r[0])); if (!it) continue;
           const q = +r[qc] || 0, name = (r[pc] || '').trim();
-          it.total += q; if (name) it.people.push({ name, qty: q });
+          it.total += q; if (name) it.people.push({ name, qty: q, note: nc >= 0 ? (r[nc] || '').trim() : '' });
         }
       }
       return { key: g.key, title: g.title, items: list };
@@ -785,7 +809,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     if (!me) { mineEl.hidden = true; return; }
     const rows = bring.flatMap(g => g.items.filter(myQty).map(it => ({ g, it, q: myQty(it) })));
     mineEl.innerHTML = `<div class="mine-head"><div><small>Your list</small></div>${rows.length ? `<span>${rows.length} ${rows.length === 1 ? 'item' : 'items'}</span>` : ''}</div>`
-      + (rows.length ? rows.map(({ g, it, q }) => `<div class="mine-row" data-group="${esc(g.key)}" data-item="${esc(it.item)}"><span class="what">${esc(it.item)}</span><div class="step"><button type="button" data-set="${q - 1}" ${q === 1 ? `class="rm" aria-label="Remove ${esc(it.item)}">${trash}` : `aria-label="One fewer ${esc(it.item)}">${minus}`}</button><output aria-label="How many">${q}</output><button type="button" data-set="${q + 1}" aria-label="One more ${esc(it.item)}"${q >= 50 ? ' disabled' : ''}>${plus}</button></div></div>`).join('')
+      + (rows.length ? rows.map(({ g, it, q }) => `<div class="mine-row" data-group="${esc(g.key)}" data-item="${esc(it.item)}"><span class="what">${esc(it.item)}${myNote(it) ? `<small>${esc(myNote(it))}</small>` : ''}</span><div class="step"><button type="button" data-set="${q - 1}" ${q === 1 ? `class="rm" aria-label="Remove ${esc(it.item)}">${trash}` : `aria-label="One fewer ${esc(it.item)}">${minus}`}</button><output aria-label="How many">${q}</output><button type="button" data-set="${q + 1}" aria-label="One more ${esc(it.item)}"${q >= 50 ? ' disabled' : ''}>${plus}</button></div></div>`).join('')
         : `<p class="mine-empty">Nothing yet. Tap Bring on anything below.</p>`);
   };
   const renderBring = () => {
@@ -830,9 +854,13 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   const toast = msg => { toastEl.textContent = msg; toastEl.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('show'), 3200); };
   // Sets how many of an item you're bringing. The screen updates at once; quick taps on the stepper send one save.
   const findItem = (gk, name) => { const g = bring.find(x => x.key === gk); return g && { g, it: g.items.find(x => x.item === name) }; };
-  const setMine = (g, it, q) => {
-    const others = it.people.filter(p => !isMe(p.name));
-    it.people = q ? [...others, { name: me, qty: q }] : others;
+  const myNote = it => (it.people.find(p => isMe(p.name) && p.note) || {}).note || '';
+  // A note only travels with the save that first adds the item; the sheet keeps it from there.
+  const notes = new Map();
+  const setMine = (g, it, q, note) => {
+    const others = it.people.filter(p => !isMe(p.name)), keepNote = note ?? myNote(it);
+    if (note) notes.set(g.key + '|' + it.item, note);
+    it.people = q ? [...others, { name: me, qty: q, note: keepNote }] : others;
     it.total = it.people.reduce((a, p) => a + p.qty, 0);
     keep.add(g.key + '|' + it.item); renderBring();
     if (sample) return;
@@ -840,7 +868,8 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     clearTimeout(saving.get(key));
     saving.set(key, setTimeout(async () => {
       try {
-        const r = await fetch(SIGNUP_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ group: g.key, item: it.item, name: me, qty: q }) });
+        const r = await fetch(SIGNUP_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ group: g.key, item: it.item, name: me, qty: q, notes: notes.get(key) || '' }) });
+        notes.delete(key);
         const j = await r.json();
         if (!j.ok) throw new Error(j.error);
       } catch (err) {
@@ -899,7 +928,27 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   youDlg.addEventListener('click', e => { if (e.target === youDlg || e.target.closest('[data-close]')) youDlg.close(); });
   renderMeBtn();
 
-  const add = (g, it) => { setMine(g, it, myQty(it) + 1); toast(`Added ${it.item} to your list.`); };
+  // ---------- Add sheet ----------
+  // Tapping Bring opens a short sheet: how many, an optional note, then it joins your list.
+  const addDlg = document.getElementById('add'), addForm = document.getElementById('add-form'), addNote = document.getElementById('add-note'), addQty = document.getElementById('add-qty');
+  let adding = null, addN = 1;
+  const setAddQty = n => { addN = Math.min(Math.max(n, 1), 50); addQty.value = addN; addForm.querySelector('[data-step="-1"]').disabled = addN <= 1; addForm.querySelector('[data-step="1"]').disabled = addN >= 50; };
+  const add = (g, it) => {
+    adding = { g, it };
+    document.getElementById('add-title').textContent = it.item;
+    document.getElementById('add-left').textContent = left(it) ? `${left(it)} of ${it.needed} still needed` : `All ${it.needed} are covered. Extras are welcome.`;
+    addNote.value = ''; setAddQty(1); addDlg.showModal(); addDlg.focus();
+  };
+  addForm.addEventListener('click', e => { const b = e.target.closest('[data-step]'); if (b) setAddQty(addN + +b.dataset.step); });
+  addForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const { g, it } = adding;
+    setMine(g, it, myQty(it) + addN, addNote.value.trim().slice(0, 300) || undefined);
+    addDlg.close();
+    toast(`Added ${addN > 1 ? addN + ' × ' : ''}${it.item} to your list.`);
+  });
+  document.getElementById('add-cancel').onclick = () => addDlg.close();
+  addDlg.addEventListener('click', e => { if (e.target === addDlg) addDlg.close(); });
   document.getElementById('view-bring').addEventListener('click', e => {
     const s = e.target.closest('[data-set]');
     if (s) { const row = s.closest('.mine-row'), f = findItem(row.dataset.group, row.dataset.item); if (f && f.it) setMine(f.g, f.it, Math.min(+s.dataset.set, 50)); return; }
@@ -915,7 +964,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     if (!me) askWho(() => add(f.g, f.it)); else add(f.g, f.it);
   });
   loadPeople();
-  setInterval(() => { if (current === 'bring' && document.visibilityState === 'visible' && !whoDlg.open && !youDlg.open) loadBring(); }, REFRESH_MS);
+  setInterval(() => { if (current === 'bring' && document.visibilityState === 'visible' && !whoDlg.open && !youDlg.open && !addDlg.open) loadBring(); }, REFRESH_MS);
 
   // ---------- Pinned header ----------
   const topBar = document.querySelector('.top');

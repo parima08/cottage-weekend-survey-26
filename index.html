@@ -60,6 +60,12 @@ h1,h2,p {margin:0}
 .go {display:flex;justify-content:center;align-items:center;min-height:48px;margin-top:4px;border-radius:10px;background:var(--accent-ink);color:#fff;font-weight:500;font-size:15px;text-decoration:none}
 .info-h {font-size:20px;font-weight:400;letter-spacing:-.025em;margin:28px 2px 0}
 .home .item {margin-top:14px}
+.rooms {display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.room {margin:0;background:var(--card);border-radius:10px;overflow:hidden;box-shadow:var(--card-shadow)}
+.room img {display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--line)}
+.room figcaption {padding:9px 11px 11px}
+.room b {display:block;font-size:14px;font-weight:500;letter-spacing:-.01em}
+.room span {display:block;font-size:12px;color:var(--muted);margin-top:1px}
 .home .thumb img {display:block;width:100%;height:100%;object-fit:cover}
 .home .item-body .where + .where {margin-top:2px}
 .more {display:inline-flex;align-items:center;min-height:36px;margin-top:6px;color:var(--accent-ink);font-size:13px;font-weight:500;text-decoration:none}
@@ -82,15 +88,15 @@ h1,h2,p {margin:0}
 .jump button[aria-current="true"] {background:var(--accent-ink);color:#fff;box-shadow:none}
 .jump .jnow {color:var(--accent-ink);display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .jump .jnow::before {content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
-.day, .item, .group {scroll-margin-top:var(--top-h,76px)}
-.today {background:var(--tone-bg,var(--card));border-radius:14px;margin-top:4px;padding:16px 14px 14px;box-shadow:var(--card-shadow)}
+.day, .ev {scroll-margin-top:var(--top-h,76px)}
+/* Today card: the same deep day color as the day's poster below, white rows on it. */
+.today {background:var(--tone-deep,var(--ink));color:#fff;border-radius:14px;margin-top:4px;padding:16px 14px 14px;box-shadow:var(--card-shadow)}
 .today[hidden], .hero[hidden] {display:none}
 .hero:not([hidden]) ~ .today {margin-top:16px}
 .today-head {display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 4px 12px}
 .today-head h2 {font-size:20px;font-weight:400;letter-spacing:-.025em;line-height:1.3}
-.today-head h2 span {display:block;font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.02em}
-.today-head .wear {background:var(--card);box-shadow:0 0 0 1px rgba(29,52,40,.08),0 2px 6px rgba(29,52,40,.08)}
-.today-rows {background:var(--card);border-radius:10px;box-shadow:0 0 0 1px rgba(29,52,40,.06)}
+.today-head h2 span {display:block;font-size:11px;color:rgba(255,255,255,.85);margin-top:4px;letter-spacing:.02em}
+.today-rows {background:var(--card);color:var(--ink);border-radius:10px}
 .today button {display:block;width:100%;padding:13px 14px;border:0;background:none;font:inherit;color:inherit;text-align:left}
 .today button + button {border-top:1px solid var(--line)}
 .today small {display:block;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
@@ -126,38 +132,77 @@ h1,h2,p {margin:0}
 .install p strong {color:var(--ink)}
 .install .x {border:0;background:none;width:44px;height:44px;margin:-6px -8px 0 0;border-radius:50%;color:var(--muted);font-size:20px;line-height:1;flex:none}
 
-.day {padding-bottom:4px}
-.dayhead {position:sticky;top:var(--top-h,76px);z-index:2;display:flex;justify-content:space-between;align-items:center;gap:10px;margin:16px -16px 0;padding:16px 18px 12px;background:var(--page)}
-.dayhead h2 {font-size:20px;font-weight:400;letter-spacing:-.025em;white-space:nowrap;line-height:1.3}
-.dayhead h2 span {display:block;font-size:11px;font-weight:400;color:var(--muted);margin-top:4px;letter-spacing:.02em}
-.wear {display:inline-flex;align-items:center;gap:7px;background:var(--tone-chip,var(--chip));color:var(--tone-ink,var(--chip-ink));border-radius:12px;padding:8px 10px;font-size:11px;font-weight:500;line-height:1.5;min-width:0;max-width:58%;overflow-wrap:anywhere}
-.dayhead .wear {background:var(--card);box-shadow:0 0 0 1px rgba(29,52,40,.08),0 2px 6px rgba(29,52,40,.08)}
+/* Schedule: each day is a poster in its deep dress-code color with a timeline rail down it. */
+/* Times sit in white on the rail; white event cards hang off the stops, so nothing blends. */
+.day {--ev-time:72px;--ev-rail:32px;--panel:var(--tone-deep,var(--ink));position:relative;margin:14px -16px 0;padding:0 14px 18px;background:var(--panel);color:#fff}
+.day:first-child {margin-top:16px}
+.dayhead {position:sticky;top:var(--top-h,76px);z-index:2;display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 -14px;padding:16px 16px 12px;background:var(--panel)}
+.dayhead h2 {font-size:22px;font-weight:500;letter-spacing:-.025em;white-space:nowrap;line-height:1.25}
+.dayhead h2 span {display:block;font-size:11.5px;font-weight:400;color:rgba(255,255,255,.85);margin-top:3px;letter-spacing:.02em}
+.wear {display:inline-flex;align-items:center;gap:7px;background:var(--card);color:var(--tone-ink,var(--chip-ink));border-radius:12px;padding:8px 10px;font-size:11px;font-weight:500;line-height:1.5;min-width:0;max-width:58%;overflow-wrap:anywhere}
 .wear svg {width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
 .item {display:grid;grid-template-columns:84px minmax(0,1fr);align-items:stretch;background:var(--card);border-radius:9px;overflow:hidden;margin-top:16px;box-shadow:var(--card-shadow)}
-.item.now {box-shadow:0 0 0 1.5px var(--accent),var(--card-shadow)}
-.item.past .thumb, .group.past .thumb {opacity:.65}
-.item.past .what, .group.past .what, .item.past .time, .group.past .group-head .time {color:var(--muted)}
 .thumb {min-height:96px;overflow:hidden}
 .item-body {padding:16px 14px;min-width:0;display:flex;flex-direction:column;justify-content:center;overflow-wrap:anywhere}
 .thumb svg {display:block;width:100%;height:100%}
 .time {display:block;font-size:15px;font-weight:500;color:var(--accent-ink);margin-bottom:4px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
 .what {display:block;font-size:15px;font-weight:500;letter-spacing:-.015em;line-height:1.45}
 .where {display:block;font-size:12px;color:var(--muted);margin-top:1px}
-.tags {display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
-.group-head .tags {margin:0;padding:0;border:0}
+.tags {display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+/* The rail: a white line from the first stop to the last, a stop per event, the card to its right. */
+/* Each row draws its own segment into the next stop, which covers the end, so the line never breaks or overshoots. */
+.rail {display:grid;gap:10px;padding-top:4px}
+.ev {--ev-art:92px;position:relative;display:grid;grid-template-columns:var(--ev-time) var(--ev-rail) minmax(0,1fr);align-items:start}
+.ev::before {content:"";position:absolute;top:24px;bottom:-34px;left:calc(var(--ev-time) + var(--ev-rail) / 2 - 1px);width:2px;background:rgba(255,255,255,.4)}
+.ev:last-child::before {display:none}
+.ev .when {padding:14px 6px 0 0;font-variant-numeric:tabular-nums;color:#fff}
+.ev .when b {display:block;font-size:15px;font-weight:600;letter-spacing:-.01em;line-height:20px;white-space:nowrap}
+.ev .when span {display:block;font-size:11.5px;color:rgba(255,255,255,.85);margin-top:1px;white-space:nowrap}
+/* Stops read --panel, not --tone-deep, so a row with its own wear color still sits on the day's rail. */
+.ev .stop {position:relative;z-index:1;width:12px;height:12px;margin:18px auto 0;border-radius:50%;background:#fff;box-shadow:0 0 0 3px var(--panel)}
+.ev .card {min-width:0;display:grid;grid-template-columns:var(--ev-art) minmax(0,1fr);align-items:stretch;min-height:86px;background:var(--card);color:var(--ink);border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.ev .body {min-width:0;padding:13px 14px;display:flex;flex-direction:column;justify-content:center;overflow-wrap:anywhere}
+.ev .what {font-size:15px;line-height:1.35}
+/* Thumbnails fill the card's left edge and use the deeper shades of the day's color. */
+.ev .thumb {min-height:86px;--t-sky:var(--th-sky);--t-h2:var(--th-h2);--t-h1:var(--th-h1)}
+/* Now: a glowing stop, a white ring floating around the card, and the card itself in the live tint. */
+.ev.now .stop {width:16px;height:16px;margin-top:16px;box-shadow:0 0 0 3px var(--panel),0 0 0 6px rgba(255,255,255,.45);animation:halo 2.4s ease-in-out infinite}
+.ev.now .card {background:var(--accent-soft);outline:3px solid #fff;outline-offset:2px}
+.ev.now .when b {font-size:16px}
+.ev.now .tag.live {background:var(--accent-ink);color:#fff}
+@keyframes halo {50% {box-shadow:0 0 0 3px var(--panel),0 0 0 8px rgba(255,255,255,.2)}}
+/* Past: hollow stop, muted time and text, washed thumbnail. */
+.ev.past .stop {background:var(--panel);box-shadow:0 0 0 3px var(--panel),inset 0 0 0 2px rgba(255,255,255,.6)}
+.ev.past .when {color:rgba(255,255,255,.7)}
+.ev.past .when span {color:rgba(255,255,255,.6)}
+.ev.past .what, .ev.past .where {color:var(--muted)}
+.ev.past .thumb {opacity:.55;filter:saturate(.4)}
+.ev.past .card {box-shadow:none}
+/* "Pick one": the options stack inside one card under a single stop, so they read as one slot. */
+.ev.group .card {display:block}
+.ev .pick {display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.ev .pick b {font-size:15px;font-weight:500}
+.ev.now .pick {border-bottom-color:rgba(29,52,40,.12)}
+.ev .opt-row {display:grid;grid-template-columns:var(--ev-art) minmax(0,1fr);align-items:stretch;min-height:56px}
+.ev .opt-row + .opt-row {border-top:1px solid var(--line)}
+.ev.now .opt-row + .opt-row {border-top-color:rgba(29,52,40,.12)}
+.ev .opt-row .thumb {min-height:56px}
+.ev .opt-row .body {padding:9px 14px}
+.ev .opt-row .what {font-size:14px;font-weight:500}
 .tag {display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:500;padding:4px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent-ink)}
 .tag.opt {background:var(--opt);color:var(--opt-ink)}
 .tag.wear-tag {background:var(--tone-chip,var(--chip));color:var(--tone-ink,var(--chip-ink))}
-/* Day sections take the color named in their dress code. */
-.tone-neutral {--tone-bg:#e2e7e2;--tone-chip:#dce2db;--tone-ink:#33403a}
-.tone-blue {--tone-bg:#d6e7f9;--tone-chip:#dceafb;--tone-ink:#315f88}
-.tone-yellow {--tone-bg:#faedc4;--tone-chip:#f9e4a0;--tone-ink:#634c00}
-.tone-green {--tone-bg:#d3ecdd;--tone-chip:#c6ead5;--tone-ink:#1d6b43}
-.tone-red {--tone-bg:#f9dcd8;--tone-chip:#f8cbc6;--tone-ink:#8f2a22}
-.tone-orange {--tone-bg:#fce3c9;--tone-chip:#f9d6b0;--tone-ink:#8a4b12}
-.tone-purple {--tone-bg:#e6dcf9;--tone-chip:#dcd0f7;--tone-ink:#4b3a86}
-.tone-pink {--tone-bg:#f9d9e6;--tone-chip:#f6c9dc;--tone-ink:#8a2f57}
+/* Day sections take the color named in their dress code: --tone-deep paints the poster, --tone-ink the chips on white. */
+/* Every --tone-deep keeps white text above 5:1. */
+.tone-neutral {--tone-deep:#3a4a42;--tone-chip:#dce2db;--th-sky:#b5e0c8;--th-h2:#8acfaa;--th-h1:#5fb98a;--tone-ink:#33403a}
+.tone-blue {--tone-deep:#2b5a90;--tone-chip:#dceafb;--th-sky:#b7d4f3;--th-h2:#8fbbe8;--th-h1:#6b9fd8;--tone-ink:#315f88}
+.tone-yellow {--tone-deep:#7d5b00;--tone-chip:#f9e4a0;--th-sky:#f7dc8a;--th-h2:#efc65a;--th-h1:#dcaa2e;--tone-ink:#634c00}
+.tone-green {--tone-deep:#1f6b45;--tone-chip:#c6ead5;--th-sky:#b5e0c8;--th-h2:#8acfaa;--th-h1:#5fb98a;--tone-ink:#1d6b43}
+.tone-red {--tone-deep:#9a2f26;--tone-chip:#f8cbc6;--th-sky:#f4bcb4;--th-h2:#ea958a;--th-h1:#d96e60;--tone-ink:#8f2a22}
+.tone-orange {--tone-deep:#944a0c;--tone-chip:#f9d6b0;--th-sky:#f8cfa3;--th-h2:#f1b072;--th-h1:#e08f45;--tone-ink:#8a4b12}
+.tone-purple {--tone-deep:#4f3d8c;--tone-chip:#dcd0f7;--th-sky:#cdbdf2;--th-h2:#b29ce8;--th-h1:#957bdb;--tone-ink:#4b3a86}
+.tone-pink {--tone-deep:#9a3561;--tone-chip:#f6c9dc;--th-sky:#f3c0d6;--th-h2:#e999bd;--th-h1:#db76a3;--tone-ink:#8a2f57}
 /* Illustrations inside a toned day or event repaint in that color. */
 .tone-blue {--t-sky:#e5f0fc;--t-h2:#d2e4f7;--t-h1:#b4d3ef;--t-acc:#528dc8;--t-tree:#578bb3;--t-tree2:#8bb8dc}
 .tone-yellow {--t-sky:#fdf3d3;--t-h2:#f8e3a2;--t-h1:#efcf6a;--t-acc:#d39b12;--t-tree:#6f9a3c;--t-tree2:#b7c25a}
@@ -166,38 +211,39 @@ h1,h2,p {margin:0}
 .tone-orange {--t-sky:#fdeedd;--t-h2:#f8d3ad;--t-h1:#f0b47a;--t-acc:#e07a26;--t-tree:#a55d22;--t-tree2:#e39a5c}
 .tone-purple {--t-sky:#efe9fb;--t-h2:#dcd0f7;--t-h1:#bfaeee;--t-acc:#7a5cd0;--t-tree:#5a45a0;--t-tree2:#9b86df}
 .tone-pink {--t-sky:#fce8f0;--t-h2:#f5c9db;--t-h1:#eca2c1;--t-acc:#d5508a;--t-tree:#a33a68;--t-tree2:#e083ab}
-/* Keep the pajama motifs off text and give them a full row below the sticky header. */
-.tone-pajama {--pajamas:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='70' viewBox='0 0 180 70'%3E%3Cg transform='translate(30 13) rotate(-12 15 20)'%3E%3Cpath d='M8 0l7 4 7-4 9 7-5 9-5-3v14H9V13l-5 3-5-9z' fill='%23c8b5e8'/%3E%3Cpath d='M9 30h12l3 19h-8l-1-12-1 12H6z' fill='%23c8b5e8'/%3E%3Cpath d='M11 2l4 8 4-8M15 10v14' fill='none' stroke='%23fff' stroke-width='1.4'/%3E%3C/g%3E%3Cg transform='translate(118 12) rotate(14 15 20)'%3E%3Cpath d='M8 0l7 4 7-4 9 7-5 9-5-3v14H9V13l-5 3-5-9z' fill='%239fc7e5'/%3E%3Cpath d='M9 30h12l3 19h-8l-1-12-1 12H6z' fill='%239fc7e5'/%3E%3Cpath d='M11 2l4 8 4-8M15 10v14' fill='none' stroke='%23fff' stroke-width='1.4'/%3E%3C/g%3E%3Cpath d='M90 18a11 11 0 1 0 9 18 10 10 0 0 1-9-18' fill='%23efd28a'/%3E%3Cpath d='M9 29l2 4 4 2-4 2-2 4-2-4-4-2 4-2zM171 45l2 4 4 2-4 2-2 4-2-4-4-2 4-2z' fill='%23e5b3cb'/%3E%3C/svg%3E");--tone-head:linear-gradient(100deg,#e7dbf9 0%,#f9dae7 50%,#d8e8f9 100%);--tone-bg:var(--tone-head);--tone-chip:linear-gradient(90deg,#dccdf7,#f6c9dc,#cfe2f7);--tone-ink:#4b3a86;--t-sky:#f1e8fb;--t-h2:#f6cfe0;--t-h1:#c9b6f0;--t-acc:#d5508a;--t-tree:#7a5cd0;--t-tree2:#e083ab}
-.day.tone {background:var(--tone-bg);margin:24px -16px 0;padding:0 16px 24px}
-.day.tone .dayhead {background:var(--tone-head,var(--tone-bg));margin-top:0}
+/* Pajama day is a night poster; the motifs get a full strip below the sticky header, off the text. */
+.tone-pajama {--pajamas:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='70' viewBox='0 0 180 70'%3E%3Cg transform='translate(30 13) rotate(-12 15 20)'%3E%3Cpath d='M8 0l7 4 7-4 9 7-5 9-5-3v14H9V13l-5 3-5-9z' fill='%23c8b5e8'/%3E%3Cpath d='M9 30h12l3 19h-8l-1-12-1 12H6z' fill='%23c8b5e8'/%3E%3Cpath d='M11 2l4 8 4-8M15 10v14' fill='none' stroke='%23fff' stroke-width='1.4'/%3E%3C/g%3E%3Cg transform='translate(118 12) rotate(14 15 20)'%3E%3Cpath d='M8 0l7 4 7-4 9 7-5 9-5-3v14H9V13l-5 3-5-9z' fill='%239fc7e5'/%3E%3Cpath d='M9 30h12l3 19h-8l-1-12-1 12H6z' fill='%239fc7e5'/%3E%3Cpath d='M11 2l4 8 4-8M15 10v14' fill='none' stroke='%23fff' stroke-width='1.4'/%3E%3C/g%3E%3Cpath d='M90 18a11 11 0 1 0 9 18 10 10 0 0 1-9-18' fill='%23efd28a'/%3E%3Cpath d='M9 29l2 4 4 2-4 2-2 4-2-4-4-2 4-2zM171 45l2 4 4 2-4 2-2 4-2-4-4-2 4-2z' fill='%23e5b3cb'/%3E%3C/svg%3E");--tone-deep:#3b3878;--th-sky:#d4c3f4;--th-h2:#ecaecb;--th-h1:#ab95e6;--tone-chip:linear-gradient(90deg,#dccdf7,#f6c9dc,#cfe2f7);--tone-ink:#4b3a86;--t-sky:#f1e8fb;--t-h2:#f6cfe0;--t-h1:#c9b6f0;--t-acc:#d5508a;--t-tree:#7a5cd0;--t-tree2:#e083ab}
 .day-art {display:none}
-.day.tone-pajama .day-art {display:block;height:56px;margin:0 -16px -4px;background:var(--pajamas) center/180px 70px repeat-x,var(--tone-head)}
-.day.tone-pajama > .item {margin-top:22px}
+.day.tone-pajama .day-art {display:block;height:56px;margin:0 -14px 2px;background:var(--pajamas) center/180px 70px repeat-x}
 @media (max-width:359px) {
   .item {grid-template-columns:76px minmax(0,1fr)}
   .item-body {padding:14px 12px}
   .what {font-size:14px}
-  .group-head {flex-wrap:wrap}
+  .day {--ev-time:66px;--ev-rail:30px;padding-inline:12px}
+  .ev .when b {font-size:14px}
+  .ev.now .when b {font-size:14.5px}
+  .dayhead {margin-inline:-12px;padding-inline:14px}
+  .day.tone-pajama .day-art {margin-inline:-12px}
+  .ev {--ev-art:80px}
+  .ev .body {padding:12px}
+  .ev .opt-row .body {padding-inline:12px}
 }
 @media (min-width:600px) {
   .hero {height:300px}
-  .day.tone {margin-inline:0;padding-inline:20px;border-radius:14px}
-  .day.tone .dayhead {margin-inline:-20px;padding-inline:20px;border-radius:14px 14px 0 0}
-  .day.tone-pajama .day-art {margin-inline:-20px}
+  .day {--ev-time:84px;--ev-rail:36px;margin-inline:0;padding-inline:18px;border-radius:14px}
+  .dayhead {margin-inline:-18px;padding-inline:20px;border-radius:14px 14px 0 0}
+  .day.tone-pajama .day-art {margin-inline:-18px}
   .item {grid-template-columns:104px minmax(0,1fr)}
   .thumb {min-height:104px}
   .item-body {padding:18px 20px}
+  .ev {--ev-art:116px}
+  .ev .body {padding:14px 18px}
+  .ev .opt-row .body {padding-inline:18px}
 }
 
 .tag.live::before {content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
 
-.group {background:var(--card);border-radius:9px;overflow:hidden;margin-top:16px;box-shadow:var(--card-shadow)}
-.group.now {box-shadow:0 0 0 1.5px var(--accent),var(--card-shadow)}
 
-.group-head {display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px}
-.group-head b {display:block;font-size:16px;font-weight:500}
-.group .item {box-shadow:none;margin:0;border-radius:0;border-top:1px solid var(--line)}
-.group .thumb {min-height:80px}
 
 
 .note {text-align:center;padding:40px 20px;color:var(--muted)}
@@ -209,7 +255,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 .il .tk{fill:var(--il-trunk)} .il .wt{fill:var(--il-water)} .il .sun{fill:var(--il-sun)} .il .cl{fill:var(--il-cloud)} .il .ink{fill:var(--il-ink)}
 .il .wall{fill:var(--il-wall)} .il .floor{fill:var(--il-floor)} .il .night{fill:var(--il-night)} .il .acc{fill:var(--t-acc,var(--accent))} .il .warm{fill:var(--il-warm)} .il .pink{fill:var(--il-pink)} .il .card{fill:var(--card)}
 .il .str{fill:none;stroke:var(--il-ink);stroke-width:1.4;stroke-linecap:round} .il .stm{fill:none;stroke:var(--il-cloud);stroke-width:3;stroke-linecap:round}
-@media (prefers-reduced-motion:reduce) {*{transition:none!important;scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce) {*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -239,8 +285,8 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     </div>
     <div class="info-hero"><img src="auburn/img/two-homes-aerial.jpg" alt="Satellite view with the main home at upper left and the second home at lower right, beside the lake" width="761" height="670"><span class="map-label main">1 · Main home</span><span class="map-label second">2 · Second home</span></div>
     <h2 class="info-h">The homes</h2>
-    <article class="home"><div class="item"><div class="thumb"><img src="auburn/img/main-dusk.jpg" alt="" loading="lazy"></div><div class="item-body"><span class="time">Home 1</span><span class="what">Main home</span><span class="where">5 bedrooms · 12 beds · 4.5 baths</span><a class="more" href="https://www.airbnb.com/rooms/1717790396205238720" target="_blank" rel="noopener">See on Airbnb ↗</a></div></div><div class="gallery" tabindex="0" aria-label="Photos"><img src="auburn/img/main-pool.jpg" alt="Pool and loungers" loading="lazy"><img src="auburn/img/main-living.jpg" alt="Living room and kitchen" loading="lazy"><img src="auburn/img/main-dining.jpg" alt="Dining table" loading="lazy"><img src="auburn/img/main-porch.jpg" alt="Wraparound porch" loading="lazy"><img src="auburn/img/main-games.jpg" alt="Lounge with arcade games" loading="lazy"><img src="auburn/img/main-firepit.jpg" alt="Fire pit patio" loading="lazy"><img src="auburn/img/main-aerial.jpg" alt="Aerial view" loading="lazy"></div></article>
-    <article class="home"><div class="item"><div class="thumb"><img src="auburn/img/second-01.jpg" alt="" loading="lazy"></div><div class="item-body"><span class="time">Home 2 · walking distance</span><span class="what">Second home</span><span class="where">2 bedrooms · 5 beds · 2 baths</span><span class="where">Lake-view deck · Hot tub · Private sauna</span><a class="more" href="https://www.airbnb.com/rooms/1156745847354612810" target="_blank" rel="noopener">See on Airbnb ↗</a></div></div><div class="gallery" tabindex="0" aria-label="Photos"><img src="auburn/img/second-02.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-04.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-06.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-09.jpg" alt="Second home" loading="lazy"></div></article>
+    <article class="home"><div class="item"><div class="thumb"><img src="auburn/img/main-dusk.jpg" alt="" loading="lazy"></div><div class="item-body"><span class="time">Home 1</span><span class="what">Main home</span><span class="where">5 bedrooms · 12 beds · 4.5 baths</span><a class="more" href="https://www.airbnb.com/rooms/1717790396205238720" target="_blank" rel="noopener">See on Airbnb ↗</a></div></div><div class="gallery" tabindex="0" aria-label="Photos"><img src="auburn/img/main-pool.jpg" alt="Pool and loungers" loading="lazy"><img src="auburn/img/main-living.jpg" alt="Living room and kitchen" loading="lazy"><img src="auburn/img/main-dining.jpg" alt="Dining table" loading="lazy"><img src="auburn/img/main-porch.jpg" alt="Wraparound porch" loading="lazy"><img src="auburn/img/main-games.jpg" alt="Lounge with arcade games" loading="lazy"><img src="auburn/img/main-firepit.jpg" alt="Fire pit patio" loading="lazy"><img src="auburn/img/main-aerial.jpg" alt="Aerial view" loading="lazy"></div></article><div class="rooms"><figure class="room"><img src="auburn/img/room-main-1.jpg" alt="Bedroom with a carved headboard and a curved wall of windows" loading="lazy"><figcaption><b>Bedroom 1</b><span>1 king · 1 single</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-2.jpg" alt="Bedroom with a spotted rug and a ceiling fan" loading="lazy"><figcaption><b>Bedroom 2</b><span>1 queen · 1 sofa bed</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-3.jpg" alt="Bedroom with a vaulted ceiling and a green nightstand" loading="lazy"><figcaption><b>Bedroom 3</b><span>1 king · 1 sofa bed</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-4.jpg" alt="Two double beds beneath small framed art" loading="lazy"><figcaption><b>Bedroom 4</b><span>2 doubles · 1 couch</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-5.jpg" alt="Bedroom with a checkered rug and doors to a balcony" loading="lazy"><figcaption><b>Bedroom 5</b><span>1 king · 1 sofa bed</span></figcaption></figure><figure class="room"><img src="auburn/img/room-main-living.jpg" alt="Living room with two gray sofas" loading="lazy"><figcaption><b>Living room</b><span>2 sofa beds</span></figcaption></figure></div>
+    <article class="home"><div class="item"><div class="thumb"><img src="auburn/img/second-01.jpg" alt="" loading="lazy"></div><div class="item-body"><span class="time">Home 2 · walking distance</span><span class="what">Second home</span><span class="where">2 bedrooms · 5 beds · 2 baths</span><span class="where">Lake-view deck · Hot tub · Private sauna</span><a class="more" href="https://www.airbnb.com/rooms/1156745847354612810" target="_blank" rel="noopener">See on Airbnb ↗</a></div></div><div class="gallery" tabindex="0" aria-label="Photos"><img src="auburn/img/second-02.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-04.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-06.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-09.jpg" alt="Second home" loading="lazy"></div></article><div class="rooms"><figure class="room"><img src="auburn/img/room-second-1.jpg" alt="Bedroom with a wood bed beside a tree-filled window" loading="lazy"><figcaption><b>Bedroom 1</b><span>1 king · 1 sofa bed</span></figcaption></figure><figure class="room"><img src="auburn/img/room-second-2.jpg" alt="Bed with a metal frame beneath abstract line art" loading="lazy"><figcaption><b>Bedroom 2</b><span>1 queen</span></figcaption></figure><figure class="room"><img src="auburn/img/room-second-living.jpg" alt="Living room with a sectional and a gold-framed mirror" loading="lazy"><figcaption><b>Living room</b><span>2 single beds</span></figcaption></figure></div>
   </section>
   <section id="view-carpool" data-view="carpool" hidden><div class="empty"><div class="empty-art" data-art="car"></div><div class="empty-body"><h1>Carpool</h1><p>Car assignments will show up here closer to the weekend.</p></div></div></section>
   <section id="view-rooms" data-view="rooms" hidden><div class="empty"><div class="empty-art" data-art="bed"></div><div class="empty-body"><h1>Rooms</h1><p>Room assignments will show up here closer to the weekend.</p></div></div></section>
@@ -406,10 +452,17 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     return now.min >= end ? 'past' : now.min >= it.t.start ? 'now' : '';
   };
   const compareKeys = (a, b) => { const [y1, m1, d1] = a.split('-').map(Number), [y2, m2, d2] = b.split('-').map(Number); return (y1 - y2) || (m1 - m2) || (d1 - d2); };
-  const itemHTML = (it, st, inGroup) => {
-    const time = it.t ? fmtRange(it.t.start, it.t.end) : 'Anytime';
-    const tags = [st === 'now' && !inGroup ? '<span class="tag live">Now</span>' : '', it.optional && !inGroup ? '<span class="tag opt">Optional</span>' : '', it.wear ? `<span class="tag wear-tag ${toneOf(it.wear)}">Wear: ${esc(it.wear)}</span>` : ''].filter(Boolean).join('');
-    return `<div class="item ${inGroup ? '' : st} ${toneOf(it.wear)}"${inGroup ? '' : ` id="ev-${it.id}"`}><div class="thumb">${scene(it.art)}</div><div class="item-body">${inGroup ? '' : `<span class="time">${esc(time)}</span>`}<span class="what">${esc(it.title)}</span>${it.where ? `<span class="where">${esc(it.where)}</span>` : ''}${tags ? `<div class="tags">${tags}</div>` : ''}</div></div>`;
+  const whenHTML = t => {
+    if (!t) return '<div class="when"><b>Anytime</b></div>';
+    const a = fmt(t.start);
+    return `<div class="when"><b>${esc(a)}</b>${t.end !== null ? `<span>to ${esc(fmt(t.end).replace(a.slice(-3), ''))}</span>` : ''}</div>`;
+  };
+  const tagsHTML = (it, st, inGroup) => [st === 'now' && !inGroup ? '<span class="tag live">Now</span>' : '', it.optional && !inGroup ? '<span class="tag opt">Optional</span>' : '', it.wear ? `<span class="tag wear-tag ${toneOf(it.wear)}">Wear: ${esc(it.wear)}</span>` : ''].filter(Boolean).join('');
+  // A row is [time | stop on the rail | card]; the card keeps its picture on the left.
+  const stop = '<span class="stop" aria-hidden="true"></span>';
+  const itemHTML = (it, st) => {
+    const tags = tagsHTML(it, st, false);
+    return `<div class="ev ${st} ${toneOf(it.wear)}" id="ev-${it.id}">${whenHTML(it.t)}${stop}<div class="card"><div class="thumb">${scene(it.art)}</div><div class="body"><span class="what">${esc(it.title)}</span>${it.where ? `<span class="where">${esc(it.where)}</span>` : ''}${tags ? `<div class="tags">${tags}</div>` : ''}</div></div></div>`;
   };
   const render = days => {
     const now = nowParts();
@@ -423,11 +476,11 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
         for (let j = i; j < dy.items.length && dy.items[j].optional && it.optional && dy.items[j].raw && dy.items[j].raw === it.raw; j++) same.push(dy.items[j]);
         if (same.length > 1) {
           const st = state(same[0], dy, now);
-          html += `<div class="group ${st}" id="ev-${it.id}"><div class="group-head"><div><span class="time">${esc(fmtRange(it.t.start, it.t.end))}</span><b>Pick one</b></div><div class="tags">${st === 'now' ? '<span class="tag live">Now</span>' : ''}<span class="tag opt">Optional</span></div></div>${same.map(x => itemHTML(x, st, true)).join('')}</div>`;
+          html += `<div class="ev group ${st}" id="ev-${it.id}">${whenHTML(it.t)}${stop}<div class="card"><div class="pick"><b>Pick one</b>${st === 'now' ? '<span class="tag live">Now</span>' : ''}<span class="tag opt">Optional</span></div>${same.map(x => { const tags = tagsHTML(x, st, true); return `<div class="opt-row ${toneOf(x.wear)}"><div class="thumb">${scene(x.art)}</div><div class="body"><span class="what">${esc(x.title)}</span>${tags ? `<div class="tags">${tags}</div>` : ''}</div></div>`; }).join('')}</div></div>`;
           i += same.length;
-        } else { html += itemHTML(it, state(it, dy, now), false); i++; }
+        } else { html += itemHTML(it, state(it, dy, now)); i++; }
       }
-      return `<section class="day tone ${toneOf(dy.wear) || 'tone-neutral'}" id="day-${dy.name.toLowerCase()}" aria-labelledby="h-${dy.name.toLowerCase()}"><div class="dayhead"><h2 id="h-${dy.name.toLowerCase()}">${esc(dy.name)}<span>${esc(dy.label)}</span></h2>${dy.wear ? `<span class="wear">${shirt}${esc(dy.wear)}</span>` : ''}</div><div class="day-art" aria-hidden="true"></div>${html}</section>`;
+      return `<section class="day ${toneOf(dy.wear) || 'tone-neutral'}" id="day-${dy.name.toLowerCase()}" aria-labelledby="h-${dy.name.toLowerCase()}"><div class="dayhead"><h2 id="h-${dy.name.toLowerCase()}">${esc(dy.name)}<span>${esc(dy.label)}</span></h2>${dy.wear ? `<span class="wear">${shirt}${esc(dy.wear)}</span>` : ''}</div><div class="day-art" aria-hidden="true"></div><div class="rail">${html}</div></section>`;
     }).join('');
     renderToday(days, now); renderJump(days, now);
   };
@@ -454,12 +507,12 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     todayBox.hidden = false;
   };
   const renderJump = (days, now) => {
-    const live = !!document.querySelector('.item.now, .group.now');
+    const live = !!document.querySelector('.ev.now');
     jump.innerHTML = days.map(d => `<button type="button" data-go="day-${d.name.toLowerCase()}">${esc(d.name.slice(0, 3))}</button>`).join('') + (live ? '<button type="button" class="jnow" data-go="now">Now</button>' : '');
     jump.hidden = current !== 'schedule'; markJump();
   };
   const goTo = id => {
-    const el = id === 'now' ? document.querySelector('.item.now, .group.now') : document.getElementById(id);
+    const el = id === 'now' ? document.querySelector('.ev.now') : document.getElementById(id);
     if (!el) return;
     if (el.matches('.day')) el.scrollIntoView({ block: 'start' }); else el.scrollIntoView({ block: 'center' });
   };
@@ -485,7 +538,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   const scrollToToday = days => {
     if (scrolledToToday || current !== 'schedule') return; scrolledToToday = true;
     const now = nowParts(), today = days.find(d => d.key === now.key);
-    const el = today && document.querySelector('.item.now, .group.now') || (today && document.getElementById('day-' + today.name.toLowerCase()));
+    const el = today && document.querySelector('.ev.now') || (today && document.getElementById('day-' + today.name.toLowerCase()));
     if (el) el.scrollIntoView({ block: 'center' });
   };
   let model = [];

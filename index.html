@@ -155,23 +155,26 @@ h1,h2,p {margin:0}
 .where {display:block;font-size:12px;color:var(--muted);margin-top:1px}
 .tags {display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 /* The rail: a white line from the first stop to the last, a stop per event, the card to its right. */
-/* Each row draws its own segment into the next stop, which covers the end, so the line never breaks or overshoots. */
+/* Time and stop sit at the card's middle. Each row's segment spans the row and the gap below it, starting and ending at the middle stop on the first and last rows. */
 .rail {display:grid;gap:10px;padding-top:4px}
-.ev {--ev-art:92px;position:relative;display:grid;grid-template-columns:var(--ev-time) var(--ev-rail) minmax(0,1fr);align-items:start}
-.ev::before {content:"";position:absolute;top:24px;bottom:-34px;left:calc(var(--ev-time) + var(--ev-rail) / 2 - 1px);width:2px;background:rgba(255,255,255,.4)}
-.ev:last-child::before {display:none}
-.ev .when {padding:14px 6px 0 0;font-variant-numeric:tabular-nums;color:#fff}
+.ev {--ev-art:92px;position:relative;display:grid;grid-template-columns:var(--ev-time) var(--ev-rail) minmax(0,1fr);align-items:center}
+.ev::before {content:"";position:absolute;top:0;bottom:-10px;left:calc(var(--ev-time) + var(--ev-rail) / 2 - 1px);width:2px;background:rgba(255,255,255,.4)}
+.ev:first-child::before {top:50%}
+.ev:last-child::before {bottom:50%}
+.ev:only-child::before {display:none}
+.ev .when {position:relative;padding:0 6px 0 0;font-variant-numeric:tabular-nums;color:#fff}
 .ev .when b {display:block;font-size:15px;font-weight:600;letter-spacing:-.01em;line-height:20px;white-space:nowrap}
-.ev .when span {display:block;font-size:11.5px;color:rgba(255,255,255,.85);margin-top:1px;white-space:nowrap}
+/* The end time hangs below, so the start time itself lines up with the stop. */
+.ev .when span {position:absolute;left:0;top:100%;display:block;font-size:11.5px;color:rgba(255,255,255,.85);margin-top:1px;white-space:nowrap}
 /* Stops read --panel, not --tone-deep, so a row with its own wear color still sits on the day's rail. */
-.ev .stop {position:relative;z-index:1;width:12px;height:12px;margin:18px auto 0;border-radius:50%;background:#fff;box-shadow:0 0 0 3px var(--panel)}
+.ev .stop {position:relative;z-index:1;width:12px;height:12px;margin:0 auto;border-radius:50%;background:#fff;box-shadow:0 0 0 3px var(--panel)}
 .ev .card {min-width:0;display:grid;grid-template-columns:var(--ev-art) minmax(0,1fr);align-items:stretch;min-height:86px;background:var(--card);color:var(--ink);border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.18)}
 .ev .body {min-width:0;padding:13px 14px;display:flex;flex-direction:column;justify-content:center;overflow-wrap:anywhere}
 .ev .what {font-size:15px;line-height:1.35}
 /* Thumbnails fill the card's left edge and use the deeper shades of the day's color. */
 .ev .thumb {min-height:86px;--t-sky:var(--th-sky);--t-h2:var(--th-h2);--t-h1:var(--th-h1)}
 /* Now: a glowing stop, a white ring floating around the card, and the card itself in the live tint. */
-.ev.now .stop {width:16px;height:16px;margin-top:16px;box-shadow:0 0 0 3px var(--panel),0 0 0 6px rgba(255,255,255,.45);animation:halo 2.4s ease-in-out infinite}
+.ev.now .stop {width:16px;height:16px;box-shadow:0 0 0 3px var(--panel),0 0 0 6px rgba(255,255,255,.45);animation:halo 2.4s ease-in-out infinite}
 .ev.now .card {background:var(--accent-soft);outline:3px solid #fff;outline-offset:2px}
 .ev.now .when b {font-size:16px}
 .ev.now .tag.live {background:var(--accent-ink);color:#fff}
@@ -185,6 +188,13 @@ h1,h2,p {margin:0}
 .ev.past .card {box-shadow:none}
 /* "Pick one": the options stack inside one card under a single stop, so they read as one slot. */
 .ev.group .card {display:block}
+/* A Pick one slot is tall, so its time and stop line up with the card's header row instead of its middle. */
+.ev.group {align-items:start}
+.ev.group .when {margin-top:14px}
+.ev.group .stop {margin-top:18px}
+.ev.group.now .stop {margin-top:16px}
+.ev.group:first-child::before {top:24px}
+.ev.group:last-child::before {bottom:calc(100% - 24px)}
 .ev .pick {display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:11px 14px;border-bottom:1px solid var(--line)}
 .ev .pick b {font-size:15px;font-weight:500}
 .ev.now .pick {border-bottom-color:rgba(29,52,40,.12)}
@@ -405,7 +415,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   <a href="#carpool" data-tab="carpool"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3M7.5 13.5h.01M16.5 13.5h.01"/></svg></span>Carpool</a>
   <a href="#rooms" data-tab="rooms"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19v-6.5A2.5 2.5 0 0 1 5.5 10h13a2.5 2.5 0 0 1 2.5 2.5V19M3 16h18M7 10V7.5h4.5V10"/></svg></span>Rooms</a>
 </div></nav>
-<script src="config.js"></script>
+<script src="config.js?v=2026-10-21"></script>
 <script>
 (() => {
   const cfg = window.CW_HUB_CONFIG || {};
@@ -448,12 +458,14 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     photo: () => `${sky}${cloud(60,40)}${cloud(250,44,.8)}${hills}<g transform="translate(160 106)"><rect class="ink" x="-46" y="-28" width="92" height="60" rx="12"/><rect class="ink" x="-18" y="-38" width="36" height="14" rx="4"/><circle class="card" cx="0" cy="2" r="20"/><circle class="wt" cx="0" cy="2" r="13"/><circle class="sun" cx="32" cy="-16" r="5"/></g>${person(70,172)}${person(96,172,'warm')}${person(226,172,'pink')}${person(252,172)}`,
     car: () => `${sky}<circle class="sun" cx="262" cy="46" r="16"/>${cloud(80,40)}${hills}<rect class="ink" y="164" width="320" height="16" opacity=".25"/><path class="stm" d="M20 172h26M80 172h26M140 172h26M200 172h26M260 172h26" opacity=".7"/><g transform="translate(150 162)"><path class="acc" d="M-46 0v-16c0-6 4-9 10-10l12-14c2-2 4-3 7-3h30c3 0 5 1 7 3l12 14c6 1 10 4 10 10V0z"/><path class="cl" d="M-20-26l9-11h12v11zM6-26v-11h12l9 11z"/><circle class="ink" cx="-26" cy="0" r="8"/><circle class="ink" cx="26" cy="0" r="8"/><circle class="cl" cx="-26" cy="0" r="3"/><circle class="cl" cx="26" cy="0" r="3"/></g>${tree(40,150)}${tree(290,150,.9,'tr2')}`,
     bed: () => `<rect class="wall" width="320" height="200"/><rect class="floor" y="150" width="320" height="50"/><rect class="night" x="196" y="34" width="76" height="62" rx="6"/><circle class="sun" cx="246" cy="58" r="11"/><circle class="night" cx="251" cy="54" r="10"/><g class="cl"><circle cx="212" cy="48" r="1.4"/><circle cx="226" cy="78" r="1.2"/></g><g transform="translate(130 150)"><rect class="tk" x="-80" y="-56" width="8" height="58" rx="3"/><rect class="card" x="-76" y="-30" width="150" height="26" rx="6"/><rect class="acc" x="-30" y="-36" width="104" height="22" rx="8"/><rect class="cl" x="-70" y="-44" width="36" height="16" rx="7"/></g>`,
+    tub: () => `${sky}${cloud(64,40)}${cloud(252,52,.8)}${hills}${tree(34,150)}${tree(290,146,1.1,'tr2')}<path class="str" d="M128 92q-8-12 0-24M160 84q-8-12 0-24M192 92q-8-12 0-24" opacity=".4"/><g transform="translate(160 158)"><path class="tk" d="M-78-28h156v26a10 10 0 0 1-10 10h-136a10 10 0 0 1-10-10z"/><ellipse class="card" cx="0" cy="-28" rx="82" ry="15"/><ellipse class="wt" cx="0" cy="-28" rx="71" ry="10"/><circle class="cl" cx="-34" cy="-30" r="3.5"/><circle class="cl" cx="6" cy="-25" r="2.5"/><circle class="cl" cx="38" cy="-31" r="3"/><circle class="cl" cx="-10" cy="-33" r="2"/></g>`,
+    sauna: () => `<rect class="dusk" width="320" height="200"/><g class="str" opacity=".22"><path d="M0 36h320M0 72h320M0 108h320"/></g><rect class="warm" x="36" y="122" width="200" height="14" rx="4"/><rect class="warm" x="36" y="96" width="120" height="12" rx="4" opacity=".75"/><rect class="tk" x="50" y="136" width="8" height="44" rx="2"/><rect class="tk" x="214" y="136" width="8" height="44" rx="2"/><rect class="floor" y="180" width="320" height="20"/><g transform="translate(266 180)"><rect class="ink" x="-22" y="-44" width="44" height="44" rx="5"/><circle class="tk" cx="-10" cy="-48" r="7"/><circle class="tk" cx="4" cy="-50" r="8"/><circle class="tk" cx="14" cy="-46" r="6"/></g><path class="str" d="M252 108q-8-12 0-24M272 102q-8-12 0-24" opacity=".45"/><g transform="translate(108 122)"><path class="card" d="M-12-2h24l-3 -18h-18z"/><path class="tk" d="M8-16l22-14" style="stroke:var(--il-trunk);stroke-width:3;stroke-linecap:round;fill:none"/></g>`,
     hike: () => `${sky}<circle class="sun" cx="70" cy="50" r="16"/>${cloud(230,40)}<path class="h2" d="M0 150L80 70l50 50 50-70 80 100H0z"/>${hills}<path d="M120 200Q170 150 230 128" style="fill:none;stroke:var(--il-cloud);stroke-width:10;stroke-linecap:round"/>${tree(70,150,1.2)}${tree(100,156,.8,'tr2')}${tree(270,138,1.1)}${person(176,128)}`
   };
   const scene = k => `<svg class="il" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${(scenes[k] || scenes.lake)()}</svg>`;
   // First match wins, so more specific words come first.
   const ART = [
-    [/arriv|check.?in/, 'home'], [/chai|tea|coffee/, 'chai'], [/breakfast|lunch|dinner|snack|food|brunch|meal/, 'meal'],
+    [/arriv|check.?in/, 'home'], [/sauna|steam room/, 'sauna'], [/hot ?tub|jacuzzi/, 'tub'], [/chai|tea|coffee/, 'chai'], [/breakfast|lunch|dinner|snack|food|brunch|meal/, 'meal'],
     [/kram|spiritual|satsang|prayer|meditat|bhakti/, 'spirit'], [/garba|raas|dance|dandiya/, 'garba'], [/fire|bonfire|campfire|s.?mores/, 'fire'],
     [/sunset/, 'sunset'], [/mystery/, 'mystery'], [/\bart\b|craft|paint/, 'art'], [/olympic|relay|race|medal|sports day/, 'olympics'], [/cricket|sport|volley|frisbee/, 'sport'],
     [/game|feud|caption|ice ?breaker|quiz|trivia/, 'games'], [/clean/, 'clean'], [/photo/, 'photo'], [/exit|depart|leave|drive/, 'car'],
@@ -492,7 +504,10 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   const DAY_RE = /^(monday|tuesday|wednesday|thursday|friday|saturday|sunday),?\s+([a-z]{3})[a-z]*\.?\s+(\d{1,2})$/i;
   const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
   const toMin = (h, m, ap) => { h = +h % 12; if (ap && ap.toLowerCase() === 'pm') h += 12; return h * 60 + (+m || 0); };
+  // "9:30 PM onwards" has a start and no set end.
   const parseTime = raw => {
+    const open = /\s+(onwards?|till late|until late)$/i;
+    if (open.test(raw)) { const t = parseTime(raw.replace(open, '')); return t && t.end === null ? { ...t, open: true } : null; }
     const m = raw.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?(?:\s*[-–to]+\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)?)?$/i);
     if (!m) return null;
     const endAp = m[6] || m[3], startAp = m[3] || m[6];
@@ -527,6 +542,26 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
       const title = event || (parseTime(time) ? '' : time);
       if (!title) continue;
       const t = event ? parseTime(time) : null;
+      // One row can hold a whole "Pick one" slot, either as a bulleted list under a name
+      // ("Chill Time, Options:" then "* Art Activity (Optional)" lines) or inline ("Chill Time - Art (Optional), Games (Optional)").
+      const lines = title.split('\n').map(x => x.trim()).filter(Boolean), bullets = lines.filter(x => /^[*•-]\s*/.test(x));
+      let slot = '', parts = [];
+      if (bullets.length > 1) {
+        slot = lines.filter(x => !bullets.includes(x)).join(' ').replace(/[,:]?\s*options?\s*:?\s*$/i, '').replace(/[,:]\s*$/, '').trim();
+        parts = bullets.map(x => x.replace(/^[*•-]\s*/, ''));
+      } else {
+        parts = title.split(/,\s*/);
+        if (!(parts.length > 1 && parts.every(x => /\(optional\)/i.test(x)))) parts = [];
+        const m = parts.length && parts[0].match(/^(.*?)\s+-\s+(.*)$/);
+        if (m) { slot = m[1].trim(); parts[0] = m[2]; }
+      }
+      if (parts.length > 1) {
+        for (const x of parts) {
+          const opt = x.replace(/\s*\(optional\)\s*/i, ' ').trim();
+          day.items.push({ id: `${days.length}-${day.items.length}`, raw: time, t: t && { ...t }, title: opt, optional: true, slot, where, art: artFor(opt) });
+        }
+        continue;
+      }
       const optional = /^\(?optional\)?\s*[-:]?\s*/i.test(title);
       const clean = title.replace(/^\(?optional\)?\s*[-:]?\s*/i, '');
       day.items.push({ id: `${days.length}-${day.items.length}`, raw: event ? time : '', t, title: clean, optional, where, art: artFor(clean) });
@@ -543,7 +578,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
         it.wear = special ? special.wear : '';
         if (it.t && it.t.end === null) {
           const next = dy.items.slice(i + 1).find(n => n.t && n.t.start > it.t.start);
-          it.t.until = next ? next.t.start : it.t.start + 60;
+          it.t.until = next ? next.t.start : it.t.start + (it.t.open ? 180 : 60);
         }
       });
     }
@@ -563,7 +598,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   const whenHTML = t => {
     if (!t) return '<div class="when"><b>Anytime</b></div>';
     const a = fmt(t.start);
-    return `<div class="when"><b>${esc(a)}</b>${t.end !== null ? `<span>to ${esc(fmt(t.end).replace(a.slice(-3), ''))}</span>` : ''}</div>`;
+    return `<div class="when"><b>${esc(a)}</b>${t.end !== null ? `<span>to ${esc(fmt(t.end).replace(a.slice(-3), ''))}</span>` : t.open ? '<span>onwards</span>' : ''}</div>`;
   };
   const tagsHTML = (it, st, inGroup) => [st === 'now' && !inGroup ? '<span class="tag live">Now</span>' : '', it.optional && !inGroup ? '<span class="tag opt">Optional</span>' : '', it.wear ? `<span class="tag wear-tag ${toneOf(it.wear)}">Wear: ${esc(it.wear)}</span>` : ''].filter(Boolean).join('');
   // A row is [time | stop on the rail | card]; the card keeps its picture on the left.
@@ -584,7 +619,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
         for (let j = i; j < dy.items.length && dy.items[j].optional && it.optional && dy.items[j].raw && dy.items[j].raw === it.raw; j++) same.push(dy.items[j]);
         if (same.length > 1) {
           const st = state(same[0], dy, now);
-          html += `<div class="ev group ${st}" id="ev-${it.id}">${whenHTML(it.t)}${stop}<div class="card"><div class="pick"><b>Pick one</b>${st === 'now' ? '<span class="tag live">Now</span>' : ''}<span class="tag opt">Optional</span></div>${same.map(x => { const tags = tagsHTML(x, st, true); return `<div class="opt-row ${toneOf(x.wear)}"><div class="thumb">${scene(x.art)}</div><div class="body"><span class="what">${esc(x.title)}</span>${tags ? `<div class="tags">${tags}</div>` : ''}</div></div>`; }).join('')}</div></div>`;
+          html += `<div class="ev group ${st}" id="ev-${it.id}">${whenHTML(it.t)}${stop}<div class="card"><div class="pick"><b>${esc(it.slot || 'Pick one')}</b>${st === 'now' ? '<span class="tag live">Now</span>' : ''}<span class="tag opt">${it.slot ? 'Pick one' : 'Optional'}</span></div>${same.map(x => { const tags = tagsHTML(x, st, true); return `<div class="opt-row ${toneOf(x.wear)}"><div class="thumb">${scene(x.art)}</div><div class="body"><span class="what">${esc(x.title)}</span>${tags ? `<div class="tags">${tags}</div>` : ''}</div></div>`; }).join('')}</div></div>`;
           i += same.length;
         } else { html += itemHTML(it, state(it, dy, now)); i++; }
       }
@@ -605,8 +640,8 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     // Only during the weekend; before it, the banner and Friday's section already say what's first.
     if (!today || (!cur.length && !next)) { todayBox.hidden = true; hero.hidden = false; return; }
     const row = (x, label, cls) => {
-      const pick = x.s.titles.length > 1, when = (x.dy === head ? '' : x.dy.name.slice(0, 3) + ' · ') + fmtRange(x.s.t.start, x.s.t.end);
-      return `<button type="button" class="${cls}" data-go="ev-${x.s.id}"><small>${label}</small><span class="tt">${esc(when)}</span><span class="tw">${pick ? 'Pick one' : esc(x.s.titles[0])}</span>${pick ? `<span class="to">${x.s.titles.map(esc).join(' · ')}</span>` : ''}</button>`;
+      const pick = x.s.titles.length > 1, when = (x.dy === head ? '' : x.dy.name.slice(0, 3) + ' · ') + fmtRange(x.s.t.start, x.s.t.end) + (x.s.t.open ? ' onwards' : '');
+      return `<button type="button" class="${cls}" data-go="ev-${x.s.id}"><small>${label}</small><span class="tt">${esc(when)}</span><span class="tw">${pick ? (x.s.slot ? `${esc(x.s.slot)} · Pick one` : 'Pick one') : esc(x.s.titles[0])}</span>${pick ? `<span class="to">${x.s.titles.map(esc).join(' · ')}</span>` : ''}</button>`;
     };
     todayBox.className = `today ${toneOf(head.wear) || 'tone-neutral'}`;
     todayBox.innerHTML = `<div class="today-head"><h2>Today<span>${esc((longDay[head.name.slice(0, 3)] || head.name) + ', ' + head.label)}</span></h2>${head.wear ? `<span class="wear">${shirt}${esc(head.wear)}</span>` : ''}</div>`

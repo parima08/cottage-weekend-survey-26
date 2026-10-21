@@ -37,7 +37,7 @@ Do not commit any response data, Sheet exports, or private Google Sheet links.
 
 `index.html` at the root shows the schedule from the organizers' "Cottage Weekend 2026 - Schedule" Google Sheet. It reads two tabs, **Final Schedule** (Time, Event, Location; a row with only a date such as `Friday, Oct 23` starts a day) and **Dress Code** (Day, Event, Dress Code; `All Day` applies to the whole day). The **[DRAFT] Schedule** tab is never read.
 
-Each tab is shared through File > Share > Publish to web, one sheet at a time, as CSV. Paste the two links into the root `config.js`. Never publish the entire document, since that would expose the draft tab. Published sheets refresh within a few minutes of an edit, and the page re-checks every 2 minutes. Each phone keeps the last good copy for weak signal.
+Each tab is shared through File > Share > Publish to web, one sheet at a time, as CSV. Paste the two links into the root `config.js`. After any edit to `config.js`, change the `?v=` date on its `<script>` tag in `index.html` so phones load the new copy instead of a saved one. Never publish the entire document, since that would expose the draft tab. Published sheets refresh within a few minutes of an edit, and the page re-checks every 2 minutes. Each phone keeps the last good copy for weak signal.
 
 Preview locally with the bundled sample data, optionally pinning the clock:
 

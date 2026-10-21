@@ -313,8 +313,11 @@ h1,h2,p {margin:0}
 .step .rm {color:#a3322a}
 .step output {min-width:20px;text-align:center;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
 /* Who are you: a bottom sheet with the attendee list. */
-.sheet {width:min(560px,100%);max-width:100%;max-height:88vh;margin:auto auto 0;padding:0;border:0;border-radius:18px 18px 0 0;background:var(--card);color:var(--ink);box-shadow:0 -10px 40px rgba(20,24,40,.25)}
+/* On iPhone the keyboard covers the bottom of the screen without moving fixed content, so sheets ride above it (--kb)
+   and size to the visible area (--vvh). dvh keeps them clear of Safari's toolbar. */
+.sheet {width:min(560px,100%);max-width:100%;max-height:88vh;max-height:min(88dvh,calc(var(--vvh,100dvh) - 16px));margin:auto auto var(--kb,0px);padding:0;border:0;border-radius:18px 18px 0 0;background:var(--card);color:var(--ink);box-shadow:0 -10px 40px rgba(20,24,40,.25)}
 .sheet[open] {display:flex;flex-direction:column}
+html:has(.sheet[open]) {overflow:hidden}
 .sheet:focus-visible {outline:none}
 .sheet::backdrop {background:rgba(20,28,24,.5)}
 .sheet-head {padding:22px 20px 0}
@@ -322,7 +325,8 @@ h1,h2,p {margin:0}
 .sheet h2 + p {font-size:13px;color:var(--muted);margin-top:2px}
 .search {display:block;width:100%;min-height:46px;margin-top:14px;padding:10px 14px;border:1.5px solid #cdd6d0;border-radius:10px;background:#fff;color:var(--ink);font:inherit;font-size:16px}
 .search:focus {outline:none;border-color:var(--accent-ink);box-shadow:0 0 0 3px var(--accent-soft)}
-.people {flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 10px 6px}
+/* flex-basis auto: with flex:1 (basis 0) Safari collapses the list to nothing inside a sheet whose height is auto. */
+.people {flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 10px 6px}
 .people button {display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:7px 10px;border:0;border-radius:10px;background:none;text-align:left;font-size:15px}
 .people button:active, .people button:hover {background:var(--page)}
 .people .avatar {width:34px;height:34px;font-size:12.5px;background:var(--accent-soft);color:var(--accent-ink)}
@@ -330,7 +334,7 @@ h1,h2,p {margin:0}
 .you-head {display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line)}
 .you-head .avatar {width:52px;height:52px;font-size:18px}
 .you-head .link {min-height:32px;padding:4px 0}
-.you-body {flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:4px 20px 12px}
+.you-body {flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:4px 20px 12px}
 .you-sec {padding:16px 0}
 .you-sec + .you-sec {border-top:1px solid var(--line)}
 .you-sec h3 {display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
@@ -458,7 +462,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     <div class="sheet-foot two"><button type="button" id="add-cancel">Cancel</button><button type="submit" class="primary">Add to my list</button></div>
   </form>
 </dialog>
-<dialog class="sheet" id="who" aria-labelledby="who-title">
+<dialog class="sheet" id="who" aria-labelledby="who-title" tabindex="-1">
   <div class="sheet-head"><h2 id="who-title">Who are you?</h2><p>Pick your name once. This phone will remember it.</p><input class="search" id="who-q" type="search" placeholder="Search names" autocomplete="off" aria-label="Search names"></div>
   <div class="people" id="who-list"></div>
   <div class="sheet-foot"><button type="button" id="who-cancel">Cancel</button></div>
@@ -927,17 +931,19 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   const initials = n => n.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
   const isMe = name => !!me && (norm(name) === norm(me) || norm(name) === norm(firstName(me)));
   const myQty = it => it.people.filter(p => isMe(p.name)).reduce((a, p) => a + p.qty, 0);
-  let people = store.get('cw26-people') || [];
-  const loadPeople = async () => {
+  // The guest list loads once per visit; the picker shows "Loading names" until it arrives, and an error only if it fails.
+  let people = store.get('cw26-people') || [], peopleLoad = null, peopleFailed = false;
+  const loadPeople = () => peopleLoad || (peopleLoad = (async () => {
     if (!cfg.ATTENDEES_SHEET_ID) return;
     try {
       const r = await fetch(sheetCSV(cfg.ATTENDEES_SHEET_ID, cfg.ATTENDEES_GID || 0) + '&t=' + Date.now(), { cache: 'no-store' });
       const t = table(await r.text()), nc = Math.max(t.col('name'), 0), ac = t.col('adult');
       // Kids are listed with zero adults; they don't sign up for things.
       people = t.rows.map(r => ({ name: (r[nc] || '').replace(/\s+/g, ' ').trim(), adult: ac < 0 || +r[ac] > 0 })).filter(p => p.name && p.adult).map(p => p.name).sort((a, b) => a.localeCompare(b));
-      store.set('cw26-people', people);
-    } catch {}
-  };
+      store.set('cw26-people', people); peopleFailed = false;
+    } catch { peopleFailed = !people.length; peopleLoad = null; }
+    if (whoDlg.open) renderPeople();
+  })());
 
   const check = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   const needHTML = (g, it) => {
@@ -1032,11 +1038,12 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   let afterPick = null;
   const renderPeople = () => {
     const q = norm(whoQ.value), list = people.filter(n => !q || norm(n).split(' ').some(w => w.startsWith(q)) || norm(n).startsWith(q));
-    whoList.innerHTML = list.length ? list.map(n => `<button type="button" data-name="${esc(n)}"><span class="avatar" aria-hidden="true">${esc(initials(n))}</span>${esc(n)}</button>`).join('') : `<p>${people.length ? 'No one by that name on the list.' : "Couldn't load the guest list. Check your connection."}</p>`;
+    whoList.innerHTML = list.length ? list.map(n => `<button type="button" data-name="${esc(n)}"><span class="avatar" aria-hidden="true">${esc(initials(n))}</span>${esc(n)}</button>`).join('') : `<p>${people.length ? 'No one by that name on the list.' : peopleFailed ? "Couldn't load the guest list. Check your connection." : 'Loading names…'}</p>`;
   };
   const askWho = then => {
-    afterPick = then || null; whoQ.value = ''; renderPeople(); whoDlg.showModal(); whoList.scrollTop = 0;
-    if (!people.length) loadPeople().then(renderPeople);
+    // Focus the sheet, not the search box, so iPhone doesn't open the keyboard over the names.
+    afterPick = then || null; whoQ.value = ''; renderPeople(); whoDlg.showModal(); whoDlg.focus(); whoList.scrollTop = 0;
+    if (!people.length) loadPeople();
   };
   whoQ.addEventListener('input', renderPeople);
   whoList.addEventListener('click', e => {
@@ -1048,6 +1055,15 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   });
   document.getElementById('who-cancel').onclick = () => whoDlg.close();
   whoDlg.addEventListener('click', e => { if (e.target === whoDlg) whoDlg.close(); });
+
+  // Track the iPhone keyboard: how much of the screen it covers and how tall the visible area is.
+  const vv = window.visualViewport;
+  const fitSheets = () => {
+    const kb = Math.max(0, Math.round(innerHeight - vv.height - vv.offsetTop));
+    document.documentElement.style.setProperty('--kb', kb + 'px');
+    document.documentElement.style.setProperty('--vvh', Math.round(vv.height) + 'px');
+  };
+  if (vv) { vv.addEventListener('resize', fitSheets); vv.addEventListener('scroll', fitSheets); fitSheets(); }
 
   // ---------- Your page ----------
   // Everything about you in one place: what you're bringing now, your car and room once they're assigned.

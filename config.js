@@ -15,8 +15,6 @@ window.CW_HUB_CONFIG = {
   SIGNUP_URL: "https://script.google.com/macros/s/AKfycbxB3kwRmtboY7tDG2yP332Ps2OHF3VFrtTwIt8OOrqBzRTgdTNgbL5dYaafYr-JmHKL/exec",
   // GoatCounter site code (the "xyz" in xyz.goatcounter.com). Blank turns analytics off.
   GOATCOUNTER_CODE: "parima08",
-  // Read-only Groups tab; no Apps Script or write endpoint.
-  CARPOOL_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTCew7Ar00SDsF1pVKeHmYIaUbG4RsUZ4bxhmgFWwLYw92Gbq2uYLCSUh0DDKcWRe35I_fSIFLTsaMT/pub?gid=1062880095&single=true&output=csv",
   EVENT_YEAR: 2026,
   TIME_ZONE: "America/Los_Angeles"
 };

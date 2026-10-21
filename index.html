@@ -440,7 +440,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   <a href="#carpool" data-tab="carpool"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3M7.5 13.5h.01M16.5 13.5h.01"/></svg></span>Carpool</a>
   <a href="#rooms" data-tab="rooms"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19v-6.5A2.5 2.5 0 0 1 5.5 10h13a2.5 2.5 0 0 1 2.5 2.5V19M3 16h18M7 10V7.5h4.5V10"/></svg></span>Rooms</a>
 </div></nav>
-<script src="config.js?v=2026-10-21"></script>
+<script src="config.js?v=2026-10-21b"></script>
 <script>
 (() => {
   const cfg = window.CW_HUB_CONFIG || {};
@@ -457,6 +457,23 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
   };
+  // ---------- Analytics ----------
+  // GoatCounter, which sets no cookies. Only the published site counts: never a preview, ?sample or a pinned clock. No names are sent.
+  const GC = (cfg.GOATCOUNTER_CODE || '').trim();
+  const counting = !!GC && location.hostname.endsWith('github.io') && !sample && !params.has('now');
+  const gcQueue = [];
+  const track = (path, title, event = false) => {
+    if (!counting) return;
+    const hit = { path, title, event };
+    if (window.goatcounter && window.goatcounter.count) window.goatcounter.count(hit); else gcQueue.push(hit);
+  };
+  if (counting) {
+    window.goatcounter = { no_onload: true };
+    const gs = document.createElement('script');
+    gs.async = true; gs.src = 'https://gc.zgo.at/count.js'; gs.dataset.goatcounter = `https://${GC}.goatcounter.com/count`;
+    gs.onload = () => gcQueue.splice(0).forEach(h => window.goatcounter.count(h));
+    document.head.appendChild(gs);
+  }
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
   // ---------- Illustrations ----------
@@ -680,6 +697,9 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     jump.hidden = current !== 'schedule'; markJump();
   };
   const goTo = id => {
+    // Jump strip taps count by day; a tap on a Today card row counts once as "today-card".
+    const what = id === 'now' ? 'now' : id.startsWith('day-') ? id.slice(4) : 'today-card';
+    track('jump-' + what, 'Jumped to ' + what, true);
     const el = id === 'now' ? document.querySelector('.ev.now') : document.getElementById(id);
     if (!el) return;
     if (el.matches('.day')) el.scrollIntoView({ block: 'start' }); else el.scrollIntoView({ block: 'center' });
@@ -895,7 +915,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   whoQ.addEventListener('input', renderPeople);
   whoList.addEventListener('click', e => {
     const b = e.target.closest('[data-name]'); if (!b) return;
-    me = b.dataset.name; store.set('cw26-me', me); whoDlg.close();
+    me = b.dataset.name; store.set('cw26-me', me); whoDlg.close(); track('picked-name', 'Picked their name', true);
     const then = afterPick; afterPick = null;
     renderMeBtn(); renderBring();
     if (then) then(); else toast(`Hi, ${firstName(me)}!`);
@@ -922,7 +942,8 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
       + sec('carpool', 'Carpool', '<p>Your car shows up here closer to the weekend.</p>')
       + sec('rooms', 'Room', '<p>Your room shows up here closer to the weekend.</p>');
   };
-  const openYou = () => { renderYou(); youDlg.showModal(); youDlg.focus(); if (BRING_ON && !bring) loadBring().then(renderYou); };
+  const openYou = () => {
+    track('your-page', 'Opened their page', true); renderYou(); youDlg.showModal(); youDlg.focus(); if (BRING_ON && !bring) loadBring().then(renderYou); };
   meBtn.onclick = () => me ? openYou() : askWho(openYou);
   document.getElementById('you-switch').onclick = () => { youDlg.close(); askWho(() => { toast(`Hi, ${firstName(me)}!`); openYou(); }); };
   document.getElementById('you-close').onclick = () => youDlg.close();
@@ -945,6 +966,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     e.preventDefault();
     const { g, it } = adding;
     setMine(g, it, myQty(it) + addN, addNote.value.trim().slice(0, 300) || undefined);
+    track('bring-add', 'Added an item to bring', true);
     addDlg.close();
     toast(`Added ${addN > 1 ? addN + ' × ' : ''}${it.item} to your list.`);
   });
@@ -985,6 +1007,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     document.querySelectorAll('[data-tab]').forEach(a => { if (a.dataset.tab === next) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     scrollTo(0, scrollMemo[next] || 0); markJump();
     if (next === 'bring') loadBring();
+    track('/' + next, next[0].toUpperCase() + next.slice(1));
   };
   addEventListener('hashchange', showTab);
   showTab();

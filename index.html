@@ -368,6 +368,37 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 .il .wall{fill:var(--il-wall)} .il .floor{fill:var(--il-floor)} .il .night{fill:var(--il-night)} .il .acc{fill:var(--t-acc,var(--accent))} .il .warm{fill:var(--il-warm)} .il .pink{fill:var(--il-pink)} .il .card{fill:var(--card)}
 .il .str{fill:none;stroke:var(--il-ink);stroke-width:1.4;stroke-linecap:round} .il .stm{fill:none;stroke:var(--il-cloud);stroke-width:3;stroke-linecap:round}
 @media (prefers-reduced-motion:reduce) {*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* Carpool follows the hub's existing cards, typography and green accents. */
+.carpool-search {margin-top:12px}
+.carpool-search label {display:block;font-size:13px;font-weight:500;margin:0 2px 7px}
+.carpool-search .search {width:100%;margin:0;background:var(--card)}
+.carpool-count {font-size:12px;color:var(--muted);margin:14px 2px 10px}
+.carpool-list {display:grid;gap:14px}
+.carpool-card {background:var(--card);border-radius:12px;padding:16px;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.carpool-card[hidden] {display:none}
+.carpool-card.is-my-carpool {border-color:var(--accent);background:color-mix(in srgb,var(--accent-soft) 45%,var(--card))}
+.carpool-heading-labels {display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.carpool-your-label {color:var(--accent-ink);font-size:12px;font-weight:500}
+.carpool-other-heading {font-size:14px;font-weight:500;letter-spacing:-.01em;margin:6px 2px -3px}
+.carpool-card-head {display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.carpool-number {font-size:11px;font-weight:500;color:var(--accent-ink);background:var(--accent-soft);border-radius:99px;padding:5px 10px}
+.carpool-total {font-size:12px;color:var(--muted);white-space:nowrap}
+.carpool-driver {display:flex;align-items:center;gap:12px}
+
+.carpool-label {display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
+.carpool-driver h2 {font-size:18px;font-weight:500;letter-spacing:-.015em;overflow-wrap:anywhere}
+.carpool-passengers {border-top:1px solid var(--line);margin-top:12px;padding-top:12px}
+.carpool-passengers h3 {font-size:11px;color:var(--muted);font-weight:400;margin:0 0 9px}
+.carpool-passengers ul {list-style:none;padding:0;margin:0;display:grid;gap:9px;font-size:14px}
+.carpool-person {display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.carpool-person.is-you {padding:2px 5px;margin-left:-5px;border-radius:4px;background:color-mix(in srgb,var(--accent-soft) 55%,transparent);color:var(--ink)}
+.carpool-you-label {font-size:10px;font-weight:400;margin-left:10px;color:var(--muted);white-space:nowrap}
+.carpool-match {background:var(--chip);color:var(--chip-ink);border-radius:2px;padding:0}
+.carpool-solo {font-size:13px;color:var(--muted);margin-top:12px}
+.carpool-muted,.carpool-no-results {color:var(--muted);font-size:13px}
+.carpool-no-results {padding:24px 4px;text-align:center}
+
 </style>
 </head>
 <body>
@@ -409,7 +440,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     <div id="bring-list"></div>
     <p class="bring-foot">The logistics team will confirm the final list with you. <a id="bring-sheet" href="#" target="_blank" rel="noopener">Open the sheet</a></p>
   </section>
-  <section id="view-carpool" data-view="carpool" hidden><div class="empty"><div class="empty-art" data-art="car"></div><div class="empty-body"><h1>Carpool</h1><p>Car assignments will show up here closer to the weekend.</p></div></div></section>
+  <section id="view-carpool" data-view="carpool" hidden><div class="info-head"><span class="place">Travel together</span><h1>Carpool</h1><p>Find your driver and see who’s riding with you.</p></div><div class="carpool-search"><label for="carpool-query">Find your group</label><input class="search" id="carpool-query" type="search" placeholder="Search your name or driver" autocomplete="off" aria-controls="carpool-list"></div><p class="carpool-count" id="carpool-count" role="status">Loading carpool…</p><div class="carpool-list" id="carpool-list"></div><p class="carpool-no-results" id="carpool-no-results" hidden>No group found. Try a first or last name.</p><p class="carpool-count" id="carpool-status" role="status"></p></section>
   <section id="view-rooms" data-view="rooms" hidden><div class="empty"><div class="empty-art" data-art="bed"></div><div class="empty-body"><h1>Rooms</h1><p>Room assignments will show up here closer to the weekend.</p></div></div></section>
 </div>
 <dialog class="sheet" id="you" aria-labelledby="you-name" tabindex="-1">
@@ -534,6 +565,101 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     if (cell || row.length) { row.push(cell); rows.push(row); }
     return rows.map(r => r.map(v => v.trim()));
   };
+
+  // ---------- Carpool (read-only published Groups tab) ----------
+  // Row 1: group numbers. Following rows: driver first, then passengers.
+  // The first completely empty row ends assignments; notes below it are ignored.
+  const parseCarpool = text => {
+    if (/^\s*</.test(text)) throw new Error('Expected CSV, received a webpage');
+    const rows = parseCSV(text.replace(/^\uFEFF/, ''));
+    const headers = rows[0] || [];
+    const body = rows.slice(1);
+    const end = body.findIndex(row => row.every(value => !value));
+    const members = end < 0 ? body : body.slice(0, end);
+    const groups = headers.flatMap((heading, column) => {
+      if (!/^\d+(?:\.0+)?$/.test(heading)) return [];
+      const names = members.map(row => row[column] || '').filter(Boolean);
+      return names.length ? [{ number: Number(heading), driver: names[0], passengers: names.slice(1) }] : [];
+    });
+    if (!groups.length) throw new Error('No carpool assignments found');
+    return groups;
+  };
+  const carpoolInput = document.getElementById('carpool-query');
+  const carpoolList = document.getElementById('carpool-list');
+  const carpoolCount = document.getElementById('carpool-count');
+  const carpoolEmpty = document.getElementById('carpool-no-results');
+  const carpoolStatus = document.getElementById('carpool-status');
+  const normalizeCarpool = value => value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  let carpoolGroups = [], carpoolBusy = false;
+  const highlightCarpoolName = (name, terms) => {
+    let normalized = '', positions = [];
+    let offset = 0;
+    for (const character of name) {
+      const folded = normalizeCarpool(character);
+      for (const letter of folded) { normalized += letter; positions.push([offset, offset + character.length]); }
+      offset += character.length;
+    }
+    const ranges = [];
+    for (const term of terms) {
+      let start = 0, found;
+      while (term && (found = normalized.indexOf(term, start)) !== -1) {
+        ranges.push([positions[found][0], positions[found + term.length - 1][1]]);
+        start = found + term.length;
+      }
+    }
+    ranges.sort((a,b) => a[0] - b[0]);
+    const merged = [];
+    for (const range of ranges) {
+      const previous = merged[merged.length - 1];
+      if (previous && range[0] <= previous[1]) previous[1] = Math.max(previous[1], range[1]);
+      else merged.push([...range]);
+    }
+    let html = '', cursor = 0;
+    for (const [start, end] of merged) {
+      html += esc(name.slice(cursor, start)) + `<mark class="carpool-match">${esc(name.slice(start, end))}</mark>`;
+      cursor = end;
+    }
+    return html + esc(name.slice(cursor));
+  };
+  const renderCarpool = () => {
+    const terms = normalizeCarpool(carpoolInput.value).split(/\s+/).filter(Boolean);
+    const belongsToMe = group => [group.driver, ...group.passengers].some(isMe);
+    const visible = carpoolGroups.filter(group => {
+      const names = normalizeCarpool([group.driver, ...group.passengers].join(' '));
+      return terms.every(term => names.includes(term));
+    }).sort((a,b) => Number(belongsToMe(b)) - Number(belongsToMe(a)));
+    const person = name => `<span class="carpool-person${isMe(name) ? ' is-you' : ''}">${highlightCarpoolName(name, terms)}</span>${isMe(name) ? '<span class="carpool-you-label">You</span>' : ''}`;
+    carpoolList.innerHTML = visible.map((group, index) => {
+      const total = group.passengers.length + 1;
+      const otherHeading = !terms.length && !belongsToMe(group) && index > 0 && belongsToMe(visible[index - 1]) ? '<h2 class="carpool-other-heading">Other groups</h2>' : '';
+      return `${otherHeading}<article class="carpool-card${belongsToMe(group) ? ' is-my-carpool' : ''}"><div class="carpool-card-head"><div class="carpool-heading-labels"><span class="carpool-number">Group ${esc(String(group.number).padStart(2, '0'))}</span>${belongsToMe(group) ? '<span class="carpool-your-label">Your carpool</span>' : ''}</div><span class="carpool-total">${total} ${total === 1 ? 'person' : 'people'}</span></div><div class="carpool-driver"><div><span class="carpool-label">Driver</span><h2>${person(group.driver)}</h2></div></div>${group.passengers.length ? `<div class="carpool-passengers"><h3>${group.passengers.length} ${group.passengers.length === 1 ? 'passenger' : 'passengers'}</h3><ul>${group.passengers.map(name => `<li>${person(name)}</li>`).join('')}</ul></div>` : '<p class="carpool-solo">Travelling solo</p>'}</article>`;
+    }).join('');
+    carpoolCount.textContent = terms.length ? `${visible.length} of ${carpoolGroups.length} groups` : `${carpoolGroups.length} groups`;
+    carpoolEmpty.hidden = !carpoolGroups.length || visible.length > 0;
+  };
+  carpoolInput.addEventListener('input', renderCarpool);
+  const loadCarpool = async () => {
+    if (carpoolBusy) return;
+    const url = (cfg.CARPOOL_CSV_URL || '').trim();
+    if (!url) { carpoolCount.textContent = 'Carpool is not connected yet.'; return; }
+    carpoolBusy = true;
+    try {
+      const request = new URL(url);
+      request.searchParams.set('t', Date.now());
+      const response = await fetch(request.href, { cache: 'no-store', signal: AbortSignal.timeout(15000) });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      carpoolGroups = parseCarpool(await response.text());
+      renderCarpool();
+      carpoolStatus.textContent = 'Live from the Groups sheet · refreshes every 2 minutes';
+    } catch (error) {
+      if (!carpoolGroups.length) carpoolCount.textContent = 'Carpool couldn’t load. Retrying automatically.';
+      carpoolStatus.textContent = carpoolGroups.length ? 'Couldn’t refresh. Showing the last loaded assignments.' : 'Check your connection or try refreshing the page.';
+    } finally { carpoolBusy = false; }
+  };
+  loadCarpool();
+  setInterval(loadCarpool, REFRESH_MS);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) loadCarpool(); });
+
   // Reads rows by header name so organizers can reorder or add columns.
   const table = text => {
     const rows = parseCSV(text).filter(r => r.some(Boolean));
@@ -917,7 +1043,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     const b = e.target.closest('[data-name]'); if (!b) return;
     me = b.dataset.name; store.set('cw26-me', me); whoDlg.close(); track('picked-name', 'Picked their name', true);
     const then = afterPick; afterPick = null;
-    renderMeBtn(); renderBring();
+    renderMeBtn(); renderBring(); renderCarpool();
     if (then) then(); else toast(`Hi, ${firstName(me)}!`);
   });
   document.getElementById('who-cancel').onclick = () => whoDlg.close();
@@ -939,7 +1065,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     const mine = bring ? bring.flatMap(g => g.items.filter(myQty)) : [];
     const sec = (tab, title, body, link) => `<section class="you-sec"><h3>${tabIcon(tab)}${title}${link ? `<a href="#${tab}" data-close>${link}</a>` : ''}</h3>${body}</section>`;
     youBody.innerHTML = sec('bring', 'Bringing', mine.length ? `<ul>${mine.map(it => `<li>${esc(it.item)}<span>${myQty(it)}</span></li>`).join('')}</ul>` : `<p>${bring ? 'Nothing yet.' : 'Loading your list.'}</p>`, mine.length ? 'Change' : 'Add things')
-      + sec('carpool', 'Carpool', '<p>Your car shows up here closer to the weekend.</p>')
+      + sec('carpool', 'Carpool', '<p>Find your driver and fellow passengers in Carpool.</p>', 'View group')
       + sec('rooms', 'Room', '<p>Your room shows up here closer to the weekend.</p>');
   };
   const openYou = () => {
@@ -1025,5 +1151,6 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   }
 })();
 </script>
+
 </body>
 </html>

@@ -31,6 +31,8 @@ Paste the `/exec` URL into `SIGNUP_URL` in the root `config.js` and commit it.
 
 To try the tab without touching the sheet, open the hub with `?sample#bring`. It reads `sample/signup.json` and fakes the writes.
 
-## Changing a sign-up
+## Who is signing up
 
-The app only adds sign-ups. To change or remove one, edit or delete its row in the signup tab; the app shows the change on its next refresh.
+The first time someone taps Bring, they pick their name from the guest list (`ATTENDEES_SHEET_ID` in `config.js`; rows with zero adults are left out) and the phone remembers it. "Your list" at the top of the tab then shows what they're bringing, with a stepper to change the count or remove it.
+
+The script only changes rows whose name matches the person: the full name, or just the first name for rows typed by hand like "Parima". Other people's rows are never touched. There are no passwords; anyone could pick any name, which is fine for a group of friends and no looser than the sheet itself.

@@ -7,9 +7,12 @@ window.CW_HUB_CONFIG = {
   // the tab reads the item list and the two sign-up tabs (by gid) straight from it.
   SIGNUP_SHEET_ID: "12WJLP2qGumpww2z0FWeD9_Z7C-u0qHW5o1DHNiYKqzU",
   SIGNUP_TABS: { list: 0, kitchen: 1360658679, misc: 384924032 },
+  // The guest list ("Name", "Adults", "Kids") people pick their name from. Must be viewable by anyone with the link.
+  ATTENDEES_SHEET_ID: "1uJx-tSzTRJuEXJcg2Xon4a1t4Wb06dSToJe79eQ3TB4",
+  ATTENDEES_GID: 0,
   // Apps Script /exec URL that writes sign-ups (see apps-script/SIGNUP-SETUP.md).
   // With it blank, the Bring button opens the sheet instead.
-  SIGNUP_URL: "https://script.google.com/macros/s/AKfycbz6_lbBUvELRrZ38Iv99FKAUNoRhgL2NHh3VVCk7T_g25Iz0oUf9ueh86c2ZVIa3G44/exec",
+  SIGNUP_URL: "https://script.google.com/macros/s/AKfycbxB3kwRmtboY7tDG2yP332Ps2OHF3VFrtTwIt8OOrqBzRTgdTNgbL5dYaafYr-JmHKL/exec",
   EVENT_YEAR: 2026,
   TIME_ZONE: "America/Los_Angeles"
 };

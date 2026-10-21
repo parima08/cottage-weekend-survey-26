@@ -17,6 +17,7 @@ The survey gathers private planning input. It shows a route map, the two possibl
 - `QUESTIONS.md` - organizer-reviewable question wording.
 - `apps-script/Code.gs` - Google Apps Script endpoint that appends responses to a private Sheet.
 - `apps-script/SETUP.md` - setup steps for the private Sheet and web app deployment.
+- `apps-script/Signup.gs` and `apps-script/SIGNUP-SETUP.md` - the endpoint behind the hub's Bring tab, which writes sign-ups into the "what to bring" sheet.
 
 ## Connect submissions
 

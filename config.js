@@ -13,6 +13,8 @@ window.CW_HUB_CONFIG = {
   // Apps Script /exec URL that writes sign-ups (see apps-script/SIGNUP-SETUP.md).
   // With it blank, the Bring button opens the sheet instead.
   SIGNUP_URL: "https://script.google.com/macros/s/AKfycbxB3kwRmtboY7tDG2yP332Ps2OHF3VFrtTwIt8OOrqBzRTgdTNgbL5dYaafYr-JmHKL/exec",
+  // GoatCounter site code (the "xyz" in xyz.goatcounter.com). Blank turns analytics off.
+  GOATCOUNTER_CODE: "parima08",
   EVENT_YEAR: 2026,
   TIME_ZONE: "America/Los_Angeles"
 };

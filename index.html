@@ -320,6 +320,12 @@ h1,h2,p {margin:0}
 html:has(.sheet[open]) {overflow:hidden}
 .sheet:focus-visible {outline:none}
 .sheet::backdrop {background:rgba(20,28,24,.5)}
+/* Profile selection keeps the same frame while filtering. Only names scroll.
+   The inset and viewport height apply on every platform, including when a keyboard reduces the visible area. */
+#who {position:fixed;inset:calc(var(--vvt,0px) + 12px) 12px auto;width:min(560px,calc(100% - 24px));height:min(640px,calc(var(--vvh,100dvh) - 24px));max-height:calc(var(--vvh,100dvh) - 24px);margin:0 auto;border-radius:18px;overflow:hidden}
+#who .sheet-head,#who .sheet-foot {flex:0 0 auto}
+#who .people {flex:1 1 0;min-height:0}
+
 .sheet-head {padding:22px 20px 0}
 .sheet h2 {font-size:21px;font-weight:400;letter-spacing:-.025em;line-height:1.3}
 .sheet h2 + p {font-size:13px;color:var(--muted);margin-top:2px}
@@ -1056,12 +1062,13 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   document.getElementById('who-cancel').onclick = () => whoDlg.close();
   whoDlg.addEventListener('click', e => { if (e.target === whoDlg) whoDlg.close(); });
 
-  // Track the iPhone keyboard: how much of the screen it covers and how tall the visible area is.
+  // Keep dialogs inside the visible viewport on every platform, including when a keyboard opens.
   const vv = window.visualViewport;
   const fitSheets = () => {
     const kb = Math.max(0, Math.round(innerHeight - vv.height - vv.offsetTop));
     document.documentElement.style.setProperty('--kb', kb + 'px');
-    document.documentElement.style.setProperty('--vvh', Math.round(vv.height) + 'px');
+    document.documentElement.style.setProperty('--vvh', Math.floor(vv.height) + 'px');
+    document.documentElement.style.setProperty('--vvt', Math.max(0, Math.floor(vv.offsetTop)) + 'px');
   };
   if (vv) { vv.addEventListener('resize', fitSheets); vv.addEventListener('scroll', fitSheets); fitSheets(); }
 

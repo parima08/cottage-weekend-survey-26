@@ -1,5 +1,6 @@
 // Bound to the "what to bring" sign-up sheet. The hub's Bring tab reads the sheet directly and
-// POSTs each sign-up here; it lands as a new row on the matching signup tab.
+// POSTs here to set how many of an item one person is bringing: it adds, changes or removes
+// that person's rows on the matching signup tab and never touches anyone else's.
 
 const LIST_TAB = 'Appliance List';
 
@@ -30,12 +31,22 @@ function doPost(e) {
 
       const sheet = getSheet_(group.tab);
       const head = findHeader_(sheet);
-      const row = nextRow_(sheet, head);
-      // Cells are written one by one so checkbox columns in between keep their formatting.
-      sheet.getRange(row, head.cols.item).setValue(item.item);
-      sheet.getRange(row, head.cols.person).setValue(asPlainText_(String(payload.name).trim()));
-      sheet.getRange(row, head.cols.quantity).setValue(Number(payload.qty));
-      if (head.cols.notes) sheet.getRange(row, head.cols.notes).setValue(asPlainText_(String(payload.notes || '').trim()));
+      const name = String(payload.name).trim();
+      const qty = Number(payload.qty);
+      const mine = ownRows_(sheet, head, item.item, name);
+      if (mine.length) {
+        // Keep the first of this person's rows for the item; extra copies typed by hand fold into it.
+        if (qty > 0) sheet.getRange(mine[0], head.cols.quantity).setValue(qty);
+        const drop = qty > 0 ? mine.slice(1) : mine;
+        drop.reverse().forEach((row) => sheet.deleteRow(row));
+      } else if (qty > 0) {
+        const row = nextRow_(sheet, head);
+        // Cells are written one by one so checkbox columns in between keep their formatting.
+        sheet.getRange(row, head.cols.item).setValue(item.item);
+        sheet.getRange(row, head.cols.person).setValue(asPlainText_(name));
+        sheet.getRange(row, head.cols.quantity).setValue(qty);
+        if (head.cols.notes && payload.notes) sheet.getRange(row, head.cols.notes).setValue(asPlainText_(String(payload.notes).trim()));
+      }
     } finally {
       lock.releaseLock();
     }
@@ -78,8 +89,8 @@ function validatePayload(payload) {
   });
 
   const qty = Number(payload.qty);
-  if (!Number.isInteger(qty) || qty < 1 || qty > MAX_QTY) {
-    throw new Error('Quantity must be between 1 and ' + MAX_QTY + '.');
+  if (!Number.isInteger(qty) || qty < 0 || qty > MAX_QTY) {
+    throw new Error('Quantity must be between 0 and ' + MAX_QTY + '.');
   }
 }
 
@@ -136,6 +147,22 @@ function nextRow_(sheet, head) {
   }
   if (row > sheet.getMaxRows()) sheet.insertRowsAfter(sheet.getMaxRows(), 1);
   return row;
+}
+
+// Rows for this item that belong to this person, top to bottom. Older rows often hold just a
+// first name, so "Parima" counts as "Parima Shah".
+function ownRows_(sheet, head, item, name) {
+  const last = sheet.getLastRow();
+  if (last <= head.row) return [];
+  const full = norm_(name);
+  const first = full.split(' ')[0];
+  const values = sheet.getRange(head.row + 1, 1, last - head.row, sheet.getLastColumn()).getValues();
+  const rows = [];
+  values.forEach((row, i) => {
+    const person = norm_(row[head.cols.person - 1]);
+    if (norm_(row[head.cols.item - 1]) === norm_(item) && (person === full || person === first)) rows.push(head.row + 1 + i);
+  });
+  return rows;
 }
 
 function norm_(value) {

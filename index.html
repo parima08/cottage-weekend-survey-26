@@ -85,7 +85,8 @@ h1,h2,p {margin:0}
 .jump {display:flex;gap:6px;width:100%;margin:-4px 0 -4px}
 .jump[hidden] {display:none}
 .jump button {flex:1;min-height:36px;border:0;border-radius:99px;background:var(--card);color:var(--ink);font:inherit;font-size:13px;font-weight:500;box-shadow:0 0 0 1px rgba(29,52,40,.1)}
-.jump button[aria-current="true"] {background:var(--accent-ink);color:#fff;box-shadow:none}
+/* The day you're scrolling through lights up in its dress-code color, the same as its panel. */
+.jump button[aria-current="true"] {background:var(--tone-deep,var(--accent-ink));color:#fff;box-shadow:none}
 .jump .jnow {color:var(--accent-ink);display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .jump .jnow::before {content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
 .day, .ev {scroll-margin-top:var(--top-h,76px)}
@@ -675,7 +676,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   };
   const renderJump = (days, now) => {
     const live = !!document.querySelector('.ev.now');
-    jump.innerHTML = days.map(d => `<button type="button" data-go="day-${d.name.toLowerCase()}">${esc(d.name.slice(0, 3))}</button>`).join('') + (live ? '<button type="button" class="jnow" data-go="now">Now</button>' : '');
+    jump.innerHTML = days.map(d => `<button type="button" class="${toneOf(d.wear) || 'tone-neutral'}" data-go="day-${d.name.toLowerCase()}">${esc(d.name.slice(0, 3))}</button>`).join('') + (live ? '<button type="button" class="jnow" data-go="now">Now</button>' : '');
     jump.hidden = current !== 'schedule'; markJump();
   };
   const goTo = id => {

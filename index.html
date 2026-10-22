@@ -516,6 +516,53 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
 :root[data-theme="dark"] .dayhead .wear {color:var(--ink)}
 :root[data-theme="dark"] .step .rm {color:#ff9b8d}
 :root[data-theme="dark"] .sheet::backdrop {background:rgba(0,0,0,.65)}
+
+/* Rooms: live read-only room directory. */
+.rooms-search label {display:block;font-size:14px;font-weight:500;margin:0 2px 8px}
+.rooms-search .search {margin:0}
+.rooms-count,.rooms-status {font-size:12px;line-height:1.6;color:var(--muted);margin:14px 2px}
+.rooms-home {margin-top:24px}
+.rooms-home-head {display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 2px 12px}
+.rooms-home-head h2 {font-size:20px;font-weight:400;letter-spacing:-.025em;margin:0}
+.rooms-home-head span {font-size:12px;color:var(--muted);white-space:nowrap}
+.room-card {background:var(--card);border:1px solid var(--line);border-radius:12px;margin:0 0 12px;box-shadow:var(--shadow-sm);overflow:hidden}
+.room-card.is-your-room {border-color:var(--accent)}
+.room-card summary {list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:16px}
+.room-card summary::-webkit-details-marker {display:none}
+.room-card summary:after {content:"";width:8px;height:8px;border-right:1.7px solid var(--muted);border-bottom:1.7px solid var(--muted);transform:rotate(45deg);flex:none;margin:0 3px 4px 0}
+.room-card[open] summary:after {transform:rotate(225deg);margin-top:6px}
+.room-summary-text {flex:1;min-width:0}
+.room-summary-heading {display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.room-summary-heading strong {font-size:16px;font-weight:500;letter-spacing:-.02em}
+.room-occupancy {font-size:12px;color:var(--muted);white-space:nowrap}
+.room-preview {display:block;font-size:12px;line-height:1.6;color:var(--muted);margin-top:5px}
+.room-your-label {display:block;font-size:11px;font-weight:500;color:var(--accent-ink);margin-bottom:4px}
+.room-people {list-style:none;padding:0 16px 5px;margin:0;border-top:1px solid var(--line)}
+.room-person {padding:12px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.room-person + .room-person {border-top:1px solid var(--line)}
+.room-person-name {display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:14px;line-height:1.5}
+.room-person-name.is-you {color:var(--accent-ink)}
+.room-bed {font-size:12px;color:var(--muted);line-height:1.6;margin-top:3px}
+.room-badge {font-size:10px;color:var(--muted);padding:2px 6px;border-radius:99px;background:var(--page)}
+.room-badge.you {color:var(--accent-ink);background:none;padding:0 2px}
+.rooms-empty {color:var(--muted);font-size:14px;line-height:1.6;padding:20px 2px}
+.rooms-retry {border:0;border-radius:99px;min-height:42px;padding:8px 18px;background:var(--accent-ink);color:var(--on-accent);font:inherit;font-size:14px}
+
+.room-featured {padding:18px;background:color-mix(in srgb,var(--accent-soft) 42%,var(--card));border:1px solid var(--accent);border-radius:14px;box-shadow:var(--shadow-sm);margin:0 0 24px}
+.room-featured-top {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.room-featured-top .room-your-label {margin:0;font-size:13px;font-weight:500}
+.room-featured-home {font-size:12px;color:var(--muted);margin-bottom:4px}
+.room-featured h2 {font-size:21px;line-height:1.35;font-weight:500;letter-spacing:-.025em;margin:0}
+.room-own-spot {border-block:1px solid var(--line);margin:14px 0;padding:12px 0}
+.room-own-spot>span {display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
+.room-own-spot strong {display:block;color:var(--accent-ink);font-size:16px;font-weight:500}
+.roommates-title {font-size:12px;font-weight:400;color:var(--muted);margin:0 0 4px}
+.room-featured .room-people {padding:0;border-top:0}
+.room-featured .room-person {padding:10px 0}
+.room-featured .room-person:last-child {padding-bottom:0}
+.rooms-other-title {font-size:14px;font-weight:500;color:var(--muted);margin:24px 2px -6px}
+.room-own-match {font-size:14px;color:var(--accent-ink);margin:0 0 5px}
+.rooms-search {margin-top:20px}
 </style>
 </head>
 <body>
@@ -569,12 +616,18 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     <p class="bring-foot">The logistics team will confirm the final list with you. <a id="bring-sheet" href="#" target="_blank" rel="noopener">Open the sheet</a></p>
     </div>
     <div id="packing-panel" hidden>
-      <div class="bring-sum packing-progress"><p><span><b id="packing-count">0 of 19</b> packed</span><span id="packing-left">19 to go</span></p><progress class="packing-bar" id="packing-progress" value="0" max="19" aria-label="Packing progress"></progress></div>
+      <div class="bring-sum packing-progress"><p><span><b id="packing-count">0 of 20</b> packed</span><span id="packing-left">20 to go</span></p><progress class="packing-bar" id="packing-progress" value="0" max="20" aria-label="Packing progress"></progress></div>
       <div id="packing-groups"></div>
     </div>
   </section>
   <section id="view-carpool" data-view="carpool" hidden><div class="info-head"><span class="place">Travel together</span><h1>Carpool</h1><p>Find your driver and see who’s riding with you.</p></div><div class="carpool-search"><label for="carpool-query">Find your group</label><input class="search" id="carpool-query" type="search" placeholder="Search your name or driver" autocomplete="off" aria-controls="carpool-list"></div><p class="carpool-count" id="carpool-count" role="status">Loading carpool…</p><div class="carpool-list" id="carpool-list"></div><p class="carpool-no-results" id="carpool-no-results" hidden>No group found. Try a first or last name.</p><p class="carpool-count" id="carpool-status" role="status"></p></section>
-  <section id="view-rooms" data-view="rooms" hidden><div class="empty"><div class="empty-art" data-art="bed"></div><div class="empty-body"><h1>Rooms</h1><p>Room assignments will show up here closer to the weekend.</p></div></div></section>
+  <section id="view-rooms" data-view="rooms" hidden>
+    <div class="info-head"><span class="place">Stay together</span><h1>Rooms</h1><p><em>Disclaimer: Room assignments are subject to change once we reach the location.</em></p></div>
+    <div class="rooms-search"><label for="rooms-query">Find your room</label><input class="search" id="rooms-query" type="search" placeholder="Search a name or room" autocomplete="off" aria-controls="rooms-list"></div>
+    <p class="rooms-count" id="rooms-count" role="status">Loading room assignments…</p>
+    <div id="rooms-list"></div>
+    <p class="rooms-status" id="rooms-status" role="status"></p>
+  </section>
 </div>
 <dialog class="sheet" id="you" aria-labelledby="you-name" tabindex="-1">
   <div class="sheet-head you-head"><span class="avatar" id="you-av" aria-hidden="true"></span><div><h2 id="you-name"></h2><button type="button" class="link" id="you-switch">Not you? Switch</button></div></div>
@@ -605,7 +658,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   <a href="#carpool" data-tab="carpool"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3M7.5 13.5h.01M16.5 13.5h.01"/></svg></span>Carpool</a>
   <a href="#rooms" data-tab="rooms"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19v-6.5A2.5 2.5 0 0 1 5.5 10h13a2.5 2.5 0 0 1 2.5 2.5V19M3 16h18M7 10V7.5h4.5V10"/></svg></span>Rooms</a>
 </div></nav>
-<script src="config.js?v=2026-10-21b"></script>
+<script src="config.js?v=2026-10-22-rooms"></script>
 <script>
 (() => {
   const cfg = window.CW_HUB_CONFIG || {};
@@ -1197,7 +1250,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     const b = e.target.closest('[data-name]'); if (!b) return;
     me = b.dataset.name; store.set('cw26-me', me); whoDlg.close(); track('picked-name', 'Picked their name', true);
     const then = afterPick; afterPick = null;
-    renderMeBtn(); renderBring(); renderCarpool(); sevaMode='mine'; renderSeva();
+    renderMeBtn(); renderBring(); renderCarpool(); sevaMode='mine'; renderSeva(); renderRooms();
     if (then) then(); else toast(`Hi, ${firstName(me)}!`);
   });
   document.getElementById('who-cancel').onclick = () => { if (me) whoDlg.close(); };
@@ -1237,7 +1290,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     const sec = (tab, title, body, link) => `<section class="you-sec"><h3>${tabIcon(tab)}${title}${link ? `<a href="#${tab}" data-close>${link}</a>` : ''}</h3>${body}</section>`;
     youBody.innerHTML = sec('bring', 'Bringing', mine.length ? `<ul>${mine.map(it => `<li>${esc(it.item)}<span>${myQty(it)}</span></li>`).join('')}</ul>` : `<p>${bring ? 'Nothing yet.' : 'Loading your list.'}</p>`, mine.length ? 'Change' : 'Add things')
       + sec('carpool', 'Carpool', '<p>Find your driver and fellow passengers in Carpool.</p>', 'View group')
-      + sec('rooms', 'Room', '<p>Your room shows up here closer to the weekend.</p>');
+      + sec('rooms', 'Room', '<p>Find your room and roommates in Rooms.</p>', 'View room');
   };
   const openYou = () => {
     track('your-page', 'Opened their page', true); renderYou(); youDlg.showModal(); youDlg.focus(); if (BRING_ON && !bring) loadBring().then(renderYou); };
@@ -1367,6 +1420,91 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   });
   sevaQuery.addEventListener('input',renderSeva);
 
+  // ---------- Rooms: published sleeping assignments, read-only ----------
+  const parseRooms = text => {
+    if (/^\s*</.test(text)) throw new Error('Expected CSV, received a webpage');
+    const rows=parseCSV(text.replace(/^\uFEFF/,''));
+    const h=rows.findIndex(r=>r.some(c=>norm(c)==='spot #') && r.some(c=>norm(c)==='name'));
+    if(h<0) throw new Error('Room allocation headers not found');
+    const col=name=>rows[h].findIndex(c=>norm(c)===name);
+    const c={id:col('spot #'),home:col('home'),room:col('room'),bed:col('bed'),spot:col('spot'),name:col('name'),lead:col('lead?')};
+    if(Object.values(c).some(i=>i<0)) throw new Error('Room allocation columns missing');
+    // Numeric spot IDs select only allocation rows, excluding logistics and pivot summaries.
+    const result=rows.slice(h+1).filter(r=>/^\d+$/.test(r[c.id]) && r[c.home] && r[c.room] && r[c.name]).map(r=>({id:r[c.id],home:r[c.home],room:r[c.room],bed:r[c.bed],spot:r[c.spot],name:r[c.name],lead:/^yes$/i.test(r[c.lead]||'')}));
+    if(!result.length) throw new Error('No room assignments found');
+    return result;
+  };
+  const roomsList=document.getElementById('rooms-list'),roomsQuery=document.getElementById('rooms-query'),roomsCount=document.getElementById('rooms-count'),roomsStatus=document.getElementById('rooms-status');
+  let roomAssignments=[],roomsBusy=false,roomsProfile=null;
+  const roomsOpen=new Set();
+  const roomKey=a=>a.home+'|'+a.room;
+  const roomIsMe=name=>isMe(name);
+  const roomFullName=name=>{
+    const full=people.filter(p=>norm(firstName(p))===norm(name));
+    return full.length===1?full[0]:name;
+  };
+  const renderRooms=()=>{
+    if(!roomAssignments.length) return;
+    const groups=[];
+    roomAssignments.forEach(a=>{
+      const key=roomKey(a);let group=groups.find(g=>g.key===key);
+      if(!group){group={key,home:a.home,room:a.room,people:[]};groups.push(group);}
+      group.people.push(a);
+    });
+    if(roomsProfile!==me){
+      roomsOpen.clear();groups.filter(g=>g.people.some(a=>roomIsMe(a.name))).forEach(g=>roomsOpen.add(g.key));roomsProfile=me;
+    }
+    const terms=normalizeCarpool(roomsQuery.value).split(/\s+/).filter(Boolean);
+    const visible=groups.filter(g=>terms.every(t=>normalizeCarpool(g.home+' '+g.room+' '+g.people.map(a=>roomFullName(a.name)).join(' ')).includes(t)));
+    const nameHTML=name=>{
+      const full=roomFullName(name);
+      const label=terms.some(t=>normalizeCarpool(full).includes(t)&&!normalizeCarpool(name).includes(t))?full:name;
+      return highlightCarpoolName(label,terms);
+    };
+    roomsCount.textContent=terms.length?visible.length+' of '+groups.length+' rooms':groups.length+' rooms · '+roomAssignments.length+' people';
+    if(!visible.length){roomsList.innerHTML='<p class="rooms-empty">No rooms found. Try a name or room number.</p>';return;}
+    const personHTML=a=>'<li class="room-person"><div><span class="room-person-name'+(roomIsMe(a.name)?' is-you':'')+'">'+'<span>'+nameHTML(a.name)+'</span>'+(roomIsMe(a.name)?'<span class="room-badge you">You</span>':'')+'</span><p class="room-bed">'+esc(a.bed)+(a.spot?' · '+esc(a.spot):'')+'</p></div></li>';
+    const mine=visible.filter(g=>g.people.some(a=>roomIsMe(a.name)));
+    const other=visible.filter(g=>!mine.includes(g));
+    const featured=mine.map(g=>{
+      const own=g.people.filter(a=>roomIsMe(a.name)),mates=g.people.filter(a=>!roomIsMe(a.name));
+      return '<article class="room-featured"><div class="room-featured-top"><span class="room-your-label">Your room</span><span class="room-occupancy">'+g.people.length+' people</span></div><p class="room-featured-home">'+esc(g.home)+'</p><h2>'+highlightCarpoolName(g.room,terms)+'</h2><div class="room-own-spot"><span>Your spot</span>'+own.map(a=>(terms.length?'<p class="room-own-match">'+nameHTML(a.name)+'</p>':'')+'<strong>'+esc(a.bed)+(a.spot?' · '+esc(a.spot):'')+'</strong>').join('')+'</div><h3 class="roommates-title">'+(mates.length?'Staying with you · '+mates.length:'Roommates')+'</h3>'+(mates.length?'<ul class="room-people">'+mates.map(personHTML).join('')+'</ul>':'<p class="room-bed">No other occupants listed.</p>')+'</article>';
+    }).join('');
+    const homes=[...new Set(other.map(g=>g.home))];
+    const directory=homes.map(home=>{
+      const rooms=other.filter(g=>g.home===home);
+      const total=rooms.reduce((n,g)=>n+g.people.length,0);
+      return '<section class="rooms-home"><div class="rooms-home-head"><h2>'+esc(home)+'</h2>'+(terms.length?'':'<span>'+total+' people</span>')+'</div>'+rooms.map(g=>{
+        const preview=g.people.slice(0,6).map(a=>nameHTML(a.name)).join(', ')+(g.people.length>6?' +'+(g.people.length-6)+' more':'');
+        return '<details class="room-card" data-room-key="'+esc(g.key)+'"'+(terms.length||roomsOpen.has(g.key)?' open':'')+'><summary><span class="room-summary-text"><span class="room-summary-heading"><strong>'+highlightCarpoolName(g.room,terms)+'</strong><span class="room-occupancy">'+g.people.length+' people</span></span><span class="room-preview">'+preview+'</span></span></summary><ul class="room-people">'+g.people.map(personHTML).join('')+'</ul></details>';
+      }).join('')+'</section>';
+    }).join('');
+    roomsList.innerHTML=featured+(mine.length&&other.length?'<h2 class="rooms-other-title">Other rooms</h2>':'')+directory;
+  };
+  roomsQuery.addEventListener('input',renderRooms);
+  roomsList.addEventListener('toggle',e=>{
+    const card=e.target.closest('details[data-room-key]');if(!card||roomsQuery.value.trim())return;
+    if(card.open)roomsOpen.add(card.dataset.roomKey);else roomsOpen.delete(card.dataset.roomKey);
+  },true);
+  const loadRooms=async()=>{
+    if(roomsBusy)return;
+    const url=(cfg.ROOMS_CSV_URL||'').trim();
+    if(!url){roomsCount.textContent='Room assignments are not connected yet.';return;}
+    roomsBusy=true;
+    try{
+      const request=new URL(url);request.searchParams.set('t',Date.now());
+      const r=await fetch(request.href,{cache:'no-store',signal:AbortSignal.timeout(15000)});
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      roomAssignments=parseRooms(await r.text());renderRooms();
+      roomsStatus.textContent='Live from the room allocation sheet · refreshes every 2 minutes';
+    }catch{
+      if(!roomAssignments.length){roomsCount.textContent='Room assignments couldn’t load.';roomsList.innerHTML='<p class="rooms-empty">Check your connection and try again.</p><button class="rooms-retry" type="button" id="rooms-retry">Try again</button>';document.getElementById('rooms-retry').onclick=loadRooms;}
+      roomsStatus.textContent=roomAssignments.length?'Couldn’t refresh. Showing the last loaded assignments.':'Retrying automatically every 2 minutes.';
+    }finally{roomsBusy=false;}
+  };
+  setInterval(()=>{if(current==='rooms'&&!document.hidden)loadRooms();},REFRESH_MS);
+  document.addEventListener('visibilitychange',()=>{if(current==='rooms'&&!document.hidden)loadRooms();});
+
   // ---------- Pinned header ----------
   const topBar = document.querySelector('.top');
   const setTopH = () => document.documentElement.style.setProperty('--top-h', topBar.getBoundingClientRect().height + 'px');
@@ -1386,6 +1524,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     scrollTo(0, scrollMemo[next] || 0); markJump();
     if (next === 'bring') loadBring();
     if (next === 'seva') renderSeva();
+    if (next === 'rooms') { renderRooms(); loadRooms(); }
     track('/' + next, next[0].toUpperCase() + next.slice(1));
   };
   addEventListener('hashchange', showTab);
@@ -1410,7 +1549,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
 
 <script>
 (() => {
-  const groups = [["Cottage essentials", [["Water bottle", ""], ["Towel", ""], ["Blankets / comforters you’ve committed to bring", ""], ["Kitchen equipment you’ve committed to bring", ""], ["First-aid items you’ve committed to bring", ""], ["Miscellaneous items you’ve committed to bring", ""], ["Pens", ""], ["Notebooks", ""], ["Headphones", ""], ["Jacket", "It might get cold at night."], ["SFYG sweater", ""], ["Food storage container", ""], ["Swimming costume", "We have pool time—please bring!"]]], ["Outdoor activities", [["Cap / hat", ""], ["Sports shoes", ""], ["Physical ID", "Required for kayaking, including kids."], ["Hiking / walking shoes", ""], ["Sunscreen", ""], ["Sunglasses", ""]]]];
+  const groups = [["Cottage essentials", [["Water bottle", ""], ["Towel", ""], ["Blankets / comforters you’ve committed to bring", ""], ["Kitchen equipment you’ve committed to bring", ""], ["First-aid items you’ve committed to bring", ""], ["Miscellaneous items you’ve committed to bring", ""], ["Pens", ""], ["Notebooks", ""], ["Headphones", ""], ["Jacket", "It might get cold at night."], ["SFYG sweater", ""], ["Food storage container", ""], ["Swimming costume", "We have pool time—please bring!"]]], ["Outdoor activities", [["Cap / hat", ""], ["Sports shoes", ""], ["Physical ID", "Required for kayaking, including kids."], ["Hiking / walking shoes", ""], ["Sunscreen", ""], ["Sunglasses", ""], ["Umbrella", ""]]]];
   const key = 'cw26-packing-v1';
   let checked;
   try { checked = new Set(JSON.parse(localStorage.getItem(key) || '[]')); } catch { checked = new Set(); }

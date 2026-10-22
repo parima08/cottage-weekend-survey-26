@@ -1463,7 +1463,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     };
     roomsCount.textContent=terms.length?visible.length+' of '+groups.length+' rooms':groups.length+' rooms · '+roomAssignments.length+' people';
     if(!visible.length){roomsList.innerHTML='<p class="rooms-empty">No rooms found. Try a name or room number.</p>';return;}
-    const personHTML=a=>'<li class="room-person"><div><span class="room-person-name'+(roomIsMe(a.name)?' is-you':'')+'">'+nameHTML(a.name)+(roomIsMe(a.name)?'<span class="room-badge you">You</span>':'')+'</span><p class="room-bed">'+esc(a.bed)+(a.spot?' · '+esc(a.spot):'')+'</p></div></li>';
+    const personHTML=a=>'<li class="room-person"><div><span class="room-person-name'+(roomIsMe(a.name)?' is-you':'')+'">'+'<span>'+nameHTML(a.name)+'</span>'+(roomIsMe(a.name)?'<span class="room-badge you">You</span>':'')+'</span><p class="room-bed">'+esc(a.bed)+(a.spot?' · '+esc(a.spot):'')+'</p></div></li>';
     const mine=visible.filter(g=>g.people.some(a=>roomIsMe(a.name)));
     const other=visible.filter(g=>!mine.includes(g));
     const featured=mine.map(g=>{
@@ -1474,7 +1474,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     const directory=homes.map(home=>{
       const rooms=other.filter(g=>g.home===home);
       const total=rooms.reduce((n,g)=>n+g.people.length,0);
-      return '<section class="rooms-home"><div class="rooms-home-head"><h2>'+esc(home)+'</h2><span>'+total+' people</span></div>'+rooms.map(g=>{
+      return '<section class="rooms-home"><div class="rooms-home-head"><h2>'+esc(home)+'</h2>'+(terms.length?'':'<span>'+total+' people</span>')+'</div>'+rooms.map(g=>{
         const preview=g.people.slice(0,6).map(a=>nameHTML(a.name)).join(', ')+(g.people.length>6?' +'+(g.people.length-6)+' more':'');
         return '<details class="room-card" data-room-key="'+esc(g.key)+'"'+(terms.length||roomsOpen.has(g.key)?' open':'')+'><summary><span class="room-summary-text"><span class="room-summary-heading"><strong>'+highlightCarpoolName(g.room,terms)+'</strong><span class="room-occupancy">'+g.people.length+' people</span></span><span class="room-preview">'+preview+'</span></span></summary><ul class="room-people">'+g.people.map(personHTML).join('')+'</ul></details>';
       }).join('')+'</section>';

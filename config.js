@@ -19,6 +19,8 @@ window.CW_HUB_CONFIG = {
   CARPOOL_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTCew7Ar00SDsF1pVKeHmYIaUbG4RsUZ4bxhmgFWwLYw92Gbq2uYLCSUh0DDKcWRe35I_fSIFLTsaMT/pub?gid=1062880095&single=true&output=csv",
   // Published sleeping allocations. The app only reads this CSV.
   ROOMS_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR8YV9Db3OHZX3FCz4DZTHHWdCuSG9ZM_x_bhr24BKihpPSLs25pLftbi8-5T2jOmSYOIztPBumh2kp/pub?gid=147732127&single=true&output=csv",
+  // Main meal and cleaning allocation tables; read-only published CSV.
+  SEVA_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6jJKui3lL06REgFOMYsgBAO0WzrKdmb1Wqm9VuMcMcGoA3wBphwDq2jheVuOs3nlHDe9rJPY9lvP-/pub?gid=939786510&single=true&output=csv",
   EVENT_YEAR: 2026,
   TIME_ZONE: "America/Los_Angeles"
 };

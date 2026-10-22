@@ -590,6 +590,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     <div class="seva-search" id="seva-search"><label for="seva-query">Find someone’s seva</label><input class="search" id="seva-query" type="search" placeholder="Search a name" autocomplete="off" aria-controls="seva-list"></div>
     <div class="seva-summary"><p id="seva-summary" role="status"></p></div>
     <div id="seva-list"></div>
+    <p class="rooms-status" id="seva-status" role="status"></p>
   </section>
   <section id="view-info" data-view="info" hidden>
     <div class="info-head"><span class="place">Auburn, CA</span><h1>We're going to Auburn</h1><p>Two homes by the lake, a short walk apart.</p></div>
@@ -658,7 +659,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   <a href="#carpool" data-tab="carpool"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3M7.5 13.5h.01M16.5 13.5h.01"/></svg></span>Carpool</a>
   <a href="#rooms" data-tab="rooms"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19v-6.5A2.5 2.5 0 0 1 5.5 10h13a2.5 2.5 0 0 1 2.5 2.5V19M3 16h18M7 10V7.5h4.5V10"/></svg></span>Rooms</a>
 </div></nav>
-<script src="config.js?v=2026-10-22-rooms"></script>
+<script src="config.js?v=2026-10-22-seva"></script>
 <script>
 (() => {
   const cfg = window.CW_HUB_CONFIG || {};
@@ -1339,8 +1340,28 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   loadPeople();
   setInterval(() => { if (current === 'bring' && document.visibilityState === 'visible' && !whoDlg.open && !youDlg.open && !addDlg.open) loadBring(); }, REFRESH_MS);
 
-  // Main allocation tables only. This preview uses a fixed copy of the sheet.
-  const sevaAllotments = [{"day": "Fri", "meal": "Snacks & drinks", "team": ["Vinay", "Janav", "Tejas", "Dhruv", "Esha"], "lead": "Vinay", "contact": "Pratik", "kind": "cleaning"}, {"day": "Sat", "meal": "Breakfast", "team": ["Prachi", "Ashish", "Tanisha", "Apurva", "Naisheel"], "lead": "Tanisha", "contact": "Niraj", "kind": "cleaning"}, {"day": "Sat", "meal": "Lunch", "team": ["Sohan", "Prisha", "Saqib", "Payal", "Anita"], "lead": "Payal", "contact": "Darshil", "kind": "cleaning"}, {"day": "Sat", "meal": "Dinner", "team": ["Aalisha", "Darpan", "Nishant", "Parva", "Pedro"], "lead": "Nishant", "contact": "Niraj", "kind": "cleaning"}, {"day": "Sun", "meal": "Breakfast & lunch", "team": ["Tulsi", "Swapnil", "Mounik", "Aashna", "Dishant", "Ekta", "Ankeet", "Akansha", "Samyag", "Devansh"], "lead": "Tulsi", "contact": "Darshil, Pratik", "kind": "cleaning"}, {"day": "Fri", "meal": "Snacks & drinks", "team": ["Sohan", "Naisheel", "Saqib", "Prisha"], "lead": "Harsh Dhruva", "contact": "Pratik", "kind": "meal"}, {"day": "Sat", "meal": "Breakfast", "team": ["Esha", "Parva", "Swapnil", "Samyag"], "lead": "Devang Jhaveri", "contact": "Niraj", "kind": "meal"}, {"day": "Sat", "meal": "Lunch", "team": ["Aalisha", "Devansh", "Ekta", "Nishant", "Darpan"], "lead": "Miti Jhaveri", "contact": "Darshil", "kind": "meal"}, {"day": "Sat", "meal": "Dinner", "team": ["Sahil", "Mounik", "Ankeet", "Anita", "Tulsi", "Payal", "Khushboo", "Niraj if reqd"], "lead": "Nihar Shah", "contact": "Niraj", "kind": "meal"}, {"day": "Sun", "meal": "Breakfast", "team": ["Tanisha", "Prachi", "Ashish", "Janav"], "lead": "Devang Jhaveri", "contact": "Darshil", "kind": "meal"}, {"day": "Sun", "meal": "Lunch", "team": ["Tejas", "Khushboo", "Dhruv", "Vinay", "Apurva"], "lead": "Harsh Dhruva", "contact": "Pratik", "kind": "meal"}];
+  // Only the two main allocation tables are sources; summaries and exemptions are ignored.
+  const parseSeva = text => {
+    if (/^\s*</.test(text)) throw new Error('Expected CSV, received a webpage');
+    const rows=parseCSV(text.replace(/^\uFEFF/,'')), result=[];
+    for(const kind of ['cleaning','meal']) {
+      const header=rows.findIndex(r=>norm(r[0]||'')==='day' && norm(r[1]||'')===kind+' sevaks' && norm(r[2]||'')==='leads for '+kind+' seva');
+      if(header<0) throw new Error('Main '+kind+' allocation table not found');
+      let count=0;
+      for(const row of rows.slice(header+1)) {
+        const period=(row[0]||'').match(/^(Fri|Sat|Sun)\s*\(([^)]+)\)\s*$/i);
+        if(!period) break;
+        const team=(row[1]||'').split(',').map(n=>n.trim()).filter(Boolean);
+        if(!team.length) continue;
+        const day=period[1][0].toUpperCase()+period[1].slice(1).toLowerCase();
+        const meal=period[2].trim().replace(/^snacks?\s*&\s*drinks$/i,'Snacks & drinks').replace(/^breakfast\s*&\s*lunch$/i,'Breakfast & lunch');
+        result.push({day,meal,team,lead:row[2]||'',contact:row[3]||'',kind});count++;
+      }
+      if(!count) throw new Error('Main '+kind+' allocation table is empty');
+    }
+    return result;
+  };
+  let sevaAllotments=[],sevaBusy=false,sevaFailed=false;
   const sevaDays = {Fri:'Friday',Sat:'Saturday',Sun:'Sunday'};
   const sevaCleanName = name => name.replace(/\s+if reqd$/i,'');
   const sevaMatch = (name, person) => {
@@ -1356,7 +1377,6 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     return roles;
   };
   const sevaOrder = a => ({Fri:0,Sat:10,Sun:20}[a.day])+({'Snacks & drinks':0,Breakfast:1,'Breakfast & lunch':1,Lunch:2,Dinner:3}[a.meal])+(a.kind==='cleaning'?.1:0);
-  sevaAllotments.sort((a,b)=>sevaOrder(a)-sevaOrder(b));
   let sevaMode=me?'mine':'all';
   const sevaQuery=document.getElementById('seva-query');
   const renderSeva=()=>{
@@ -1364,6 +1384,11 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     document.getElementById('seva-prompt').hidden=!!me;
     document.getElementById('seva-search').hidden=personal;
     document.querySelectorAll('[data-seva-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sevaMode===(personal?'mine':'all'))));
+    if(!sevaAllotments.length){
+      document.getElementById('seva-summary').textContent=sevaFailed?'Assignments unavailable':'Loading assignments…';
+      document.getElementById('seva-list').innerHTML=sevaFailed?'<div class="seva-empty">Check your connection and try again.<button class="seva-pick" type="button" data-seva-retry>Try again</button></div>':'';
+      return;
+    }
     const q=norm(sevaQuery.value);
     const terms=personal?[]:normalizeCarpool(sevaQuery.value).split(/\s+/).filter(Boolean);
     const searchName=n=>{
@@ -1419,6 +1444,29 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     sevaMode=b.dataset.sevaMode;renderSeva();
   });
   sevaQuery.addEventListener('input',renderSeva);
+
+  const sevaStatus=document.getElementById('seva-status');
+  const loadSeva=async()=>{
+    if(sevaBusy)return;
+    const url=(cfg.SEVA_CSV_URL||'').trim();
+    if(!url){sevaFailed=true;sevaStatus.textContent='Seva is not connected yet.';renderSeva();return;}
+    sevaBusy=true;
+    if(!sevaAllotments.length){sevaFailed=false;sevaStatus.textContent='Loading seva assignments…';renderSeva();}
+    try{
+      const request=new URL(url);request.searchParams.set('t',Date.now());
+      const response=await fetch(request.href,{cache:'no-store',signal:AbortSignal.timeout(15000)});
+      if(!response.ok)throw new Error('HTTP '+response.status);
+      const next=parseSeva(await response.text());next.sort((a,b)=>sevaOrder(a)-sevaOrder(b));
+      sevaAllotments=next;sevaFailed=false;renderSeva();
+      sevaStatus.textContent='Live from the seva allocation sheet · refreshes every 2 minutes';
+    }catch{
+      sevaFailed=true;renderSeva();
+      sevaStatus.textContent=sevaAllotments.length?'Couldn’t refresh. Showing the last loaded assignments.':'Couldn’t load seva assignments. Retrying automatically every 2 minutes.';
+    }finally{sevaBusy=false;}
+  };
+  document.getElementById('seva-list').addEventListener('click',e=>{if(e.target.closest('[data-seva-retry]'))loadSeva();});
+  setInterval(()=>{if(current==='seva'&&!document.hidden)loadSeva();},REFRESH_MS);
+  document.addEventListener('visibilitychange',()=>{if(current==='seva'&&!document.hidden)loadSeva();});
 
   // ---------- Rooms: published sleeping assignments, read-only ----------
   const parseRooms = text => {
@@ -1523,7 +1571,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     document.querySelectorAll('[data-tab]').forEach(a => { if (a.dataset.tab === next) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     scrollTo(0, scrollMemo[next] || 0); markJump();
     if (next === 'bring') loadBring();
-    if (next === 'seva') renderSeva();
+    if (next === 'seva') { renderSeva(); loadSeva(); }
     if (next === 'rooms') { renderRooms(); loadRooms(); }
     track('/' + next, next[0].toUpperCase() + next.slice(1));
   };

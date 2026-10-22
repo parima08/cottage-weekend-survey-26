@@ -6,7 +6,15 @@
 <title>Cottage Weekend 2026</title>
 <meta name="description" content="Schedule for SFYG Cottage Weekend 2026 in Auburn, October 23 - 25.">
 <meta name="theme-color" content="#eef1ee">
-<meta name="color-scheme" content="light only">
+<meta name="color-scheme" content="light dark">
+<script>
+(() => {
+  let theme = 'light';
+  try { if (localStorage.getItem('cw26-theme') === 'dark') theme = 'dark'; } catch {}
+  document.documentElement.dataset.theme = theme;
+  document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#111b16' : '#eef1ee';
+})();
+</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Cottage Wknd">
@@ -35,7 +43,7 @@ button {font:inherit;color:inherit;cursor:pointer}
 h1,h2,p {margin:0}
 .shell {width:min(600px,100%);margin-inline:auto;padding:0 max(16px,env(safe-area-inset-right)) calc(100px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
 .tabbar {position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 18px rgba(29,52,40,.04);padding:8px 12px calc(10px + env(safe-area-inset-bottom))}
-.tabbar div {display:grid;grid-template-columns:repeat(5,1fr);max-width:520px;margin-inline:auto}
+.tabbar div {display:grid;grid-template-columns:repeat(6,1fr);max-width:600px;margin-inline:auto}
 .tabbar a {display:grid;justify-items:center;gap:4px;min-height:48px;padding:2px 0;font-size:11px;font-weight:500;color:var(--muted);text-decoration:none}
 .tabbar span {display:grid;place-items:center;width:min(58px,100%);height:32px;border-radius:99px}
 .tabbar svg {width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -57,7 +65,7 @@ h1,h2,p {margin:0}
 .fact svg {width:20px;height:20px;stroke:var(--accent-ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .fact b {display:block;font-size:15px;font-weight:500}
 .fact span:not(.ic) {display:block;font-size:12px;color:var(--muted)}
-.go {display:flex;justify-content:center;align-items:center;min-height:48px;margin-top:4px;border-radius:10px;background:var(--accent-ink);color:#fff;font-weight:500;font-size:15px;text-decoration:none}
+.go {display:flex;justify-content:center;align-items:center;min-height:48px;margin-top:4px;border-radius:10px;background:var(--accent-ink);color:var(--on-accent);font-weight:500;font-size:15px;text-decoration:none}
 .info-h {font-size:20px;font-weight:400;letter-spacing:-.025em;margin:28px 2px 0}
 .home .item {margin-top:14px}
 .rooms {display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
@@ -112,7 +120,7 @@ h1,h2,p {margin:0}
 /* You: your initials in the header open your page; before you pick a name it is a plain person icon. */
 .me-btn {flex:none;width:40px;height:40px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--card);color:var(--muted);box-shadow:0 0 0 1px rgba(29,52,40,.12)}
 .me-btn svg {width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.me-btn.on {background:var(--accent-ink);color:#fff;box-shadow:none;font-size:14px;font-weight:500;letter-spacing:.02em}
+.me-btn.on {background:var(--accent-ink);color:var(--on-accent);box-shadow:none;font-size:14px;font-weight:500;letter-spacing:.02em}
 .brand .sync {display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;font-weight:400;color:var(--muted);flex-wrap:wrap}
 .sync i {width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
 .sync.stale i {background:var(--il-warm)}
@@ -178,7 +186,7 @@ h1,h2,p {margin:0}
 .ev.now .stop {width:16px;height:16px;box-shadow:0 0 0 3px var(--panel),0 0 0 6px rgba(255,255,255,.45);animation:halo 2.4s ease-in-out infinite}
 .ev.now .card {background:var(--accent-soft);outline:3px solid #fff;outline-offset:2px}
 .ev.now .when b {font-size:16px}
-.ev.now .tag.live {background:var(--accent-ink);color:#fff}
+.ev.now .tag.live {background:var(--accent-ink);color:var(--on-accent)}
 @keyframes halo {50% {box-shadow:0 0 0 3px var(--panel),0 0 0 8px rgba(255,255,255,.2)}}
 /* Past: hollow stop, muted time and text, washed thumbnail. */
 .ev.past .stop {background:var(--panel);box-shadow:0 0 0 3px var(--panel),inset 0 0 0 2px rgba(255,255,255,.6)}
@@ -271,7 +279,7 @@ h1,h2,p {margin:0}
 .bring-filter {display:flex;gap:6px;margin-top:14px}
 .bring-filter[hidden], .bring-sum[hidden] {display:none}
 .bring-filter button {flex:1;min-height:38px;border:0;border-radius:99px;background:var(--card);font-size:13px;font-weight:500;box-shadow:0 0 0 1px rgba(29,52,40,.1)}
-.bring-filter button[aria-pressed="true"] {background:var(--accent-ink);color:#fff;box-shadow:none}
+.bring-filter button[aria-pressed="true"] {background:var(--accent-ink);color:var(--on-accent);box-shadow:none}
 .need-group h2 {display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:20px;font-weight:400;letter-spacing:-.025em;margin:26px 2px 10px}
 .need-group h2 span {font-size:12px;color:var(--muted);letter-spacing:0}
 .needs {background:var(--card);border-radius:12px;overflow:hidden;box-shadow:var(--card-shadow)}
@@ -285,7 +293,7 @@ h1,h2,p {margin:0}
 .need .who em {font-style:normal;font-weight:500;color:var(--accent-ink)}
 .need.done .need-count {color:var(--accent-ink);font-weight:500}
 .need.done .bar i {background:var(--accent-ink)}
-.add {display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:40px;min-width:84px;padding:0 16px;border:0;border-radius:99px;background:var(--accent-ink);color:#fff;font-size:14px;font-weight:500}
+.add {display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:40px;min-width:84px;padding:0 16px;border:0;border-radius:99px;background:var(--accent-ink);color:var(--on-accent);font-size:14px;font-weight:500}
 .add svg {width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .need.done .add, .add.on {background:none;color:var(--accent-ink);box-shadow:inset 0 0 0 1.5px var(--accent-ink)}
 .add.on {background:var(--accent-soft);box-shadow:none}
@@ -298,7 +306,7 @@ h1,h2,p {margin:0}
 .mine + .bring-sum {margin-top:20px}
 .mine-head {display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--accent-soft)}
 .mine-head > span:last-child {font-size:12px;color:var(--accent-ink)}
-.avatar {width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--accent-ink);color:#fff;font-size:14px;font-weight:500;letter-spacing:.02em}
+.avatar {width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--accent-ink);color:var(--on-accent);font-size:14px;font-weight:500;letter-spacing:.02em}
 .mine-head div {flex:1;min-width:0}
 .mine-head small {display:block;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
 .link {border:0;background:none;padding:8px 2px;min-height:40px;color:var(--accent-ink);font-size:13px;font-weight:500;flex:none}
@@ -323,7 +331,7 @@ html:has(.sheet[open]) {overflow:hidden}
 /* Profile selection keeps the same frame while filtering. Only names scroll.
    The inset and viewport height apply on every platform, including when a keyboard reduces the visible area. */
 #you,#who {position:fixed;inset:calc(var(--vvt,0px) + 12px) 12px auto;width:min(560px,calc(100% - 24px));max-height:calc(var(--vvh,100dvh) - 24px);margin:0 auto;border-radius:18px;overflow:hidden}
-#you {top:calc(var(--vvt,0px) + var(--vvh,100dvh) / 2);transform:translateY(-50%)}
+#you,#who {top:calc(var(--vvt,0px) + var(--vvh,100dvh) / 2);transform:translateY(-50%)}
 #who {height:min(640px,calc(var(--vvh,100dvh) - 24px))}
 #who .sheet-head,#who .sheet-foot {flex:0 0 auto}
 #who .people {flex:1 1 0;min-height:0}
@@ -331,7 +339,7 @@ html:has(.sheet[open]) {overflow:hidden}
 .sheet-head {padding:22px 20px 0}
 .sheet h2 {font-size:21px;font-weight:400;letter-spacing:-.025em;line-height:1.3}
 .sheet h2 + p {font-size:13px;color:var(--muted);margin-top:2px}
-.search {display:block;width:100%;min-height:46px;margin-top:14px;padding:10px 14px;border:1.5px solid #cdd6d0;border-radius:10px;background:#fff;color:var(--ink);font:inherit;font-size:16px}
+.search {display:block;width:100%;min-height:46px;margin-top:14px;padding:10px 14px;border:1.5px solid var(--input-line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;font-size:16px}
 .search:focus {outline:none;border-color:var(--accent-ink);box-shadow:0 0 0 3px var(--accent-soft)}
 /* flex-basis auto: with flex:1 (basis 0) Safari collapses the list to nothing inside a sheet whose height is auto. */
 .people {flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 10px 6px}
@@ -363,11 +371,11 @@ html:has(.sheet[open]) {overflow:hidden}
 .field > span {display:block;margin-bottom:-6px}
 .field em {font-style:normal;font-weight:400;color:var(--muted)}
 .sheet-foot.two {display:grid;grid-template-columns:1fr 2fr;gap:10px;padding-top:12px}
-.sheet-foot .primary {background:var(--accent-ink);color:#fff}
+.sheet-foot .primary {background:var(--accent-ink);color:var(--on-accent)}
 .mine-row .what small {display:block;font-size:12px;color:var(--muted);margin-top:1px;overflow-wrap:anywhere}
 .sheet-foot {padding:6px 20px calc(16px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
 .sheet-foot button {width:100%;min-height:46px;border:0;border-radius:10px;background:var(--page);font-size:15px;font-weight:500}
-.toast {position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));z-index:6;width:max-content;max-width:calc(100% - 32px);transform:translate(-50%,12px);background:var(--ink);color:#fff;font-size:14px;padding:12px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.toast {position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));z-index:6;width:max-content;max-width:calc(100% - 32px);transform:translate(-50%,12px);background:var(--ink);color:var(--page);font-size:14px;padding:12px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
 .toast.show {opacity:1;transform:translate(-50%,0)}
 
 .note {text-align:center;padding:40px 20px;color:var(--muted)}
@@ -411,13 +419,110 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 .carpool-muted,.carpool-no-results {color:var(--muted);font-size:13px}
 .carpool-no-results {padding:24px 4px;text-align:center}
 
+
+/* Personal packing checklist shares the Bring page's card and color system. */
+.bring-mode {display:flex;gap:4px;padding:4px;background:var(--line);border-radius:13px;margin:18px 0 14px}
+.bring-mode button {flex:1;min-height:44px;border:0;border-radius:10px;background:transparent;color:var(--muted);font:inherit;font-size:14px;font-weight:500}
+.bring-mode button[aria-pressed="true"] {background:var(--card);color:var(--accent-ink);box-shadow:0 2px 6px rgba(29,52,40,.08)}
+#view-bring .info-head {margin-bottom:0}
+.bring-intro {font-size:15px;line-height:1.5;color:var(--muted);margin:0 0 22px}
+#shared-supplies[hidden],#packing-panel[hidden] {display:none}
+.packing-group h2 {font-size:20px;font-weight:400;letter-spacing:-.025em;margin:26px 2px 10px}
+.packing-items {background:var(--card);border-radius:12px;overflow:hidden;box-shadow:var(--card-shadow)}
+.packing-row {display:flex;align-items:flex-start;gap:13px;padding:16px;cursor:pointer;min-height:58px}
+.packing-row + .packing-row {border-top:1px solid var(--line)}
+.packing-row input {flex:0 0 22px;width:22px;height:22px;margin:1px 0 0;accent-color:var(--accent-ink);cursor:pointer}
+.packing-row .packing-name {display:block;font-size:15px;line-height:1.5}
+.packing-row small {display:block;font-size:12px;line-height:1.5;color:var(--muted);margin-top:3px}
+.packing-row:has(input:checked) {background:rgba(30,125,80,.04)}
+.packing-row input:checked + span .packing-name {text-decoration:line-through;color:var(--muted)}
+.packing-progress {margin-top:0}
+progress.packing-bar {display:block;width:100%;height:6px;margin-top:12px;border:0;border-radius:99px;overflow:hidden;background:var(--line);accent-color:var(--accent)}
+progress.packing-bar::-webkit-progress-bar {background:var(--line)}
+progress.packing-bar::-webkit-progress-value {background:var(--accent);border-radius:99px}
+progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:99px}
+
+/* Seva: read-only allotments from the main cleaning and meal tables. */
+.seva-modes {margin-top:22px}
+.seva-prompt {padding:20px;background:var(--accent-soft);border:1px solid var(--line);border-radius:14px;margin-top:22px}
+.seva-prompt h2 {font-size:19px;font-weight:500;margin-bottom:6px}
+.seva-prompt p {font-size:14px;line-height:1.5;color:var(--muted)}
+.seva-pick {min-height:42px;padding:10px 18px;margin-top:14px;border:0;border-radius:99px;background:var(--accent-ink);color:var(--on-accent);font:inherit;font-size:14px;font-weight:500}
+.seva-summary {display:flex;justify-content:space-between;gap:12px;align-items:center;margin:18px 2px;color:var(--muted);font-size:13px;line-height:1.5}
+.seva-search {margin:16px 0 20px}
+.seva-search label {display:block;font-size:14px;font-weight:500;margin-bottom:8px}
+.seva-search input {margin:0}
+.seva-day {font-size:20px;font-weight:400;letter-spacing:-.025em;margin:28px 2px 12px}
+.seva-card {background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--card-shadow);padding:20px;margin-bottom:16px;overflow:hidden}
+.seva-card.is-mine {border-color:#8bc4a5;background:linear-gradient(135deg,#f3fbf6,var(--card) 65%)}
+.seva-card-head {display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px}
+.seva-card-head .seva-date {display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:6px;font-weight:500}
+.seva-card-head h3 {font-size:21px;line-height:1.3;font-weight:500;letter-spacing:-.025em}
+.seva-kind {font-size:12px;line-height:1.3;background:var(--accent-soft);color:var(--accent-ink);padding:7px 10px;border-radius:99px;white-space:nowrap}
+.seva-leads {display:grid;grid-template-columns:1fr 1fr;gap:14px;border-block:1px solid var(--line);padding:14px 0;margin:0 0 16px}
+.seva-leads div {min-width:0}
+.seva-leads dt {color:var(--muted);font-size:12px;line-height:1.4;margin-bottom:5px}
+.seva-leads dd {margin:0;font-size:15px;line-height:1.4;font-weight:500;overflow-wrap:anywhere}
+.seva-leads dd.is-you {color:var(--accent-ink)}
+.seva-team-title {font-size:13px;color:var(--muted);font-weight:400;margin-bottom:8px}
+.seva-team {list-style:none;padding:0;margin:0}
+.seva-team li {display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:9px 0;font-size:15px;line-height:1.4}
+.seva-team li + li {border-top:1px solid var(--line)}
+.seva-team li.is-you {color:var(--accent-ink)}
+.seva-badge {display:inline-block;font-size:11px;padding:2px 7px;border-radius:99px;background:var(--page);color:var(--muted);font-weight:400}
+.seva-team .is-you .seva-badge {background:transparent;color:var(--accent-ink)}
+.seva-empty {padding:28px 20px;background:var(--card);border-radius:14px;border:1px solid var(--line);color:var(--muted);font-size:14px;line-height:1.6}
+.seva-empty button {display:block}
+#seva-prompt[hidden],#seva-search[hidden] {display:none}
+
+/* Keep the roster compact while preserving each lead and team. */
+.seva-modes {margin-top:16px}
+.seva-summary {margin:14px 2px}
+.seva-card {padding:16px;margin-bottom:14px}
+.seva-card-head {gap:10px;margin-bottom:12px;align-items:center}
+.seva-card-head h3 {margin:0;font-size:20px}
+.seva-card-head .seva-date {margin-bottom:4px}
+.seva-leads {padding:10px 0;gap:12px;margin:0 0 12px}
+.seva-leads dt {margin-bottom:3px}
+.seva-team-title {margin:0 0 6px}
+.seva-team {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px}
+.seva-team li,.seva-team li.is-you {min-width:0;padding:7px 8px;gap:5px;align-content:center;font-size:14px;border-radius:7px}
+.seva-team li + li {border-top:0}
+.seva-team li>span:first-child {overflow-wrap:anywhere}
+.seva-team-section+.seva-team-section {border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.seva-section-title {font-size:14px;color:var(--accent-ink);font-weight:500;margin:0 0 10px}
+.seva-role {font-size:13px;color:var(--accent-ink);margin:0 0 10px}
+#who-required {padding:8px 0 2px;color:var(--muted);font-size:13px;text-align:center}
+#who-required[hidden],#who-cancel[hidden] {display:none}
+
+/* Shared theme controls are available in the header and the first-visit picker. */
+:root {--input-line:#cdd6d0}
+:root[data-theme="dark"] {
+  color-scheme:dark;
+  --page:#111b16;--card:#1b2921;--ink:#e4eee7;--muted:#adbcaf;--line:#33483b;--input-line:#4b6554;
+  --accent:#50bf80;--accent-ink:#8cdeb0;--accent-soft:#233f30;--on-accent:#10251a;
+  --chip:#59491c;--chip-ink:#ffe7a1;--opt:#3b3154;--opt-ink:#e0d0ff;
+  --shadow:0 8px 24px rgba(0,0,0,.2);--shadow-sm:0 3px 12px rgba(0,0,0,.18);
+  --card-shadow:0 0 0 1px #33483b,0 3px 16px rgba(0,0,0,.2);
+}
+.header-actions {display:flex;align-items:center;gap:8px;flex:none}
+.top .brand {flex:1}
+.top .brand>div {min-width:0}
+.theme-toggle {display:grid;place-items:center;flex:none;width:40px;height:40px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--card);color:var(--ink)}
+.theme-toggle svg {width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.picker-title-row {display:flex;align-items:flex-start;gap:14px;justify-content:space-between}
+.picker-title-row h2 {margin:0;min-width:0}
+:root[data-theme="dark"] .seva-card.is-mine {border-color:#4e8060;background:linear-gradient(135deg,#223b2c,var(--card) 65%)}
+:root[data-theme="dark"] .dayhead .wear {color:var(--ink)}
+:root[data-theme="dark"] .step .rm {color:#ff9b8d}
+:root[data-theme="dark"] .sheet::backdrop {background:rgba(0,0,0,.65)}
 </style>
 </head>
 <body>
 <div class="shell">
   <header class="top">
     <div class="brand"><img src="img/sfyg-logo.png" alt="SFYG logo" width="40" height="40"><div><b>Cottage Weekend 2026</b><span class="sync" id="sync" aria-live="polite">SFYG · Auburn</span></div></div>
-    <button type="button" class="me-btn" id="me-btn" aria-label="Who are you?"></button>
+    <div class="header-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false"></button><button type="button" class="me-btn" id="me-btn" aria-label="Select your name"></button></div>
     <nav class="jump" id="jump" aria-label="Jump to" hidden></nav>
   </header>
   <section id="view-schedule" data-view="schedule">
@@ -430,6 +535,14 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   <section class="today" id="today" aria-label="Up next" hidden></section>
   <main id="schedule" aria-label="Schedule"></main>
   <footer>SFYG Cottage Weekend 2026</footer>
+  </section>
+  <section id="view-seva" data-view="seva" hidden>
+    <div class="info-head"><span class="place">Help together</span><h1>Seva</h1><p>Your duties and the people serving with you.</p></div>
+    <div class="seva-prompt" id="seva-prompt" hidden><h2>Find your seva</h2><p>Select your name to see your duties, leads and teammates.</p><button class="seva-pick" id="seva-select" type="button">Select your name</button></div>
+    <div class="bring-mode seva-modes" role="group" aria-label="Seva view"><button type="button" data-seva-mode="mine" aria-controls="seva-list" aria-pressed="false">Your seva</button><button type="button" data-seva-mode="all" aria-controls="seva-list" aria-pressed="true">All allotments</button></div>
+    <div class="seva-search" id="seva-search"><label for="seva-query">Find someone’s seva</label><input class="search" id="seva-query" type="search" placeholder="Search a name" autocomplete="off" aria-controls="seva-list"></div>
+    <div class="seva-summary"><p id="seva-summary" role="status"></p></div>
+    <div id="seva-list"></div>
   </section>
   <section id="view-info" data-view="info" hidden>
     <div class="info-head"><span class="place">Auburn, CA</span><h1>We're going to Auburn</h1><p>Two homes by the lake, a short walk apart.</p></div>
@@ -445,12 +558,20 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     <article class="home"><div class="item"><div class="thumb"><img src="auburn/img/second-01.jpg" alt="" loading="lazy"></div><div class="item-body"><span class="time">Home 2 · walking distance</span><span class="what">Second home</span><span class="where">2 bedrooms · 5 beds · 2 baths</span><span class="where">Lake-view deck · Hot tub · Private sauna</span><a class="more" href="https://www.airbnb.com/rooms/1156745847354612810" target="_blank" rel="noopener">See on Airbnb ↗</a></div></div><div class="gallery" tabindex="0" aria-label="Photos"><img src="auburn/img/second-02.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-04.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-06.jpg" alt="Second home" loading="lazy"><img src="auburn/img/second-09.jpg" alt="Second home" loading="lazy"></div></article><div class="rooms"><figure class="room"><img src="auburn/img/room-second-1.jpg" alt="Bedroom with a wood bed beside a tree-filled window" loading="lazy"><figcaption><b>Bedroom 1</b><span>1 king · 1 sofa bed</span></figcaption></figure><figure class="room"><img src="auburn/img/room-second-2.jpg" alt="Bed with a metal frame beneath abstract line art" loading="lazy"><figcaption><b>Bedroom 2</b><span>1 queen</span></figcaption></figure><figure class="room"><img src="auburn/img/room-second-living.jpg" alt="Living room with a sectional and a gold-framed mirror" loading="lazy"><figcaption><b>Living room</b><span>2 single beds</span></figcaption></figure></div>
   </section>
   <section id="view-bring" data-view="bring" hidden>
-    <div class="info-head"><span class="place">Help out</span><h1>What to bring</h1><p>Tap Bring on anything you can bring. It goes straight onto the logistics sheet.</p></div>
+    <div class="info-head"><span class="place">Get ready</span><h1>What to bring</h1></div>
+    <div class="bring-mode" role="group" aria-label="What to bring"><button type="button" data-bring-mode="shared" aria-pressed="true" aria-controls="shared-supplies">Shared supplies</button><button type="button" data-bring-mode="packing" aria-pressed="false" aria-controls="packing-panel">Packing list</button></div>
+    <p class="bring-intro" id="bring-intro">Tap Bring on anything you can bring. It goes straight onto the logistics sheet.</p>
+    <div id="shared-supplies">
     <div class="mine" id="mine" hidden></div>
     <div class="bring-sum" id="bring-sum" hidden></div>
     <div class="bring-filter" id="bring-filter" hidden><button type="button" data-filter="open" aria-pressed="true">Still needed</button><button type="button" data-filter="all" aria-pressed="false">All items</button></div>
     <div id="bring-list"></div>
     <p class="bring-foot">The logistics team will confirm the final list with you. <a id="bring-sheet" href="#" target="_blank" rel="noopener">Open the sheet</a></p>
+    </div>
+    <div id="packing-panel" hidden>
+      <div class="bring-sum packing-progress"><p><span><b id="packing-count">0 of 19</b> packed</span><span id="packing-left">19 to go</span></p><progress class="packing-bar" id="packing-progress" value="0" max="19" aria-label="Packing progress"></progress></div>
+      <div id="packing-groups"></div>
+    </div>
   </section>
   <section id="view-carpool" data-view="carpool" hidden><div class="info-head"><span class="place">Travel together</span><h1>Carpool</h1><p>Find your driver and see who’s riding with you.</p></div><div class="carpool-search"><label for="carpool-query">Find your group</label><input class="search" id="carpool-query" type="search" placeholder="Search your name or driver" autocomplete="off" aria-controls="carpool-list"></div><p class="carpool-count" id="carpool-count" role="status">Loading carpool…</p><div class="carpool-list" id="carpool-list"></div><p class="carpool-no-results" id="carpool-no-results" hidden>No group found. Try a first or last name.</p><p class="carpool-count" id="carpool-status" role="status"></p></section>
   <section id="view-rooms" data-view="rooms" hidden><div class="empty"><div class="empty-art" data-art="bed"></div><div class="empty-body"><h1>Rooms</h1><p>Room assignments will show up here closer to the weekend.</p></div></div></section>
@@ -471,13 +592,14 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   </form>
 </dialog>
 <dialog class="sheet" id="who" aria-labelledby="who-title" tabindex="-1">
-  <div class="sheet-head"><h2 id="who-title">Who are you?</h2><p>Pick your name once. This phone will remember it.</p><input class="search" id="who-q" type="search" placeholder="Search names" autocomplete="off" aria-label="Search names"></div>
+  <div class="sheet-head"><div class="picker-title-row"><h2 id="who-title">Select your name for a personalized experience</h2><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false"></button></div><input class="search" id="who-q" type="search" placeholder="Search names" autocomplete="off" aria-label="Search names"></div>
   <div class="people" id="who-list"></div>
-  <div class="sheet-foot"><button type="button" id="who-cancel">Cancel</button></div>
+  <div class="sheet-foot"><p id="who-required" hidden>Select your name to continue.</p><button type="button" id="who-cancel">Cancel</button></div>
 </dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="tabbar" aria-label="Sections"><div>
   <a href="#schedule" data-tab="schedule"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8.5 3v4M15.5 3v4"/></svg></span>Schedule</a>
+  <a href="#seva" data-tab="seva"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 10.5 11 7a2.2 2.2 0 0 1 3.5-2.6A2.2 2.2 0 0 1 18 7zM3 13h3v8H3zM6 14l3-2h3.5a2 2 0 0 1 0 4H10m2.5 0 5.5-2a2 2 0 0 1 1.8 3.5L13 21H6"/></svg></span>Seva</a>
   <a href="#info" data-tab="info"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg></span>Info</a>
   <a href="#bring" data-tab="bring"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12.5H6.2z"/><path d="M9 10.5V6.5a3 3 0 0 1 6 0v4"/></svg></span>Bring</a>
   <a href="#carpool" data-tab="carpool"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17v-5l2-5h10l2 5v5M3.5 17h17M7 20v-3M17 20v-3M7.5 13.5h.01M16.5 13.5h.01"/></svg></span>Carpool</a>
@@ -488,6 +610,13 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 (() => {
   const cfg = window.CW_HUB_CONFIG || {};
   const params = new URLSearchParams(location.search);
+  // An explicit preview-only link starts a fresh profile test, then removes the reset flag.
+  if (params.get('reset-profile') === '1' && (location.hostname === 'terminal.local' || location.hostname.endsWith('.chatgpt.site'))) {
+    try { localStorage.removeItem('cw26-me'); } catch {}
+    const cleanURL = new URL(location.href); cleanURL.searchParams.delete('reset-profile');
+    history.replaceState(history.state, '', cleanURL.href);
+    params.delete('reset-profile');
+  }
   const sample = params.has('sample');
   const urls = sample
     ? { schedule: 'sample/schedule.csv', dress: 'sample/dress-code.csv' }
@@ -934,7 +1063,8 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 
   // ---------- You ----------
   // The name this phone picked from the attendee list. Older sheet rows often hold a first name only, so those count too.
-  let me = store.get('cw26-me') || '';
+  const savedProfile = store.get('cw26-me');
+  let me = typeof savedProfile === 'string' ? savedProfile.trim() : '';
   const firstName = n => n.trim().split(/\s+/)[0];
   const initials = n => n.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
   const isMe = name => !!me && (norm(name) === norm(me) || norm(name) === norm(firstName(me)));
@@ -942,12 +1072,17 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   // The guest list loads once per visit; the picker shows "Loading names" until it arrives, and an error only if it fails.
   let people = store.get('cw26-people') || [], peopleLoad = null, peopleFailed = false;
   const loadPeople = () => peopleLoad || (peopleLoad = (async () => {
-    if (!cfg.ATTENDEES_SHEET_ID) return;
+    if (!cfg.ATTENDEES_SHEET_ID) { peopleFailed = true; return; }
     try {
       const r = await fetch(sheetCSV(cfg.ATTENDEES_SHEET_ID, cfg.ATTENDEES_GID || 0) + '&t=' + Date.now(), { cache: 'no-store' });
-      const t = table(await r.text()), nc = Math.max(t.col('name'), 0), ac = t.col('adult');
+      if (!r.ok) throw new Error('Guest list unavailable');
+      const text = await r.text();
+      if (/^\s*</.test(text)) throw new Error('Expected guest list data');
+      const t = table(text), nc = Math.max(t.col('name'), 0), ac = t.col('adult');
       // Kids are listed with zero adults; they don't sign up for things.
-      people = t.rows.map(r => ({ name: (r[nc] || '').replace(/\s+/g, ' ').trim(), adult: ac < 0 || +r[ac] > 0 })).filter(p => p.name && p.adult).map(p => p.name).sort((a, b) => a.localeCompare(b));
+      const nextPeople = t.rows.map(r => ({ name: (r[nc] || '').replace(/\s+/g, ' ').trim(), adult: ac < 0 || +r[ac] > 0 })).filter(p => p.name && p.adult).map(p => p.name).sort((a, b) => a.localeCompare(b));
+      if (!nextPeople.length) throw new Error('Guest list is empty');
+      people = nextPeople;
       store.set('cw26-people', people); peopleFailed = false;
     } catch { peopleFailed = !people.length; peopleLoad = null; }
     if (whoDlg.open) renderPeople();
@@ -1046,23 +1181,34 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   let afterPick = null;
   const renderPeople = () => {
     const q = norm(whoQ.value), list = people.filter(n => !q || norm(n).split(' ').some(w => w.startsWith(q)) || norm(n).startsWith(q));
-    whoList.innerHTML = list.length ? list.map(n => `<button type="button" data-name="${esc(n)}"><span class="avatar" aria-hidden="true">${esc(initials(n))}</span>${esc(n)}</button>`).join('') : `<p>${people.length ? 'No one by that name on the list.' : peopleFailed ? "Couldn't load the guest list. Check your connection." : 'Loading names…'}</p>`;
+    whoList.innerHTML = list.length ? list.map(n => `<button type="button" data-name="${esc(n)}"><span class="avatar" aria-hidden="true">${esc(initials(n))}</span>${esc(n)}</button>`).join('') : `<p>${people.length ? 'No one by that name on the list.' : peopleFailed ? "Couldn't load the guest list. Check your connection." : 'Loading names…'}</p>${!people.length && peopleFailed ? '<button type="button" id="who-retry">Try again</button>' : ''}`;
   };
   const askWho = then => {
     // Focus the sheet, not the search box, so iPhone doesn't open the keyboard over the names.
-    afterPick = then || null; whoQ.value = ''; renderPeople(); whoDlg.showModal(); whoDlg.focus(); whoList.scrollTop = 0;
+    afterPick = then || null; whoQ.value = '';
+    document.getElementById('who-cancel').hidden = !me;
+    document.getElementById('who-required').hidden = !!me;
+    renderPeople(); if (!whoDlg.open) whoDlg.showModal(); whoDlg.focus(); whoList.scrollTop = 0;
     if (!people.length) loadPeople();
   };
   whoQ.addEventListener('input', renderPeople);
   whoList.addEventListener('click', e => {
+    if (e.target.closest('#who-retry')) { peopleFailed = false; renderPeople(); loadPeople(); return; }
     const b = e.target.closest('[data-name]'); if (!b) return;
     me = b.dataset.name; store.set('cw26-me', me); whoDlg.close(); track('picked-name', 'Picked their name', true);
     const then = afterPick; afterPick = null;
-    renderMeBtn(); renderBring(); renderCarpool();
+    renderMeBtn(); renderBring(); renderCarpool(); sevaMode='mine'; renderSeva();
     if (then) then(); else toast(`Hi, ${firstName(me)}!`);
   });
-  document.getElementById('who-cancel').onclick = () => whoDlg.close();
-  whoDlg.addEventListener('click', e => { if (e.target === whoDlg) whoDlg.close(); });
+  document.getElementById('who-cancel').onclick = () => { if (me) whoDlg.close(); };
+  whoDlg.addEventListener('cancel', e => { if (!me) e.preventDefault(); });
+  whoDlg.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !me) { e.preventDefault(); e.stopPropagation(); }
+  });
+  whoDlg.addEventListener('close', () => {
+    if (!me) { whoDlg.showModal(); whoDlg.focus(); }
+  });
+  whoDlg.addEventListener('click', e => { if (e.target === whoDlg && me) whoDlg.close(); });
 
   // Keep dialogs inside the visible viewport on every platform, including when a keyboard opens.
   const vv = window.visualViewport;
@@ -1082,7 +1228,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   const renderMeBtn = () => {
     meBtn.classList.toggle('on', !!me);
     meBtn.innerHTML = me ? esc(initials(me)) : personIcon;
-    meBtn.setAttribute('aria-label', me ? `You: ${me}` : 'Who are you?');
+    meBtn.setAttribute('aria-label', me ? `You: ${me}` : 'Select your name');
   };
   const renderYou = () => {
     document.getElementById('you-av').textContent = initials(me);
@@ -1140,6 +1286,87 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   loadPeople();
   setInterval(() => { if (current === 'bring' && document.visibilityState === 'visible' && !whoDlg.open && !youDlg.open && !addDlg.open) loadBring(); }, REFRESH_MS);
 
+  // Main allocation tables only. This preview uses a fixed copy of the sheet.
+  const sevaAllotments = [{"day": "Fri", "meal": "Snacks & drinks", "team": ["Vinay", "Janav", "Tejas", "Dhruv", "Esha"], "lead": "Vinay", "contact": "Pratik", "kind": "cleaning"}, {"day": "Sat", "meal": "Breakfast", "team": ["Prachi", "Ashish", "Tanisha", "Apurva", "Naisheel"], "lead": "Tanisha", "contact": "Niraj", "kind": "cleaning"}, {"day": "Sat", "meal": "Lunch", "team": ["Sohan", "Prisha", "Saqib", "Payal", "Anita"], "lead": "Payal", "contact": "Darshil", "kind": "cleaning"}, {"day": "Sat", "meal": "Dinner", "team": ["Aalisha", "Darpan", "Nishant", "Parva", "Pedro"], "lead": "Nishant", "contact": "Niraj", "kind": "cleaning"}, {"day": "Sun", "meal": "Breakfast & lunch", "team": ["Tulsi", "Swapnil", "Mounik", "Aashna", "Dishant", "Ekta", "Ankeet", "Akansha", "Samyag", "Devansh"], "lead": "Tulsi", "contact": "Darshil, Pratik", "kind": "cleaning"}, {"day": "Fri", "meal": "Snacks & drinks", "team": ["Sohan", "Naisheel", "Saqib", "Prisha"], "lead": "Harsh Dhruva", "contact": "Pratik", "kind": "meal"}, {"day": "Sat", "meal": "Breakfast", "team": ["Esha", "Parva", "Swapnil", "Samyag"], "lead": "Devang Jhaveri", "contact": "Niraj", "kind": "meal"}, {"day": "Sat", "meal": "Lunch", "team": ["Aalisha", "Devansh", "Ekta", "Nishant", "Darpan"], "lead": "Miti Jhaveri", "contact": "Darshil", "kind": "meal"}, {"day": "Sat", "meal": "Dinner", "team": ["Sahil", "Mounik", "Ankeet", "Anita", "Tulsi", "Payal", "Khushboo", "Niraj if reqd"], "lead": "Nihar Shah", "contact": "Niraj", "kind": "meal"}, {"day": "Sun", "meal": "Breakfast", "team": ["Tanisha", "Prachi", "Ashish", "Janav"], "lead": "Devang Jhaveri", "contact": "Darshil", "kind": "meal"}, {"day": "Sun", "meal": "Lunch", "team": ["Tejas", "Khushboo", "Dhruv", "Vinay", "Apurva"], "lead": "Harsh Dhruva", "contact": "Pratik", "kind": "meal"}];
+  const sevaDays = {Fri:'Friday',Sat:'Saturday',Sun:'Sunday'};
+  const sevaCleanName = name => name.replace(/\s+if reqd$/i,'');
+  const sevaMatch = (name, person) => {
+    const n = norm(sevaCleanName(name)), p = norm(person);
+    return !!p && (n === p || n === norm(firstName(person)));
+  };
+  const sevaNames = text => text.split(',').map(n=>n.trim());
+  const sevaRoles = a => {
+    const roles=[];
+    if(a.team.some(n=>sevaMatch(n,me))) roles.push(a.kind==='meal'?'Meal seva':'Cleaning seva');
+    if(sevaNames(a.lead).some(n=>sevaMatch(n,me))) roles.push(a.kind==='meal'?'Meal lead':'Cleaning lead');
+    if(sevaNames(a.contact).some(n=>sevaMatch(n,me))) roles.push(a.kind==='meal'?'Operations lead':'Food contact');
+    return roles;
+  };
+  const sevaOrder = a => ({Fri:0,Sat:10,Sun:20}[a.day])+({'Snacks & drinks':0,Breakfast:1,'Breakfast & lunch':1,Lunch:2,Dinner:3}[a.meal])+(a.kind==='cleaning'?.1:0);
+  sevaAllotments.sort((a,b)=>sevaOrder(a)-sevaOrder(b));
+  let sevaMode=me?'mine':'all';
+  const sevaQuery=document.getElementById('seva-query');
+  const renderSeva=()=>{
+    const personal=sevaMode==='mine' && !!me;
+    document.getElementById('seva-prompt').hidden=!!me;
+    document.getElementById('seva-search').hidden=personal;
+    document.querySelectorAll('[data-seva-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sevaMode===(personal?'mine':'all'))));
+    const q=norm(sevaQuery.value);
+    const terms=personal?[]:normalizeCarpool(sevaQuery.value).split(/\s+/).filter(Boolean);
+    const searchName=n=>{
+      const name=norm(sevaCleanName(n));
+      const full=people.filter(p=>norm(firstName(p))===name);
+      return full.length===1?norm(full[0]):name;
+    };
+    const nameHTML=n=>{
+      let name=sevaCleanName(n);
+      // Show the full attendee name when a surname search matches a first-name-only allotment.
+      const full=people.filter(p=>norm(firstName(p))===norm(name));
+      if(terms.length && full.length===1 && terms.some(t=>normalizeCarpool(full[0]).includes(t)&&!normalizeCarpool(name).includes(t))) name=full[0];
+      return highlightCarpoolName(name,terms);
+    };
+    const matches=a=>!q||[...a.team,...sevaNames(a.lead),...sevaNames(a.contact)].some(n=>q.split(' ').every(part=>searchName(n).includes(part)));
+    const groups=[];
+    for(const a of sevaAllotments){
+      if(personal && !sevaRoles(a).length) continue;
+      const key=a.day+'|'+a.meal;
+      let group=groups.find(g=>g.key===key);
+      if(!group){group={key,day:a.day,meal:a.meal,teams:[]};groups.push(group);}
+      group.teams.push(a);
+    }
+    const shown=personal?groups:groups.filter(g=>g.teams.some(matches));
+    const total=shown.reduce((n,g)=>n+g.teams.length,0);
+    const count=total+' assignment'+(total===1?'':'s');
+    const periodCount=shown.length+' meal period'+(shown.length===1?'':'s');
+    document.getElementById('seva-summary').textContent=personal?me+' · '+count:q?periodCount+' matching “'+sevaQuery.value.trim()+'”':periodCount+' · '+total+' teams';
+    const leader=text=>sevaNames(text).map(n=>nameHTML(n)+(sevaMatch(n,me)?' <span class="seva-badge">You</span>':'')).join(', ');
+    const teamHTML=(a,combined)=>{
+      const roles=sevaRoles(a);
+      const kind=a.kind==='meal'?'Meal seva':'Cleaning seva';
+      const leadLabel=a.kind==='meal'?'Meal lead':'Cleaning lead',contactLabel=a.kind==='meal'?'Operations lead':'Food contact';
+      const members=a.team.map(n=>{
+        const you=sevaMatch(n,me),lead=sevaNames(a.lead).some(l=>norm(l)===norm(sevaCleanName(n))),conditional=/if reqd$/i.test(n);
+        return '<li'+(you?' class="is-you"':'')+'><span>'+nameHTML(n)+'</span>'+(you?'<span class="seva-badge">You</span>':'')+(lead?'<span class="seva-badge">Lead</span>':'')+(conditional?'<span class="seva-badge">If needed</span>':'')+'</li>';
+      }).join('');
+      const specialRoles=personal?roles.filter(r=>r!==kind):[];
+      return '<section class="seva-team-section">'+(combined?'<h4 class="seva-section-title">'+kind+'</h4>':'')+(specialRoles.length?'<p class="seva-role">Your role: '+specialRoles.map(esc).join(' · ')+'</p>':'')+'<dl class="seva-leads"><div><dt>'+leadLabel+'</dt><dd>'+leader(a.lead)+'</dd></div><div><dt>'+contactLabel+'</dt><dd>'+leader(a.contact)+'</dd></div></dl><h4 class="seva-team-title">'+(personal?'Your team':'Sevaks')+' · '+a.team.length+' people'+(a.team.some(n=>/if reqd$/i.test(n))?' (includes backup)':'')+'</h4><ul class="seva-team">'+members+'</ul></section>';
+    };
+    let day='';
+    document.getElementById('seva-list').innerHTML=shown.length?shown.map(g=>{
+      const heading=!personal&&day!==g.day?'<h2 class="seva-day">'+sevaDays[g.day]+'</h2>':'';day=g.day;
+      const mine=g.teams.some(a=>sevaRoles(a).length),combined=g.teams.length>1;
+      const badge=combined?'': '<span class="seva-kind">'+(g.teams[0].kind==='meal'?'Meal seva':'Cleaning seva')+'</span>';
+      return heading+'<article class="seva-card'+(mine?' is-mine':'')+'"><div class="seva-card-head"><div>'+(personal?'<span class="seva-date">'+sevaDays[g.day]+'</span>':'')+'<h3>'+esc(g.meal)+'</h3></div>'+badge+'</div>'+g.teams.map(a=>teamHTML(a,combined)).join('')+'</article>';
+    }).join(''):'<div class="seva-empty">'+(personal?'No meal or cleaning seva is listed for you in the main allocation tables.':'No allotments found. Try a first or last name.')+'</div>';
+  };
+  const sevaPick=()=>askWho(()=>{sevaMode='mine';sevaQuery.value='';renderSeva();});
+  document.getElementById('seva-select').onclick=sevaPick;
+  document.querySelectorAll('[data-seva-mode]').forEach(b=>b.onclick=()=>{
+    if(b.dataset.sevaMode==='mine'&&!me){sevaPick();return;}
+    sevaMode=b.dataset.sevaMode;renderSeva();
+  });
+  sevaQuery.addEventListener('input',renderSeva);
+
   // ---------- Pinned header ----------
   const topBar = document.querySelector('.top');
   const setTopH = () => document.documentElement.style.setProperty('--top-h', topBar.getBoundingClientRect().height + 'px');
@@ -1150,7 +1377,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
   // ---------- Tabs ----------
   const scrollMemo = {};
   const showTab = () => {
-    const next = ['schedule', 'info', 'bring', 'carpool', 'rooms'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'schedule';
+    const next = ['schedule', 'seva', 'info', 'bring', 'carpool', 'rooms'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'schedule';
     scrollMemo[current] = scrollY;
     current = next;
     document.querySelectorAll('[data-view]').forEach(v => { v.hidden = v.dataset.view !== next; });
@@ -1158,10 +1385,13 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     document.querySelectorAll('[data-tab]').forEach(a => { if (a.dataset.tab === next) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     scrollTo(0, scrollMemo[next] || 0); markJump();
     if (next === 'bring') loadBring();
+    if (next === 'seva') renderSeva();
     track('/' + next, next[0].toUpperCase() + next.slice(1));
   };
   addEventListener('hashchange', showTab);
   showTab();
+  // Require a profile on first entry, preserving the requested route and existing saved profiles.
+  if (!me) askWho();
 
   // ---------- Add to home screen hint ----------
   const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
@@ -1174,6 +1404,79 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     const box = document.getElementById('install'); box.hidden = false;
     document.getElementById('install-close').onclick = () => { box.hidden = true; store.set('cw26-install-dismissed', true); };
   }
+})();
+</script>
+
+
+<script>
+(() => {
+  const groups = [["Cottage essentials", [["Water bottle", ""], ["Towel", ""], ["Blankets / comforters you’ve committed to bring", ""], ["Kitchen equipment you’ve committed to bring", ""], ["First-aid items you’ve committed to bring", ""], ["Miscellaneous items you’ve committed to bring", ""], ["Pens", ""], ["Notebooks", ""], ["Headphones", ""], ["Jacket", "It might get cold at night."], ["SFYG sweater", ""], ["Food storage container", ""], ["Swimming costume", "We have pool time—please bring!"]]], ["Outdoor activities", [["Cap / hat", ""], ["Sports shoes", ""], ["Physical ID", "Required for kayaking, including kids."], ["Hiking / walking shoes", ""], ["Sunscreen", ""], ["Sunglasses", ""]]]];
+  const key = 'cw26-packing-v1';
+  let checked;
+  try { checked = new Set(JSON.parse(localStorage.getItem(key) || '[]')); } catch { checked = new Set(); }
+  const list = document.getElementById('packing-groups');
+  let total = 0;
+  groups.forEach(([title, items], g) => {
+    const section = document.createElement('section'); section.className = 'packing-group';
+    const heading = document.createElement('h2'); heading.textContent = title; section.append(heading);
+    const rows = document.createElement('div'); rows.className = 'packing-items';
+    items.forEach(([name, note], i) => {
+      const id = g + ':' + name;
+      const label = document.createElement('label'); label.className = 'packing-row';
+      const input = document.createElement('input'); input.type = 'checkbox'; input.checked = checked.has(id);
+      const text = document.createElement('span'); const main = document.createElement('span'); main.className = 'packing-name'; main.textContent = name; text.append(main);
+      if (note) { const small = document.createElement('small'); small.textContent = note; text.append(small); }
+      input.addEventListener('change', () => {
+        if (input.checked) checked.add(id); else checked.delete(id);
+        try { localStorage.setItem(key, JSON.stringify([...checked])); } catch {}
+        progress();
+      });
+      label.append(input,text); rows.append(label); total++;
+    });
+    section.append(rows); list.append(section);
+  });
+  function progress() {
+    const done = list.querySelectorAll('input:checked').length;
+    document.getElementById('packing-count').textContent = done + ' of ' + total;
+    document.getElementById('packing-left').textContent = done === total ? 'All packed!' : (total - done) + ' to go';
+    const bar = document.getElementById('packing-progress'); bar.value = done; bar.max = total;
+  }
+  progress();
+  const intro = document.getElementById('bring-intro');
+  document.querySelectorAll('[data-bring-mode]').forEach(button => button.addEventListener('click', () => {
+    const packing = button.dataset.bringMode === 'packing';
+    document.getElementById('shared-supplies').hidden = packing;
+    document.getElementById('packing-panel').hidden = !packing;
+    document.querySelectorAll('[data-bring-mode]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+    intro.textContent = packing ? 'Check off items as you pack. Saved on this browser.' : 'Tap Bring on anything you can bring. It goes straight onto the logistics sheet.';
+  }));
+})();
+</script>
+
+
+<script>
+(() => {
+  const moon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13.4A8 8 0 0 1 10.6 4a8.3 8.3 0 1 0 9.4 9.4Z"/></svg>';
+  const sun = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  const buttons = document.querySelectorAll('[data-theme-toggle]');
+  const apply = theme => {
+    const dark = theme === 'dark';
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    document.querySelector('meta[name="theme-color"]').content = dark ? '#111b16' : '#eef1ee';
+    buttons.forEach(b => {
+      b.innerHTML = dark ? sun : moon;
+      b.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      b.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+      b.setAttribute('aria-pressed', String(dark));
+    });
+  };
+  buttons.forEach(b => b.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    apply(next);
+    try { localStorage.setItem('cw26-theme', next); } catch {}
+  }));
+  addEventListener('storage', e => { if (e.key === 'cw26-theme') apply(e.newValue); });
+  apply(document.documentElement.dataset.theme);
 })();
 </script>
 

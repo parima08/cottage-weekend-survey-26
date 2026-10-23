@@ -22,9 +22,10 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="img/icon-192.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
 <style>
+@font-face {font-family:'Poppins';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/poppins-400.ttf') format('truetype')}
+@font-face {font-family:'Poppins';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/poppins-500.ttf') format('truetype')}
+@font-face {font-family:'Poppins';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/poppins-600.ttf') format('truetype')}
 :root {
   color-scheme:light;
   --page:#eef1ee; --card:#ffffff; --ink:#263b32; --muted:#626f68; --line:#e7ece9;
@@ -616,6 +617,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     <div id="bring-list"></div>
     <p class="bring-foot">The logistics team will confirm the final list with you. <a id="bring-sheet" href="#" target="_blank" rel="noopener">Open the sheet</a></p>
     </div>
+    <p class="rooms-status" id="bring-status" role="status"></p>
     <div id="packing-panel" hidden>
       <div class="bring-sum packing-progress"><p><span><b id="packing-count">0 of 20</b> packed</span><span id="packing-left">20 to go</span></p><progress class="packing-bar" id="packing-progress" value="0" max="20" aria-label="Packing progress"></progress></div>
       <div id="packing-groups"></div>
@@ -679,10 +681,47 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   const YEAR = cfg.EVENT_YEAR || new Date().getFullYear();
   const CACHE_KEY = 'cw26-hub-' + (sample ? 'sample' : 'live');
   const REFRESH_MS = 2 * 60 * 1000;
+  let current = 'schedule';
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
   };
+  // Successful responses only: source checks prevent mixing different published sheets.
+  const dataStates = new Map();
+  let refreshSync = () => {};
+  const savedTime = at => new Date(at).toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  const dataStatus = kind => {
+    const state=dataStates.get(kind),offline=!navigator.onLine;
+    if(!state || !state.at) return offline?'Offline · no saved data on this browser.':state?.failed?'Couldn’t load data. Check your connection.':'Loading latest data…';
+    return offline?`Offline · saved ${savedTime(state.at)}`:state.failed?`Couldn’t refresh · saved ${savedTime(state.at)}`:state.saved?`Saved ${savedTime(state.at)} · checking for updates…`:'Live from the sheet · refreshes every 2 minutes';
+  };
+  const updateDataStatus = () => {
+    for(const kind of ['carpool','rooms','seva','bring']) {
+      const el=document.getElementById(kind+'-status');if(el)el.textContent=dataStatus(kind);
+    }
+    refreshSync();
+  };
+  const setDataState = (kind,at,flags={}) => {dataStates.set(kind,{at,...flags});updateDataStatus();};
+  const csvKey = kind => 'cw26-csv-v1-'+kind;
+  const restoreCSV = (kind,source,parse) => {
+    try {
+      const cached=store.get(csvKey(kind));
+      if(!cached || cached.source!==source || !Number.isFinite(cached.at) || typeof cached.text!=='string')return null;
+      const data=parse(cached.text);setDataState(kind,cached.at,{saved:true});return data;
+    } catch {return null;}
+  };
+  const saveCSV = (kind,source,text) => {
+    const at=Date.now();store.set(csvKey(kind),{source,text,at});setDataState(kind,at);
+  };
+  const failedData = kind => {const state=dataStates.get(kind)||{};setDataState(kind,state.at,{failed:true});};
+  const getText = async url => {
+    if(!navigator.onLine)throw new Error('Offline');
+    const request=new URL(url,location.href);request.searchParams.set('t',Date.now());
+    const response=await fetch(request.href,{cache:'no-store',signal:AbortSignal.timeout(10000)});
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    const text=await response.text();if(/^\s*</.test(text))throw new Error('Expected data, received a webpage');return text;
+  };
+
   // ---------- Analytics ----------
   // GoatCounter, which sets no cookies. Only the published site counts: never a preview, ?sample or a pinned clock. No names are sent.
   const GC = (cfg.GOATCOUNTER_CODE || '').trim();
@@ -839,20 +878,18 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     if (!url) { carpoolCount.textContent = 'Carpool is not connected yet.'; return; }
     carpoolBusy = true;
     try {
-      const request = new URL(url);
-      request.searchParams.set('t', Date.now());
-      const response = await fetch(request.href, { cache: 'no-store', signal: AbortSignal.timeout(15000) });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      carpoolGroups = parseCarpool(await response.text());
+      const text=await getText(url);
+      carpoolGroups=parseCarpool(text);saveCSV('carpool',url,text);
       renderCarpool();
-      carpoolStatus.textContent = 'Live from the Groups sheet · refreshes every 2 minutes';
+      updateDataStatus();
     } catch (error) {
       if (!carpoolGroups.length) carpoolCount.textContent = 'Carpool couldn’t load. Retrying automatically.';
-      carpoolStatus.textContent = carpoolGroups.length ? 'Couldn’t refresh. Showing the last loaded assignments.' : 'Check your connection or try refreshing the page.';
+      failedData('carpool');
     } finally { carpoolBusy = false; }
   };
+  carpoolGroups=restoreCSV('carpool',(cfg.CARPOOL_CSV_URL||'').trim(),parseCarpool)||[];
   loadCarpool();
-  setInterval(loadCarpool, REFRESH_MS);
+  setInterval(()=>{if(!document.hidden)loadCarpool();}, REFRESH_MS);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) loadCarpool(); });
 
   // Reads rows by header name so organizers can reorder or add columns.
@@ -1040,10 +1077,17 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   const sync = document.getElementById('sync');
   let fetchedAt = 0, stale = false;
   const ago = t => { const m = Math.round((Date.now() - t) / 60000); return m < 1 ? 'just now' : m < 60 ? `${m} min ago` : m < 1440 ? `${Math.round(m / 60)} hr ago` : `${Math.round(m / 1440)} d ago`; };
-  const showSync = () => { if (!fetchedAt) return; sync.className = 'sync' + (stale ? ' stale' : ''); sync.innerHTML = `<i></i>${stale ? 'Offline · saved ' : 'Live · updated '}${ago(fetchedAt)}`; };
+  const showSync = () => {
+    const kind=['carpool','rooms','seva','bring'].includes(current)?current:'schedule';
+    const state=dataStates.get(kind),at=state?.at,offline=!navigator.onLine;
+    const saved=offline||state?.failed||state?.saved;
+    sync.className='sync'+(saved?' stale':'');
+    sync.innerHTML='<i></i>'+(offline?'Offline':state?.failed?'Connection issue':state?.saved?'Saved data':'Live')+(at?' · '+(saved?'saved '+savedTime(at):'updated '+ago(at)):offline?' · no saved data':' · loading…');
+  };
+  refreshSync=showSync;
 
   // ---------- Load ----------
-  let scrolledToToday = false, current = 'schedule';
+  let scrolledToToday = false;
   const scrollToToday = days => {
     if (scrolledToToday || current !== 'schedule') return; scrolledToToday = true;
     const now = nowParts(), today = days.find(d => d.key === now.key);
@@ -1054,21 +1098,23 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   const load = async () => {
     if (!urls.schedule) { main.innerHTML = `<div class="note"><b>Schedule coming soon</b>Check back closer to the weekend.</div>`; return; }
     try {
-      const get = u => fetch(u + (u.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(r.status); return r.text(); });
-      const [sched, dress] = await Promise.all([get(urls.schedule), urls.dress ? get(urls.dress).catch(() => '') : '']);
+      const get = getText;
+      let dressFailed=false;
+      const [sched,dress]=await Promise.all([get(urls.schedule),urls.dress?get(urls.dress).catch(()=>{dressFailed=true;return store.get(CACHE_KEY)?.dress||'';}):'']);
       if (/^\s*</.test(sched)) throw new Error('not csv');
-      model = build(sched, dress); fetchedAt = Date.now(); stale = false;
+      const next=build(sched,dress);if(!next.length)throw new Error('Schedule is empty');
+      model=next;fetchedAt=Date.now();stale=dressFailed;setDataState('schedule',fetchedAt,{failed:dressFailed});
       store.set(CACHE_KEY, { sched, dress, at: fetchedAt });
     } catch {
       const c = store.get(CACHE_KEY);
       if (c && !model.length) { model = build(c.sched, c.dress); fetchedAt = c.at; }
-      stale = true;
+      stale = true;failedData('schedule');
       if (!model.length) { main.innerHTML = `<div class="note"><b>Couldn't load the schedule</b>Check your connection and try again.<br><button type="button" id="retry">Try again</button></div>`; document.getElementById('retry').onclick = load; showSync(); return; }
     }
     render(model); showSync(); scrollToToday(model);
   };
   const cached = store.get(CACHE_KEY);
-  if (cached && urls.schedule) { model = build(cached.sched, cached.dress); fetchedAt = cached.at; render(model); showSync(); }
+  if (cached && urls.schedule) { try {model=build(cached.sched,cached.dress);fetchedAt=cached.at;render(model);setDataState('schedule',fetchedAt,{saved:true});}catch{} }
   load();
   setInterval(() => { if (document.visibilityState === 'visible') load(); }, REFRESH_MS);
   setInterval(() => { if (model.length) render(model); showSync(); }, 30 * 1000);
@@ -1110,7 +1156,9 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   const bringList = document.getElementById('bring-list'), bringSum = document.getElementById('bring-sum'), bringFilterEl = document.getElementById('bring-filter'), mineEl = document.getElementById('mine');
   const SHEET_URL = SHEET ? `https://docs.google.com/spreadsheets/d/${SHEET}/edit` : '';
   if (SHEET_URL) document.getElementById('bring-sheet').href = SHEET_URL; else document.querySelector('.bring-foot').hidden = true;
-  let bringSampleLoaded = false, bring = (store.get(BRING_KEY) || {}).groups || null, bringFilter = 'open', bringLoading = false;
+  const bringCache=store.get(BRING_KEY);
+  let bringSampleLoaded = false, bring = Array.isArray(bringCache?.groups)?bringCache.groups:null, bringFilter = 'open', bringLoading = false;
+  if(bring)setDataState('bring',bringCache.at,{saved:true});
   // Items you add in this visit stay on the "Still needed" view, so they don't vanish under your thumb.
   const keep = new Set();
   const left = it => Math.max(it.needed - it.total, 0);
@@ -1128,7 +1176,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   const loadPeople = () => peopleLoad || (peopleLoad = (async () => {
     if (!cfg.ATTENDEES_SHEET_ID) { peopleFailed = true; return; }
     try {
-      const r = await fetch(sheetCSV(cfg.ATTENDEES_SHEET_ID, cfg.ATTENDEES_GID || 0) + '&t=' + Date.now(), { cache: 'no-store' });
+      const r = await fetch(sheetCSV(cfg.ATTENDEES_SHEET_ID, cfg.ATTENDEES_GID || 0) + '&t=' + Date.now(), { cache: 'no-store',signal:AbortSignal.timeout(10000) });
       if (!r.ok) throw new Error('Guest list unavailable');
       const text = await r.text();
       if (/^\s*</.test(text)) throw new Error('Expected guest list data');
@@ -1184,7 +1232,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     if (!BRING_ON || bringLoading || saving.size) { renderBring(); return; }
     bringLoading = true; renderBring();
     try {
-      const get = u => fetch(u + (u.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(r.status); return r.text(); });
+      const get = getText;
       if (sample) bring = bring && bringSampleLoaded ? bring : (JSON.parse(await get('sample/signup.json')).groups);
       else {
         const [list, ...tabs] = await Promise.all([get(sheetCSV(SHEET, TABS.list || 0)), ...BRING_GROUPS.map(g => get(sheetCSV(SHEET, g.tab)))]);
@@ -1192,8 +1240,10 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
         if (saving.size) { bringLoading = false; return; }
         bring = buildBring(list, tabs);
       }
-      bringSampleLoaded = sample; store.set(BRING_KEY, { groups: bring });
+      if(!Array.isArray(bring)||!bring.length)throw new Error('Supply list is empty');
+      bringSampleLoaded=sample;const at=Date.now();store.set(BRING_KEY,{groups:bring,at});setDataState('bring',at);
     } catch {
+      failedData('bring');
       if (!bring) { bringList.innerHTML = `<div class="note"><b>Couldn't load the list</b>Check your connection and try again.<br><button type="button" id="bring-retry">Try again</button></div>`; document.getElementById('bring-retry').onclick = loadBring; bringLoading = false; return; }
     }
     bringLoading = false; renderBring();
@@ -1208,6 +1258,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   // A note only travels with the save that first adds the item; the sheet keeps it from there.
   const notes = new Map();
   const setMine = (g, it, q, note) => {
+    if(!sample&&!navigator.onLine){toast('Connect to the internet to change shared supplies.');return false;}
     const others = it.people.filter(p => !isMe(p.name)), keepNote = note ?? myNote(it);
     if (note) notes.set(g.key + '|' + it.item, note);
     it.people = q ? [...others, { name: me, qty: q, note: keepNote }] : others;
@@ -1218,11 +1269,15 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     clearTimeout(saving.get(key));
     saving.set(key, setTimeout(async () => {
       try {
-        const r = await fetch(SIGNUP_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ group: g.key, item: it.item, name: me, qty: q, notes: notes.get(key) || '' }) });
+        const r = await fetch(SIGNUP_URL, { signal:AbortSignal.timeout(10000), method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ group: g.key, item: it.item, name: me, qty: q, notes: notes.get(key) || '' }) });
         notes.delete(key);
         const j = await r.json();
         if (!j.ok) throw new Error(j.error);
       } catch (err) {
+        const confirmed=(store.get(BRING_KEY)||{}).groups;
+        const savedItem=confirmed?.find(x=>x.key===g.key)?.items.find(x=>x.item===it.item);
+        if(savedItem){it.people=savedItem.people;it.total=savedItem.total;renderBring();}
+        failedData('bring');
         toast(err instanceof TypeError || !err.message ? "Couldn't save. Check your connection and try again." : err.message);
       }
       saving.delete(key);
@@ -1307,6 +1362,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   let adding = null, addN = 1;
   const setAddQty = n => { addN = Math.min(Math.max(n, 1), 50); addQty.value = addN; addForm.querySelector('[data-step="-1"]').disabled = addN <= 1; addForm.querySelector('[data-step="1"]').disabled = addN >= 50; };
   const add = (g, it) => {
+    if(!sample&&!navigator.onLine){toast('Connect to the internet to change shared supplies.');return;}
     adding = { g, it };
     document.getElementById('add-title').textContent = it.item;
     document.getElementById('add-left').textContent = left(it) ? `${left(it)} of ${it.needed} still needed` : `All ${it.needed} are covered. Extras are welcome.`;
@@ -1316,7 +1372,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
   addForm.addEventListener('submit', e => {
     e.preventDefault();
     const { g, it } = adding;
-    setMine(g, it, myQty(it) + addN, addNote.value.trim().slice(0, 300) || undefined);
+    if(setMine(g,it,myQty(it)+addN,addNote.value.trim().slice(0,300)||undefined)===false)return;
     track('bring-add', 'Added an item to bring', true);
     addDlg.close();
     toast(`Added ${addN > 1 ? addN + ' × ' : ''}${it.item} to your list.`);
@@ -1327,6 +1383,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     const s = e.target.closest('[data-set]');
     if (s) { const row = s.closest('.mine-row'), f = findItem(row.dataset.group, row.dataset.item); if (f && f.it) setMine(f.g, f.it, Math.min(+s.dataset.set, 50)); return; }
     const b = e.target.closest('.add'); if (!b) return;
+    if(!sample&&!navigator.onLine){toast('Connect to the internet to change shared supplies.');return;}
     const f = findItem(b.dataset.group, b.dataset.item); if (!f || !f.it) return;
     // Until the sheet's script is deployed, sign-ups happen in the sheet itself.
     if (!sample && !SIGNUP_URL) { window.open(SHEET_URL, '_blank', 'noopener'); return; }
@@ -1453,17 +1510,18 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     sevaBusy=true;
     if(!sevaAllotments.length){sevaFailed=false;sevaStatus.textContent='Loading seva assignments…';renderSeva();}
     try{
-      const request=new URL(url);request.searchParams.set('t',Date.now());
-      const response=await fetch(request.href,{cache:'no-store',signal:AbortSignal.timeout(15000)});
-      if(!response.ok)throw new Error('HTTP '+response.status);
-      const next=parseSeva(await response.text());next.sort((a,b)=>sevaOrder(a)-sevaOrder(b));
+      const text=await getText(url);
+      const next=parseSeva(text);next.sort((a,b)=>sevaOrder(a)-sevaOrder(b));
+      saveCSV('seva',url,text);
       sevaAllotments=next;sevaFailed=false;renderSeva();
-      sevaStatus.textContent='Live from the seva allocation sheet · refreshes every 2 minutes';
+      updateDataStatus();
     }catch{
       sevaFailed=true;renderSeva();
-      sevaStatus.textContent=sevaAllotments.length?'Couldn’t refresh. Showing the last loaded assignments.':'Couldn’t load seva assignments. Retrying automatically every 2 minutes.';
+      failedData('seva');
     }finally{sevaBusy=false;}
   };
+  sevaAllotments=restoreCSV('seva',(cfg.SEVA_CSV_URL||'').trim(),parseSeva)||[];
+  sevaAllotments.sort((a,b)=>sevaOrder(a)-sevaOrder(b));
   document.getElementById('seva-list').addEventListener('click',e=>{if(e.target.closest('[data-seva-retry]'))loadSeva();});
   setInterval(()=>{if(current==='seva'&&!document.hidden)loadSeva();},REFRESH_MS);
   document.addEventListener('visibilitychange',()=>{if(current==='seva'&&!document.hidden)loadSeva();});
@@ -1540,16 +1598,15 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     if(!url){roomsCount.textContent='Room assignments are not connected yet.';return;}
     roomsBusy=true;
     try{
-      const request=new URL(url);request.searchParams.set('t',Date.now());
-      const r=await fetch(request.href,{cache:'no-store',signal:AbortSignal.timeout(15000)});
-      if(!r.ok)throw new Error('HTTP '+r.status);
-      roomAssignments=parseRooms(await r.text());renderRooms();
-      roomsStatus.textContent='Live from the room allocation sheet · refreshes every 2 minutes';
+      const text=await getText(url);
+      roomAssignments=parseRooms(text);saveCSV('rooms',url,text);renderRooms();
+      updateDataStatus();
     }catch{
       if(!roomAssignments.length){roomsCount.textContent='Room assignments couldn’t load.';roomsList.innerHTML='<p class="rooms-empty">Check your connection and try again.</p><button class="rooms-retry" type="button" id="rooms-retry">Try again</button>';document.getElementById('rooms-retry').onclick=loadRooms;}
-      roomsStatus.textContent=roomAssignments.length?'Couldn’t refresh. Showing the last loaded assignments.':'Retrying automatically every 2 minutes.';
+      failedData('rooms');
     }finally{roomsBusy=false;}
   };
+  roomAssignments=restoreCSV('rooms',(cfg.ROOMS_CSV_URL||'').trim(),parseRooms)||[];
   setInterval(()=>{if(current==='rooms'&&!document.hidden)loadRooms();},REFRESH_MS);
   document.addEventListener('visibilitychange',()=>{if(current==='rooms'&&!document.hidden)loadRooms();});
 
@@ -1573,10 +1630,16 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     if (next === 'bring') loadBring();
     if (next === 'seva') { renderSeva(); loadSeva(); }
     if (next === 'rooms') { renderRooms(); loadRooms(); }
+    updateDataStatus();
     track('/' + next, next[0].toUpperCase() + next.slice(1));
   };
   addEventListener('hashchange', showTab);
+  renderCarpool();
   showTab();
+  // Warm the read-only data once so every tab works on a later offline visit.
+  loadRooms();loadSeva();loadBring();
+  addEventListener('offline',updateDataStatus);
+  addEventListener('online',()=>{updateDataStatus();load();loadCarpool();loadRooms();loadSeva();loadBring();if(!people.length)loadPeople();});
   // Require a profile on first entry, preserving the requested route and existing saved profiles.
   if (!me) askWho();
 
@@ -1634,6 +1697,7 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
     const packing = button.dataset.bringMode === 'packing';
     document.getElementById('shared-supplies').hidden = packing;
     document.getElementById('packing-panel').hidden = !packing;
+    document.getElementById('bring-status').hidden=packing;
     document.querySelectorAll('[data-bring-mode]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
     intro.textContent = packing ? 'Check off items as you pack. Saved on this browser.' : 'Tap Bring on anything you can bring. It goes straight onto the logistics sheet.';
   }));
@@ -1667,5 +1731,12 @@ progress.packing-bar::-moz-progress-bar {background:var(--accent);border-radius:
 })();
 </script>
 
+<script>
+if('serviceWorker' in navigator){
+  addEventListener('load',()=>{
+    navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).catch(()=>{});
+  });
+}
+</script>
 </body>
 </html>

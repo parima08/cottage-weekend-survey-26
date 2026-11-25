@@ -343,6 +343,8 @@ html:has(.sheet[open]) {overflow:hidden}
 .you-sec ul {list-style:none;margin:10px 0 0;padding:0}
 .you-sec li {display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:15px}
 .you-sec li span {color:var(--muted);font-variant-numeric:tabular-nums}
+.you-sec .kv li {text-align:right}
+.you-sec .kv li span {flex:none;text-align:left}
 .you-sec p {margin-top:8px;font-size:14px;color:var(--muted)}
 .sheet .kicker {display:block;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
 .add-body {padding:6px 20px 20px}
@@ -379,12 +381,15 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 .carpool-search .search {width:100%;margin:0;background:var(--card)}
 .carpool-count {font-size:12px;color:var(--muted);margin:14px 2px 10px}
 .carpool-list {display:grid;gap:14px}
-.carpool-card {background:var(--card);border-radius:12px;padding:16px;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.carpool-card {background:var(--card);border-radius:12px;padding:16px;box-shadow:var(--card-shadow)}
 .carpool-card[hidden] {display:none}
-.carpool-card.is-my-carpool {border-color:var(--accent);background:color-mix(in srgb,var(--accent-soft) 45%,var(--card))}
+/* Your carpool is set apart the same way as Your list on Bring: a green ring, a tinted header strip and a deeper shadow. */
+.carpool-card.is-my-carpool {border:2px solid var(--accent-ink);border-radius:14px;padding:14px;box-shadow:0 4px 10px rgba(29,82,52,.14),0 16px 40px rgba(29,82,52,.24)}
+.carpool-card.is-my-carpool .carpool-number {background:var(--card)}
+.carpool-card.is-my-carpool .carpool-card-head {margin:-14px -14px 14px;padding:12px 14px;background:var(--accent-soft);border-radius:12px 12px 0 0}
 .carpool-heading-labels {display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.carpool-your-label {color:var(--accent-ink);font-size:12px;font-weight:500}
-.carpool-other-heading {font-size:14px;font-weight:500;letter-spacing:-.01em;margin:6px 2px -3px}
+.carpool-your-label {color:var(--accent-ink);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.carpool-other-heading {font-size:20px;font-weight:400;letter-spacing:-.025em;margin:12px 2px -4px}
 .carpool-card-head {display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .carpool-number {font-size:11px;font-weight:500;color:var(--accent-ink);background:var(--accent-soft);border-radius:99px;padding:5px 10px}
 .carpool-total {font-size:12px;color:var(--muted);white-space:nowrap}
@@ -396,8 +401,8 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
 .carpool-passengers h3 {font-size:11px;color:var(--muted);font-weight:400;margin:0 0 9px}
 .carpool-passengers ul {list-style:none;padding:0;margin:0;display:grid;gap:9px;font-size:14px}
 .carpool-person {display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.carpool-person.is-you {padding:2px 5px;margin-left:-5px;border-radius:4px;background:color-mix(in srgb,var(--accent-soft) 55%,transparent);color:var(--ink)}
-.carpool-you-label {font-size:10px;font-weight:400;margin-left:10px;color:var(--muted);white-space:nowrap}
+.carpool-person.is-you {font-weight:500}
+.carpool-you-label {display:inline-block;vertical-align:2px;margin-left:8px;padding:2px 8px;border-radius:99px;background:var(--accent-ink);color:#fff;font-size:10.5px;font-weight:600;letter-spacing:.02em;white-space:nowrap}
 .carpool-match {background:var(--chip);color:var(--chip-ink);border-radius:2px;padding:0}
 .carpool-solo {font-size:13px;color:var(--muted);margin-top:12px}
 .carpool-muted,.carpool-no-results {color:var(--muted);font-size:13px}
@@ -653,7 +658,7 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
       const response = await fetch(request.href, { cache: 'no-store', signal: AbortSignal.timeout(15000) });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       carpoolGroups = parseCarpool(await response.text());
-      renderCarpool();
+      renderCarpool(); if (youDlg.open) renderYou();
       carpoolStatus.textContent = 'Live from the Groups sheet · refreshes every 2 minutes';
     } catch (error) {
       if (!carpoolGroups.length) carpoolCount.textContent = 'Carpool couldn’t load. Retrying automatically.';
@@ -1075,13 +1080,22 @@ footer {text-align:center;color:var(--muted);font-size:12.5px;margin-top:28px}
     meBtn.innerHTML = me ? esc(initials(me)) : personIcon;
     meBtn.setAttribute('aria-label', me ? `You: ${me}` : 'Who are you?');
   };
+  // Your car on your page: the group, who drives, and who else rides.
+  const myCar = () => carpoolGroups.find(g => [g.driver, ...g.passengers].some(isMe));
+  const carpoolForYou = () => {
+    const g = myCar();
+    if (!g) return `<p>${carpoolGroups.length ? 'You’re not in a car yet. Check Carpool for the groups.' : 'Loading your car.'}</p>`;
+    const others = [g.driver, ...g.passengers].filter(n => !isMe(n) && n !== g.driver);
+    const riders = isMe(g.driver) ? g.passengers : others;
+    return `<ul class="kv"><li><span>Group</span>${esc(String(g.number).padStart(2, '0'))}</li><li><span>Driver</span>${isMe(g.driver) ? 'You' : esc(g.driver)}</li>${riders.length ? `<li><span>${isMe(g.driver) ? 'Your riders' : 'Also riding'}</span>${riders.map(esc).join(', ')}</li>` : isMe(g.driver) ? '<li><span>Your riders</span>None yet</li>' : ''}</ul>`;
+  };
   const renderYou = () => {
     document.getElementById('you-av').textContent = initials(me);
     document.getElementById('you-name').textContent = me;
     const mine = bring ? bring.flatMap(g => g.items.filter(myQty)) : [];
     const sec = (tab, title, body, link) => `<section class="you-sec"><h3>${tabIcon(tab)}${title}${link ? `<a href="#${tab}" data-close>${link}</a>` : ''}</h3>${body}</section>`;
     youBody.innerHTML = sec('bring', 'Bringing', mine.length ? `<ul>${mine.map(it => `<li>${esc(it.item)}<span>${myQty(it)}</span></li>`).join('')}</ul>` : `<p>${bring ? 'Nothing yet.' : 'Loading your list.'}</p>`, mine.length ? 'Change' : 'Add things')
-      + sec('carpool', 'Carpool', '<p>Find your driver and fellow passengers in Carpool.</p>', 'View group')
+      + sec('carpool', 'Carpool', carpoolForYou(), myCar() ? 'View group' : '')
       + sec('rooms', 'Room', '<p>Your room shows up here closer to the weekend.</p>');
   };
   const openYou = () => {
